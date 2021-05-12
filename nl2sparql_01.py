@@ -54,39 +54,6 @@ def load_dataset(path_datasets, train_file, test_file, valid_file, batch_size=1,
 
     return train_iterator, valid_iterator, test_iterator, train_data, valid_data, test_data, question_field, sparql_field
 
-# question_vocab_path = Path(path_datasets).joinpath('question_vocab.pth')
-# question_vocab_path = path_datasets + '/' + 'question_vocab.pth'
-
-# print(question_vocab_path)
-
-# if question_vocab_path.is_file():
-#     print("Loading question_vocab.pth")
-    # question_field.build_vocab().vocab.load_vectors(question_vocab_path)
-    # question_field.vocab = question_vocab
-# else:
-#     print("Generating question_vocab.pth")
-#     question_vocab = question_field.build_vocab(train_data, max_size=None, min_freq=1)
-#     print("Saving question_vocab.pth")
-    # torch.save(question_vocab, question_vocab_path)
-    # save_vocab(question_vocab, question_vocab_path)
-
-# sparql_vocab_path = Path(path_datasets).joinpath('sparql_vocab.pth')
-# sparql_vocab_path = path_datasets + '/' + 'sparql_vocab.pth'
-
-# print(sparql_vocab_path)
-#
-# if sparql_vocab_path.is_file():
-#     print("Loading sparql_vocab.pth")
-#     # sparql_field.vocab.load_vectors(torch.load(sparql_vocab_path))
-#     # sparql_field.vocab = sparql_vocab
-# else:
-#     print("Generating sparql_vocab.pth")
-#     sparql_vocab = sparql_field.build_vocab(train_data, max_size=None, min_freq=1)
-#     print("Saving sparql_vocab.pth")
-#     # torch.save(sparql_vocab, sparql_vocab_path)
-#     save_vocab(sparql_vocab, sparql_vocab_path)
-
-
 class Transformer(nn.Module):
     def __init__(
         self,
@@ -167,16 +134,6 @@ class Transformer(nn.Module):
         return out
 
 
-# optimizer = optim.Adam(model.parameters(), lr=learning_rate)
-
-# scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-#     optimizer, factor=0.1, patience=10, verbose=True
-# )
-
-
-# criterion = nn.CrossEntropyLoss(ignore_index=pad_idx)
-
-
 def fit(train_iterator, model, device, path_checkpoint, last_checkpoint, epochs, learning_rate, pad_idx):
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
     criterion = nn.CrossEntropyLoss(ignore_index=pad_idx)
@@ -253,94 +210,8 @@ def fit(train_iterator, model, device, path_checkpoint, last_checkpoint, epochs,
         print(f"Sentence: {sentence} \n")
         print(f"Translated example sentence: {translated_sentence} \n ")
 
-
-# def predict(model, device, path_checkpoint, learning_rate, pad_idx):
-#     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
-#     criterion = nn.CrossEntropyLoss(ignore_index=pad_idx)
-#
-#     if len(path_checkpoint) > 0:
-#         load_checkpoint(path_checkpoint, model, optimizer, device)
-#     model.to(device)
-#
-#     model.eval()
-#     with torch.no_grad():
-#         preds = torch.tensor([]).to(device)
-#         for batch in test_iterator:
-#             inp_data = batch.src.to(device)
-#             # Forward prop
-#             pred = model(inp_data)
-#             preds = torch.cat([preds, pred])
-#
-#     return preds
-
-
-# if predict_mode:
-#     sparql_predicted = predict(model, device, checkpoint_path, learning_rate, pad_idx)
-#     print(sparql_predicted)
-#
-# if train_mode:
-#     sentence = "Is Alexander Hamilton a lawyer?"
-#
-#     for epoch in range(last_check + 1, num_epochs):
-#         print(f"[Epoch {epoch} / {num_epochs}]")
-#
-#         if save_model:
-#             # if (epoch + last_check) % 5 == 0:
-#             checkpoint = {"state_dict": model.state_dict(), "optimizer": optimizer.state_dict()}
-#             save_checkpoint(checkpoint, filename='checkpoints/DBNQA/cp_DBNQA_' + str(epoch) + '_epochs.pth.tar')
-#
-#         model.eval()
-#         translated_sentence = translate_sentence(model, sentence, question_field, sparql_field, device, max_length=50)
-#
-#         print(f"Sentence: {sentence} \n")
-#         print(f"Translated example sentence: {translated_sentence} \n ")
-#         # print(" ".join(translated_sentence))
-#
-#         model.train()
-#         losses = []
-#
-#         for batch_idx, batch in enumerate(train_iterator):
-#             # Get input and targets and get to cuda
-#             inp_data = batch.src.to(device)
-#             target = batch.trg.to(device)
-#
-#             # Forward prop
-#             output = model(inp_data, target[:-1, :])
-#
-#             # Output is of shape (trg_len, batch_size, output_dim) but Cross Entropy Loss
-#             # doesn't take input in that form. For example if we have MNIST we want to have
-#             # output to be: (N, 10) and targets just (N). Here we can view it in a similar
-#             # way that we have output_words * batch_size that we want to send in into
-#             # our cost function, so we need to do some reshapin.
-#             # Let's also remove the start token while we're at it
-#             output = output.reshape(-1, output.shape[2])
-#             target = target[1:].reshape(-1)
-#
-#             optimizer.zero_grad()
-#
-#             loss = criterion(output, target)
-#             losses.append(loss.item())
-#
-#             # Back prop
-#             loss.backward()
-#             # Clip to avoid exploding gradient issues, makes sure grads are
-#             # within a healthy range
-#             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1)
-#
-#             # Gradient descent step
-#             optimizer.step()
-#
-#             # plot to tensorboard
-#             writer.add_scalar("Training loss", loss, global_step=step)
-#             step += 1
-#
-#         mean_loss = sum(losses) / len(losses)
-#         print(f"loss mean: {(mean_loss)}")
-#         scheduler.step(mean_loss)
-
 def test(test_data, question_field, sparql_field, model, device, path_checkpoint, learning_rate, pad_idx):
         optimizer = optim.Adam(model.parameters(), lr=learning_rate)
-        criterion = nn.CrossEntropyLoss(ignore_index=pad_idx)
 
         if Path(path_checkpoint).is_file():
             load_checkpoint(path_checkpoint, model, optimizer, device)
@@ -361,8 +232,8 @@ def test(test_data, question_field, sparql_field, model, device, path_checkpoint
 
             prediction = translate_sentence(model, src, question_field, sparql_field, device, max_length=500)
             prediction = prediction[:-1]  # remove <eos> token
-            print(f"row: {cont } of {len(test_data)}")
-            print(f"Question: { src } \nSparql grand true: {trg} \nSparql predicted: { prediction}")
+            print(f"row: {cont} of {len(test_data)}")
+            print(f"Question: {src} \nSparql grand true: {trg} \nSparql predicted: {prediction}")
             # sparql_wikidata = q2sparql[line]
             # sparql_wikidata = str(re.split('\)\n(?=ns)|[ ]*\.\n[\t]*|\{\n[\t]*(?=ns)', q2sparql[line]))
             sparql_dbpedia = str(prediction).strip().lower().replace('\n', ' ').replace('\t', '').replace('\r', ' ')
@@ -381,7 +252,7 @@ def test(test_data, question_field, sparql_field, model, device, path_checkpoint
 
 def predict(question, question_field, sparql_field, model, device, path_checkpoint, learning_rate, pad_idx):
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
-    criterion = nn.CrossEntropyLoss(ignore_index=pad_idx)
+    # criterion = nn.CrossEntropyLoss(ignore_index=pad_idx)
 
     if Path(path_checkpoint).is_file():
         load_checkpoint(path_checkpoint, model, optimizer, device)
@@ -405,35 +276,47 @@ def valid(valid_data, question_field, sparql_field, model, device, path_checkpoi
     print(f"Bleu score {score * 100:.2f}")
 
 if __name__ == '__main__':
-    # parser = argparse.ArgumentParser()
-    # parser.parse_args()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-dn", dest="dataset_name", help="name of dataset.")
+    parser.add_argument("-pd", dest="path_dataset", help="path of the dataset.")
+    parser.add_argument("-pc", dest="path_checkpoints", help="path of the checkpoints.")
+    parser.add_argument("-tr", dest="train", default=False, help="train the model?.")
+    parser.add_argument("-te", dest="test", default=False, help="test the model?.")
+    parser.add_argument("-va", dest="valid", default=False, help="valid the model?.")
+    parser.add_argument("-pr", dest="predict", default=True, help="generate an sparql prediction from question in natural language.")
+    parser.add_argument("-lm", dest="load", default=True, help="load model.")
+    parser.add_argument("-sm", dest="save", default=False, help="save model.")
+
+    args = parser.parse_args()
 
     # Prepare path's and files
-    dataset_name = 'lcquad10'
-    path_datasets = 'data/' + dataset_name
-    path_checkpoints = 'checkpoints/' + dataset_name
+    # dataset_name = 'lcquad10'
+    # dataset_name = 'DBNQA'
+    # path_datasets = 'data/' + dataset_name
+    # path_checkpoints = 'checkpoints/' + dataset_name
+    dataset_name = args.dataset_name
+    path_datasets = args.path_dataset + '/' + dataset_name
+    path_checkpoints = args.path_checkpoints + '/' + dataset_name
+
     train_file = dataset_name + '_train.csv'
     test_file = dataset_name + '_test.csv'
     valid_file = dataset_name + '_valid.csv'
-    batch_size = 500
+    batch_size = 100
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(device)
 
     train_iterator, valid_iterator, test_iterator, train_data, valid_data, test_data, question_field, sparql_field = load_dataset(path_datasets, train_file, test_file, valid_file, batch_size, device)
     src_vocab_size = len(question_field.vocab)
     trg_vocab_size = len(sparql_field.vocab)
-
-    # src_vocab_size = len(question_field.vocab)
-    # trg_vocab_size = len(sparql_field.vocab)
     print(f"src_vocab_size: {src_vocab_size} , trg_vocab_size: {trg_vocab_size}")
 
     # We're ready to define everything we need for training our Seq2Seq model
-    predict_mode = False
-    train_mode = False
-    valid_mode = True
-    test_mode = False
-    load_model = True
-    save_model = True
+    predict_mode = args.predict
+    train_mode = args.train
+    valid_mode = args.valid
+    test_mode = args.test
+    load_model = args.load
+    save_model = args.save
 
     # Training hyperparameters
     epochs = 100
