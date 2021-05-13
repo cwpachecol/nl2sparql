@@ -436,7 +436,7 @@ if __name__ == '__main__':
     save_model = True
 
     # Training hyperparameters
-    epochs = 100
+    epochs = 5
     learning_rate = 3e-4
 
     # Model hyperparameters
@@ -451,7 +451,7 @@ if __name__ == '__main__':
     max_len = 1010
     forward_expansion = 4
     src_pad_idx = question_field.vocab.stoi["<pad>"]
-    last_checkpoint = 80
+    last_checkpoint = 0
 
     # # Tensorboard to get nice loss plot
     # writer = SummaryWriter("runs/loss_plot")

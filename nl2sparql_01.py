@@ -1,6 +1,7 @@
 import sys
 import os
 import io
+import json
 import numpy as np
 from pathlib import Path
 
@@ -10,16 +11,11 @@ import torch.nn as nn
 import torch.optim as optim
 import spacy
 from torch.utils.tensorboard import SummaryWriter
-# from torchtext.datasets import Multi30k
 from torchtext.legacy.data import Field, BucketIterator, TabularDataset
 from torch.utils.data import Dataset, DataLoader
 from tqdm import tqdm
 import torchvision.transforms as transforms  # Transformations we can perform on our dataset
-# import DataSplit as ds
-# import generator_utils as gu
 from utils import translate_sentence, bleu, save_checkpoint, load_checkpoint
-# from google.colab import drive
-# drive.mount('/content/drive')
 import pickle
 
 spacy_eng = spacy.load("en_core_web_sm")
@@ -277,64 +273,56 @@ def valid(valid_data, question_field, sparql_field, model, device, path_checkpoi
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-dn", dest="dataset_name", help="name of dataset.")
-    parser.add_argument("-pd", dest="path_dataset", help="path of the dataset.")
-    parser.add_argument("-pc", dest="path_checkpoints", help="path of the checkpoints.")
-    parser.add_argument("-tr", dest="train", default=False, help="train the model?.")
-    parser.add_argument("-te", dest="test", default=False, help="test the model?.")
-    parser.add_argument("-va", dest="valid", default=False, help="valid the model?.")
-    parser.add_argument("-pr", dest="predict", default=True, help="generate an sparql prediction from question in natural language.")
-    parser.add_argument("-lm", dest="load", default=True, help="load model.")
-    parser.add_argument("-sm", dest="save", default=False, help="save model.")
+    parser.add_argument("-cf", dest="config_file", help="name of the config file (*.json).")
 
     args = parser.parse_args()
+
+    with open(args.config_file, "r") as read_file:
+        args_from_file = json.load(read_file)
 
     # Prepare path's and files
     # dataset_name = 'lcquad10'
     # dataset_name = 'DBNQA'
     # path_datasets = 'data/' + dataset_name
     # path_checkpoints = 'checkpoints/' + dataset_name
-    dataset_name = args.dataset_name
-    path_datasets = args.path_dataset + '/' + dataset_name
-    path_checkpoints = args.path_checkpoints + '/' + dataset_name
+    dataset_name = args_from_file['dataset_name']
+    dataset_path = args_from_file['dataset_path'] + '/' + dataset_name
+    checkpoint_path = args_from_file['checkpoint_path'] + '/' + dataset_name
 
     train_file = dataset_name + '_train.csv'
     test_file = dataset_name + '_test.csv'
     valid_file = dataset_name + '_valid.csv'
-    batch_size = 100
+    batch_size = args_from_file['batch_size']
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(device)
 
-    train_iterator, valid_iterator, test_iterator, train_data, valid_data, test_data, question_field, sparql_field = load_dataset(path_datasets, train_file, test_file, valid_file, batch_size, device)
+    train_iterator, valid_iterator, test_iterator, train_data, valid_data, test_data, question_field, sparql_field = load_dataset(dataset_path, train_file, test_file, valid_file, batch_size, device)
     src_vocab_size = len(question_field.vocab)
     trg_vocab_size = len(sparql_field.vocab)
     print(f"src_vocab_size: {src_vocab_size} , trg_vocab_size: {trg_vocab_size}")
 
     # We're ready to define everything we need for training our Seq2Seq model
-    predict_mode = args.predict
-    train_mode = args.train
-    valid_mode = args.valid
-    test_mode = args.test
-    load_model = args.load
-    save_model = args.save
+    train_mode = args_from_file['train_mode']
+    valid_mode = args_from_file['test_mode']
+    test_mode = args_from_file['valid_mode']
+    predict_mode = args_from_file['predict_mode']
+    load_model = args_from_file['load_mode']
+    save_model = args_from_file['save_mode']
 
     # Training hyperparameters
-    epochs = 100
+    epochs = args_from_file['epochs']
     learning_rate = 3e-4
 
     # Model hyperparameters
-    # src_vocab_size = len(question_field.vocab)
-    # trg_vocab_size = len(sparql_field.vocab)
-    # print(f"src_vocab_size: { src_vocab_size } , trg_vocab_size: { trg_vocab_size }")
     embedding_size = 256
-    num_heads = 8
+    num_heads = 4
     num_encoder_layers = 3
     num_decoder_layers = 3
     dropout = 0.10
     max_len = 1010
     forward_expansion = 4
     src_pad_idx = question_field.vocab.stoi["<pad>"]
-    last_checkpoint = 80
+    last_checkpoint = args_from_file['last_checkpoint']
 
     # # Tensorboard to get nice loss plot
     # writer = SummaryWriter("runs/loss_plot")
@@ -356,7 +344,7 @@ if __name__ == '__main__':
 
     checkpoint_path = ""
     if load_model:
-        checkpoint_path = str(path_checkpoints) + str('/cp_') + str(dataset_name) + str('_') + str(
+        checkpoint_path = str(checkpoint_path) + str('/cp_') + str(dataset_name) + str('_') + str(
             last_checkpoint) + str('_epochs.pth.tar')
 
     if train_mode:

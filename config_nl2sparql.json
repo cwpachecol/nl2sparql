@@ -1,0 +1,21 @@
+{
+        "dataset_name": "DBNQA",
+        "dataset_path": "data",
+        "checkpoint_path" : "checkpoints",
+        "train_mode": true,
+        "test_mode": false,
+        "valid_mode": false,
+        "predict_mode": false,
+        "load_mode": true,
+        "save_mode": true,
+        "batch_size": 10,
+        "epochs": 1000,
+        "last_checkpoint": 0,
+        "learning_rate": 3e-4,
+        "num_heads": 8,
+        "num_encoder_layers": 3,
+        "num_decoder_layers": 3,
+        "dropout": 0.10,
+        "max_len": 1010,
+        "forward_expansion": 4
+}
