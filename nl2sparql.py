@@ -142,7 +142,7 @@ def fit(train_iterator, model, device, load_model, checkpoint_path, last_checkpo
             load_checkpoint(load_checkpoint_path, model, optimizer, device)
             print(f"model: {load_checkpoint_path} loaded..")
         else:
-            return print(f"Archivo checkpoint: {load_checkpoint_path} no encontrado")
+            print(f"Checkpoint: {load_checkpoint_path} fiel, no find, start from scratch")
 
     model.to(device)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.1, patience=10, verbose=True)
