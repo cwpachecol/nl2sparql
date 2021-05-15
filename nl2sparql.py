@@ -130,13 +130,19 @@ class Transformer(nn.Module):
         return out
 
 
-def fit(train_iterator, model, device, path_checkpoint, last_checkpoint, epochs, learning_rate, pad_idx):
+def fit(train_iterator, model, device, load_model, checkpoint_path, last_checkpoint, epochs, learning_rate, pad_idx):
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
     criterion = nn.CrossEntropyLoss(ignore_index=pad_idx)
 
-    if Path(path_checkpoint).is_file():
-        load_checkpoint(path_checkpoint, model, optimizer, device)
-        print(f"model: {path_checkpoint} loaded..")
+    if load_model:
+        load_checkpoint_path = ""
+        load_checkpoint_path = str(checkpoint_path) + str('/cp_') + str(dataset_name) + str('_') + str(last_checkpoint) + str('_epochs.pth.tar')
+
+        if Path(load_checkpoint_path).is_file():
+            load_checkpoint(load_checkpoint_path, model, optimizer, device)
+            print(f"model: {load_checkpoint_path} loaded..")
+        else:
+            return print(f"Archivo checkpoint: {load_checkpoint_path} no encontrado")
 
     model.to(device)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.1, patience=10, verbose=True)
@@ -195,11 +201,13 @@ def fit(train_iterator, model, device, path_checkpoint, last_checkpoint, epochs,
 
         if save_model:
             # if (epoch + last_check) % 5 == 0:
-            checkpoint_path = str(path_checkpoints) + str('/cp_') + str(dataset_name) + str('_') + str(
+
+            save_checkpoint_path = ""
+            save_checkpoint_path = str(checkpoint_path) + str('/cp_') + str(dataset_name) + str('_') + str(
                 epoch) + str('_epochs.pth.tar')
-            print(f"Saving checkpoint:{ checkpoint_path }")
+            print(f"Saving checkpoint:{ save_checkpoint_path }")
             checkpoint = {"state_dict": model.state_dict(), "optimizer": optimizer.state_dict()}
-            save_checkpoint(checkpoint, checkpoint_path)
+            save_checkpoint(checkpoint, save_checkpoint_path)
 
         model.eval()
         translated_sentence = translate_sentence(model, sentence, question_field, sparql_field, device, max_length=50)
@@ -334,13 +342,13 @@ if __name__ == '__main__':
         device,
     ).to(device)
 
-    checkpoint_path = ""
-    if load_model:
-        checkpoint_path = str(checkpoint_path) + str('/cp_') + str(dataset_name) + str('_') + str(
-            last_checkpoint) + str('_epochs.pth.tar')
+    # checkpoint_path = ""
+    # if load_model:
+    #     checkpoint_path = str(checkpoint_path) + str('/cp_') + str(dataset_name) + str('_') + str(
+    #         last_checkpoint) + str('_epochs.pth.tar')
 
     if train_mode:
-        fit(train_iterator, model, device, checkpoint_path, last_checkpoint, epochs, learning_rate, src_pad_idx)
+        fit(train_iterator, model, device, load_model, checkpoint_path, last_checkpoint, epochs, learning_rate, src_pad_idx)
 
     if test_mode:
         test(test_data, question_field, sparql_field, model, device, checkpoint_path, learning_rate, src_pad_idx)
