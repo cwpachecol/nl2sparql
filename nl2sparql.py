@@ -17,7 +17,7 @@ from tqdm import tqdm
 import torchvision.transforms as transforms  # Transformations we can perform on our dataset
 from utils import translate_sentence, bleu, save_checkpoint, load_checkpoint
 import pickle
-
+from generator_utils import decode, fix_URI
 spacy_eng = spacy.load("en_core_web_sm")
 
 def tokenize_eng(text):
@@ -36,7 +36,8 @@ def load_dataset(path_datasets, train_file, test_file, valid_file, batch_size=1,
                                                               format="csv",
                                                               fields=fields,
                                                               skip_header=False)
-    question_vocab = question_field.build_vocab(train_data, max_size=None, min_freq=1)
+    # question_vocab = question_field.build_vocab(train_data, max_size=None, min_freq=1)
+    question_vocab = question_field.build_vocab(train_data, max_size=1000, vectors="glove.6B.100d")
     sparql_vocab = sparql_field.build_vocab(train_data, max_size=None, min_freq=1)
 
     train_iterator, valid_iterator, test_iterator = BucketIterator.splits(
@@ -357,8 +358,14 @@ if __name__ == '__main__':
         question_nl = ""
         while(question_nl != '-q'):
             question_nl = input("Input natural language question or write '-q' to finish:")
-            sparql_predicted = predict(question_nl, question_field, sparql_field, model, device, checkpoint_path, learning_rate, src_pad_idx)
-            print(f"predicted sparql: { sparql_predicted }")
+            sparql_predicted_encoded = predict(question_nl, question_field, sparql_field, model, device, checkpoint_path, learning_rate, src_pad_idx)
+            # print(f"predicted sparql encoded: { sparql_predicted_encoded }")
+            sparql_predicted_decoded = "".join(sparql_predicted_encoded)
+            # print(sparql_predicted_decoded)
+            sparql_predicted_decoded = decode(sparql_predicted_decoded)
+            # print(sparql_predicted_decoded)
+            # sparql_predicted_decoded = fix_URI(sparql_predicted_decoded)
+            print(f"sparql predicted: { sparql_predicted_decoded }")
 
     if valid_mode:
         valid(valid_data, question_field, sparql_field, model, device, checkpoint_path, learning_rate)
