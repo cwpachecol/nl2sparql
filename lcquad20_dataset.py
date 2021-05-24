@@ -2,14 +2,11 @@ import json
 import requests, json, re, operator
 import sys
 from parsers.lc_quad20 import LC_Qaud20
-import pandas as pd
-
 
 def prepare_dataset(ds):
     ds.load()
     ds.parse()
     return ds
-
 
 def ask_query(uri):
     if uri == "<https://www.w3.org/1999/02/22-rdf-syntax-ns#type>":
