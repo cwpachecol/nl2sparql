@@ -64,7 +64,8 @@ if __name__ == "__main__":
             raw_row["answers"] = []
 
         tmp.append(raw_row)
-        # print(f"No: {idx} \n row: {raw_row}")
+        if idx % 100 == 0:
+            print(f"No: {idx} \n row: {raw_row}")
     with open('data/LC-QUAD20/linked_answer.json', 'w') as jsonFile:
         json.dump(tmp, jsonFile)
 
