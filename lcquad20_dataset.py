@@ -50,7 +50,8 @@ if __name__ == "__main__":
     with open("data/LC-QUAD20/data.json", "w") as write_file:
         json.dump(data, write_file)
 
-    ds = LC_Qaud20(path="./data/LC-QUAD20/data.json")
+    # ds = LC_Qaud20(path="./data/LC-QUAD20/data.json", sparql_field="sparql_wikidata")
+    ds = LC_Qaud20( path="./data/LC-QUAD20/data.json", sparql_field="sparql_dbpedia18")
     tmp = []
     for idx, qapair in enumerate(prepare_dataset(ds).qapairs):
         raw_row = dict()

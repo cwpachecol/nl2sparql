@@ -11,7 +11,8 @@ from parsers.answerparser import AnswerParser
 #  "corrected_question": "Which comic characters are painted by Bill Finger?"}
 class LC_Qaud20:
     # def __init__(self, path="./data/LC-QUAD/data_v8.json"):
-    def __init__(self, path="./data/LC-QUAD20/data.json"):
+    def __init__(self, path="./data/LC-QUAD20/data.json", sparql_field="sparql_wikidata"):
+        self.sparql_field = sparql_field
         self.raw_data = []
         self.qapairs = []
         self.path = path
@@ -24,12 +25,12 @@ class LC_Qaud20:
     def parse(self):
         parser = LC_Qaud20Parser()
         for raw_row in self.raw_data:
-            # sparql_query = raw_row["sparql_query"].replace("DISTINCT COUNT(", "COUNT(DISTINCT ")
+            sparql_query = raw_row[self.sparql_field].replace("DISTINCT COUNT(", "COUNT(DISTINCT ")
             # sparql_wikidata = raw_row["sparql_wikidata"].replace("DISTINCT COUNT(", "COUNT(DISTINCT ")
-            sparql_dbpedia18 = raw_row["sparql_dbpedia18"].replace("DISTINCT COUNT(", "COUNT(DISTINCT ")
+            # sparql_dbpedia18 = raw_row[self.sparql_file].replace("DISTINCT COUNT(", "COUNT(DISTINCT ")
 
             self.qapairs.append(
-                QApair(raw_row["question"], [], sparql_dbpedia18, raw_row, raw_row["uid"], self.parser))
+                QApair(raw_row["question"], [], sparql_query, raw_row, raw_row["uid"], self.parser))
 
     def print_pairs(self, n=-1):
         for item in self.qapairs[0:n]:
@@ -42,9 +43,11 @@ class LC_Qaud20Parser(AnswerParser):
         super(LC_Qaud20Parser, self).__init__(DBpedia(one_hop_bloom_file="./data/blooms/spo1.bloom"))
 
     def parse_question(self, raw_question):
+        raw_question = str(raw_question).lower()
         return raw_question
 
     def parse_sparql(self, raw_query):
+        raw_query = str(raw_query).lower()
         uris = [Uri(raw_uri, DBpedia.parse_uri) for raw_uri in re.findall('<[^>]*>', raw_query)]
 
         return raw_query, True, uris
