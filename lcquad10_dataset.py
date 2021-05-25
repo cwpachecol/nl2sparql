@@ -51,7 +51,7 @@ if __name__ == "__main__":
 
     ds = LC_Qaud(path="./data/LC-QUAD10/data.json")
     tmp = []
-    for qapair in prepare_dataset(ds).qapairs:
+    for idx, qapair in enumerate(prepare_dataset(ds).qapairs[:10]):
         raw_row = dict()
         raw_row["id"] = qapair.id.__str__()
         raw_row["question"] = qapair.question.text
@@ -63,7 +63,7 @@ if __name__ == "__main__":
             raw_row["answers"] = []
 
         tmp.append(raw_row)
-
+        print(f"No: {idx} \n qapair:\n{raw_row}")
     with open('data/LC-QUAD10/linked_answer.json', 'w') as jsonFile:
         json.dump(tmp, jsonFile)
 

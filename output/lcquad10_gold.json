@@ -1,0 +1,31 @@
+[
+    {
+        "answer": "correct",
+        "features": [
+            "single",
+            "multivar",
+            "count"
+        ],
+        "generated_queries": [
+            {
+                "correct": true,
+                "query": "?u_0 <http://dbpedia.org/ontology/director> <http://dbpedia.org/resource/Stanley_Kubrick>",
+                "target_var": "?u_0"
+            }
+        ],
+        "id": "1501",
+        "query": "SELECT COUNT(DISTINCT ?uri) WHERE {?uri <http://dbpedia.org/ontology/director> <http://dbpedia.org/resource/Stanley_Kubrick>  . }",
+        "question": "How many movies did Stanley Kubrick direct?"
+    },
+    {
+        "answer": "-no_answer",
+        "features": [
+            "compound",
+            "singlevar"
+        ],
+        "generated_queries": [],
+        "id": "2586",
+        "query": "SELECT DISTINCT ?uri WHERE {?uri <http://dbpedia.org/ontology/founder> <http://dbpedia.org/resource/John_Forbes_(British_Army_officer)>  . ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/City>}",
+        "question": "Which city's foundeer is John Forbes?"
+    }
+]

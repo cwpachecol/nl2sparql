@@ -9,20 +9,20 @@ from parsers.answerparser import AnswerParser
 #  "sparql_template_id": 301,
 #  "sparql_query": "SELECT DISTINCT ?uri WHERE {?uri <http://dbpedia.org/ontology/creator> <http://dbpedia.org/resource/Bill_Finger>  . ?uri <https://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/ComicsCharacter>}",
 #  "corrected_question": "Which comic characters are painted by Bill Finger?"}
-class LC_Qaud:
+class LC_Qaud10:
     # def __init__(self, path="./data/LC-QUAD/data_v8.json"):
-    def __init__(self, path="./data/LC-QUAD/data.json"):
+    def __init__(self, path="./data/LC-QUAD10/data.json"):
         self.raw_data = []
         self.qapairs = []
         self.path = path
-        self.parser = LC_QaudParser()
+        self.parser = LC_Qaud10Parser()
 
     def load(self):
         with open(self.path) as data_file:
             self.raw_data = json.load(data_file)
 
     def parse(self):
-        parser = LC_QaudParser()
+        parser = LC_Qaud10Parser()
         for raw_row in self.raw_data:
             sparql_query = raw_row["sparql_query"].replace("DISTINCT COUNT(", "COUNT(DISTINCT ")
             self.qapairs.append(
@@ -34,9 +34,9 @@ class LC_Qaud:
             print("")
 
 
-class LC_QaudParser(AnswerParser):
+class LC_Qaud10Parser(AnswerParser):
     def __init__(self):
-        super(LC_QaudParser, self).__init__(DBpedia(one_hop_bloom_file="./data/blooms/spo1.bloom"))
+        super(LC_Qaud10Parser, self).__init__(DBpedia(one_hop_bloom_file="./data/blooms/spo1.bloom"))
 
     def parse_question(self, raw_question):
         return raw_question

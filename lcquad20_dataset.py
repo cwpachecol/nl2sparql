@@ -50,7 +50,7 @@ if __name__ == "__main__":
     # ds = LC_Qaud20(path="./data/LC-QUAD20/data.json", sparql_field="sparql_wikidata")
     ds = LC_Qaud20( path="./data/LC-QUAD20/data.json", sparql_field="sparql_dbpedia18")
     tmp = []
-    for idx, qapair in enumerate(prepare_dataset(ds).qapairs):
+    for idx, qapair in enumerate(prepare_dataset(ds).qapairs[:20]):
         raw_row = dict()
         raw_row["id"] = qapair.id.__str__()
         raw_row["question"] = qapair.question.text
@@ -62,7 +62,7 @@ if __name__ == "__main__":
             raw_row["answers"] = []
 
         tmp.append(raw_row)
-        if idx % 100 == 0:
+        if idx % 1 == 0:
             print(f"No: {idx} \n row: {raw_row}")
     with open('data/LC-QUAD20/linked_answer.json', 'w') as jsonFile:
         json.dump(tmp, jsonFile)

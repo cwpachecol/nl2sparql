@@ -1,0 +1,270 @@
+[
+    {
+        "answer": "correct",
+        "features": [
+            "single",
+            "count",
+            "multivar"
+        ],
+        "generated_queries": [
+            {
+                "correct": true,
+                "query": "?u_0 <http://dbpedia.org/ontology/director> <http://dbpedia.org/resource/Stanley_Kubrick>",
+                "target_var": "?u_0"
+            }
+        ],
+        "id": "1501",
+        "query": "SELECT COUNT(DISTINCT ?uri) WHERE {?uri <http://dbpedia.org/ontology/director> <http://dbpedia.org/resource/Stanley_Kubrick>  . }",
+        "question": "How many movies did Stanley Kubrick direct?"
+    },
+    {
+        "answer": "-no_answer",
+        "features": [
+            "singlevar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "2586",
+        "query": "SELECT DISTINCT ?uri WHERE {?uri <http://dbpedia.org/ontology/founder> <http://dbpedia.org/resource/John_Forbes_(British_Army_officer)>  . ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/City>}",
+        "question": "Which city's foundeer is John Forbes?"
+    },
+    {
+        "answer": "correct",
+        "features": [
+            "singlevar",
+            "compound"
+        ],
+        "generated_queries": [
+            {
+                "correct": true,
+                "query": "?u_0 <http://dbpedia.org/ontology/riverMouth> <http://dbpedia.org/resource/Dead_Sea>",
+                "target_var": "?u_0"
+            },
+            {
+                "correct": false,
+                "query": "?u_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/River>",
+                "target_var": "?u_0"
+            },
+            {
+                "correct": true,
+                "query": "?u_0 <http://dbpedia.org/ontology/riverMouth> <http://dbpedia.org/resource/Dead_Sea> .?u_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/River>",
+                "target_var": "?u_0"
+            }
+        ],
+        "id": "2653",
+        "query": "SELECT DISTINCT ?uri WHERE {?uri <http://dbpedia.org/ontology/riverMouth> <http://dbpedia.org/resource/Dead_Sea>  . ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/River>}",
+        "question": "What is the river whose mouth is in deadsea?"
+    },
+    {
+        "answer": "correct",
+        "features": [
+            "single",
+            "singlevar"
+        ],
+        "generated_queries": [
+            {
+                "correct": true,
+                "query": "<http://dbpedia.org/resource/John_Kotelawala> <http://dbpedia.org/property/allegiance> ?u_0",
+                "target_var": "?u_0"
+            }
+        ],
+        "id": "1055",
+        "query": " SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/John_Kotelawala> <http://dbpedia.org/property/allegiance> ?uri } ",
+        "question": "What is the allegiance of John Kotelawala ?"
+    },
+    {
+        "answer": "correct",
+        "features": [
+            "count",
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [
+            {
+                "correct": false,
+                "query": "?u_0 <http://dbpedia.org/ontology/breeder> <http://dbpedia.org/resource/Jacques_Van't_Hart>",
+                "target_var": "?u_1"
+            },
+            {
+                "correct": false,
+                "query": "?u_0 <http://dbpedia.org/property/race> ?u_1",
+                "target_var": "?u_1"
+            },
+            {
+                "correct": true,
+                "query": "?u_0 <http://dbpedia.org/ontology/breeder> <http://dbpedia.org/resource/Jacques_Van't_Hart> .?u_0 <http://dbpedia.org/property/race> ?u_1",
+                "target_var": "?u_1"
+            },
+            {
+                "correct": false,
+                "query": "?u_1 <http://dbpedia.org/ontology/breeder> <http://dbpedia.org/resource/Jacques_Van't_Hart>",
+                "target_var": "?u_1"
+            }
+        ],
+        "id": "705",
+        "query": "SELECT COUNT(DISTINCT ?uri) WHERE { ?x <http://dbpedia.org/ontology/breeder> <http://dbpedia.org/resource/Jacques_Van't_Hart> . ?x <http://dbpedia.org/property/race> ?uri  . }",
+        "question": "How many races have the horses bred by Jacques Van't Hart participated in?"
+    },
+    {
+        "answer": "-no_answer",
+        "features": [
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "106",
+        "query": " SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/Al_Gore_presidential_campaign,_2000> <http://dbpedia.org/ontology/incumbent> ?uri. <http://dbpedia.org/resource/Ann_Lewis> <http://dbpedia.org/ontology/president> ?uri} ",
+        "question": "What is the incumbent of the Al Gore presidential campaign, 2000 and also the president of the Ann Lewis ?"
+    },
+    {
+        "answer": "-no_answer",
+        "features": [
+            "single",
+            "singlevar"
+        ],
+        "generated_queries": [],
+        "id": "589",
+        "query": " SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/Tom_Perriello> <http://dbpedia.org/ontology/region> ?uri } ",
+        "question": "What is the region of Tom Perriello ?"
+    },
+    {
+        "answer": "correct",
+        "features": [
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [
+            {
+                "correct": false,
+                "query": "?u_1 <http://dbpedia.org/property/related> <http://dbpedia.org/resource/Subaru_Outback>",
+                "target_var": "?u_1"
+            },
+            {
+                "correct": false,
+                "query": "?u_0 <http://dbpedia.org/ontology/layout> ?u_1",
+                "target_var": "?u_1"
+            },
+            {
+                "correct": false,
+                "query": "?u_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Automobile>",
+                "target_var": "?u_1"
+            },
+            {
+                "correct": false,
+                "query": "?u_1 <http://dbpedia.org/property/related> <http://dbpedia.org/resource/Subaru_Outback> .?u_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Automobile>",
+                "target_var": "?u_1"
+            },
+            {
+                "correct": false,
+                "query": "?u_0 <http://dbpedia.org/ontology/layout> ?u_1 .?u_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Automobile>",
+                "target_var": "?u_1"
+            },
+            {
+                "correct": false,
+                "query": "?u_0 <http://dbpedia.org/property/related> <http://dbpedia.org/resource/Subaru_Outback>",
+                "target_var": "?u_1"
+            },
+            {
+                "correct": false,
+                "query": "?u_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Automobile>",
+                "target_var": "?u_1"
+            },
+            {
+                "correct": true,
+                "query": "?u_0 <http://dbpedia.org/property/related> <http://dbpedia.org/resource/Subaru_Outback> .?u_0 <http://dbpedia.org/ontology/layout> ?u_1",
+                "target_var": "?u_1"
+            },
+            {
+                "correct": false,
+                "query": "?u_0 <http://dbpedia.org/property/related> <http://dbpedia.org/resource/Subaru_Outback> .?u_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Automobile>",
+                "target_var": "?u_1"
+            },
+            {
+                "correct": false,
+                "query": "?u_0 <http://dbpedia.org/ontology/layout> ?u_1 .?u_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Automobile>",
+                "target_var": "?u_1"
+            },
+            {
+                "correct": false,
+                "query": "?u_0 <http://dbpedia.org/property/related> <http://dbpedia.org/resource/Subaru_Outback> .?u_0 <http://dbpedia.org/ontology/layout> ?u_1 .?u_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Automobile>",
+                "target_var": "?u_1"
+            },
+            {
+                "correct": false,
+                "query": "?u_1 <http://dbpedia.org/property/related> <http://dbpedia.org/resource/Subaru_Outback> .?u_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Automobile>",
+                "target_var": "?u_1"
+            },
+            {
+                "correct": false,
+                "query": "?u_0 <http://dbpedia.org/property/related> <http://dbpedia.org/resource/Subaru_Outback> .?u_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Automobile>",
+                "target_var": "?u_1"
+            },
+            {
+                "correct": true,
+                "query": "?u_0 <http://dbpedia.org/property/related> <http://dbpedia.org/resource/Subaru_Outback> .?u_0 <http://dbpedia.org/ontology/layout> ?u_1 .?u_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Automobile>",
+                "target_var": "?u_1"
+            },
+            {
+                "correct": false,
+                "query": "?u_1 <http://dbpedia.org/ontology/layout> ?u_0",
+                "target_var": "?u_1"
+            },
+            {
+                "correct": true,
+                "query": "?u_1 <http://dbpedia.org/property/related> <http://dbpedia.org/resource/Subaru_Outback> .?u_1 <http://dbpedia.org/ontology/layout> ?u_0",
+                "target_var": "?u_0"
+            },
+            {
+                "correct": false,
+                "query": "?u_1 <http://dbpedia.org/ontology/layout> ?u_0 .?u_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Automobile>",
+                "target_var": "?u_1"
+            },
+            {
+                "correct": false,
+                "query": "?u_1 <http://dbpedia.org/property/related> <http://dbpedia.org/resource/Subaru_Outback> .?u_1 <http://dbpedia.org/ontology/layout> ?u_0 .?u_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Automobile>",
+                "target_var": "?u_1"
+            },
+            {
+                "correct": false,
+                "query": "?u_1 <http://dbpedia.org/ontology/layout> ?u_0 .?u_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Automobile>",
+                "target_var": "?u_1"
+            },
+            {
+                "correct": true,
+                "query": "?u_1 <http://dbpedia.org/property/related> <http://dbpedia.org/resource/Subaru_Outback> .?u_1 <http://dbpedia.org/ontology/layout> ?u_0 .?u_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Automobile>",
+                "target_var": "?u_0"
+            }
+        ],
+        "id": "2468",
+        "query": "SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/property/related> <http://dbpedia.org/resource/Subaru_Outback> . ?x <http://dbpedia.org/ontology/layout> ?uri  . ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Automobile>}",
+        "question": "What layout can be found in cars similar to the Subaru Outback?"
+    },
+    {
+        "answer": "-no_answer",
+        "features": [
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "2413",
+        "query": "SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/property/operator> <http://dbpedia.org/resource/Starwood_Hotels_and_Resorts_Worldwide> . ?x <http://dbpedia.org/property/address> ?uri  . }",
+        "question": "Starwood operates in which places?"
+    },
+    {
+        "answer": "correct",
+        "features": [
+            "single",
+            "singlevar"
+        ],
+        "generated_queries": [
+            {
+                "correct": true,
+                "query": "<http://dbpedia.org/resource/Austin_College> <http://dbpedia.org/property/mascot> ?u_0",
+                "target_var": "?u_0"
+            }
+        ],
+        "id": "1600",
+        "query": " SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/Austin_College> <http://dbpedia.org/property/mascot> ?uri } ",
+        "question": "Name the mascot of Austin College ?"
+    }
+]

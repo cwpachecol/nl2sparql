@@ -5,11 +5,11 @@ def parse_args():
     parser = argparse.ArgumentParser(
         description='PyTorch TreeLSTM for Sentence Similarity on Dependency Trees')
     # data arguments
-    parser.add_argument('--data', default='learning/treelstm/data/lc-quad/',
+    parser.add_argument('--data', default='learning/treelstm/data/lc-quad10/',
                         help='path to dataset')
     parser.add_argument('--save', default='learning/treelstm/checkpoints/',
                         help='directory to save checkpoints in')
-    parser.add_argument('--expname', type=str, default='lc_quad',
+    parser.add_argument('--expname', type=str, default='lc_quad10',
                         help='Name to identify experiment')
     # model arguments
     parser.add_argument('--mem_dim', default=150, type=int,

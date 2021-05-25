@@ -1,4 +1,3 @@
-import kb
 from parsers.lc_quad10_linked import LC_Qaud10_Linked
 from parsers.lc_quad10 import LC_Qaud10Parser
 from common.container.sparql import SPARQL
@@ -115,82 +114,65 @@ def qg(linker, kb, parser, qapair, force_gold=True):
     return "correct" if correct else "-incorrect", output_where
 
 
+if __name__ == "__main__":
+    logger = logging.getLogger(__name__)
+    utility.setup_logging()
 
-logger = logging.getLogger ( __name__ )
-utility.setup_logging ()
+    ds = LC_Qaud_Linked(path="./data/LC-QUAD10/linked_answer.json")
+    ds.load()
+    ds.parse()
 
-ds = LC_Qaud10_Linked(path="./data/LC-QUAD10/linked_answer.json")
-# print(ds.parser.kb.endpoint)
-# print(ds.parser.kb.parse_uri("<http://dbpedia.org/resource/Jawaharlal_Nehru>"))
-# print(ds.parser.kb.parse_uri("<http://dbpedia.org/property/founder>"))
-# print(ds.parser.kb.query("SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/John_Kotelawala> <http://dbpedia.org/property/allegiance> ?uri } "))
-# print(ds.parser.kb.default_graph_uri)
-# print(ds.parser.kb.query_prefix())
-# print("=="*10)
+    if not ds.parser.kb.server_available:
+        logger.error("Server is not available. Please check the endpoint at: {}".format(ds.parser.kb.endpoint))
+        sys.exit(0)
 
-ds.load()
-ds.parse()
+    parser = LC_QaudParser()
+    kb = parser.kb
 
-# print(len(ds.qapairs))
-# print(ds.parser.kb.endpoint)
+    stats = Stats()
+    linker = GoldLinker()
+    output_file = 'lcquad10_gold'
 
-if not ds.parser.kb.server_available:
-    logger.error("Server is not available. Please check the endpoint at: {}".format(ds.parser.kb.endpoint))
-    sys.exit(0)
+    tmp = []
+    output = []
+    na_list = []
 
-parser = LC_Qaud10Parser()
+    for qapair in ds.qapairs:
+        print('='*10)
+        stats.inc("total")
+        output_row = {"question": qapair.question.text,
+                      "id": qapair.id,
+                      "query": qapair.sparql.query,
+                      "answer": "",
+                      "features": list(qapair.sparql.query_features()),
+                      "generated_queries": []}
 
-print(parser.kb)
-kb = parser.kb
+        if qapair.answerset is None or len(qapair.answerset) == 0:
+            stats.inc("query_no_answer")
+            output_row["answer"] = "-no_answer"
+            na_list.append(output_row['id'])
+        else:
+            result, where = qg(linker, ds.parser.kb, ds.parser, qapair, False)
+            stats.inc(result)
+            output_row["answer"] = result
+            newwhere = []
+            for iwhere in where:
+                if iwhere not in newwhere:
+                    newwhere.append(iwhere)
+            output_row["generated_queries"] = newwhere
+            logger.info(result)
 
-stats = Stats()
-linker = GoldLinker()
-print(linker)
-output_file = 'lcquad10_gold'
+        logger.info(stats)
+        output.append(output_row)
 
-tmp = []
-output = []
-na_list = []
+        if stats["total"] % 100 == 0:
+            with open("output/{}.json".format(output_file), "w") as data_file:
+                json.dump(output, data_file, sort_keys=True, indent=4, separators=(',', ': '))
 
-for idx, qapair in enumerate(ds.qapairs[:2]):
-    print('=' * 10 )
-    stats.inc("total")
-    output_row = {"question": qapair.question.text,
-                  "id": qapair.id,
-                  "query": qapair.sparql.query,
-                  "answer": "",
-                  "features": list(qapair.sparql.query_features()),
-                  "generated_queries": []}
-    print(output_row)
-    print("---"*20)
-    if qapair.answerset is None or len(qapair.answerset) == 0:
-        stats.inc("query_no_answer")
-        output_row["answer"] = "-no_answer"
-        na_list.append(output_row['id'])
-    else:
-        result, where = qg(linker, ds.parser.kb, ds.parser, qapair, False)
-        stats.inc(result)
-        output_row["answer"] = result
-        newwhere = []
-        for iwhere in where:
-            if iwhere not in newwhere:
-                newwhere.append(iwhere)
-        output_row["generated_queries"] = newwhere
-        logger.info(result)
+    with open("output/{}.json".format(output_file), "w") as data_file:
+        json.dump(output, data_file, sort_keys=True, indent=4, separators=(',', ': '))
+    print('stats: ', stats)
 
-    logger.info(stats)
-    output.append(output_row)
-
-    if stats["total"] % 100 == 0:
-        with open("output/{}.json".format ( output_file ), "w") as data_file:
-            json.dump(output, data_file, sort_keys=True, indent=4, separators=(',', ': '))
-
-with open("output/{}.json".format(output_file), "w") as data_file:
-    json.dump(output, data_file, sort_keys=True, indent=4, separators=(',', ': '))
-print('stats: ', stats)
-
-with open('na_list_lcquad10gold.txt', 'w') as f:
-    for i in na_list:
-        f.write("{}\n".format(i))
-
-status, raw_answer_true = kb.query(qapair.sparql.query.replace("https", "http"))
+    with open('na_list_lcquad10gold.txt', 'w') as f:
+        for i in na_list:
+            f.write("{}\n".format(i))

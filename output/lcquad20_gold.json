@@ -1,0 +1,232 @@
+[
+    {
+        "answer": "-no_answer",
+        "features": [
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "19719",
+        "query": "select distinct ?obj where { ?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://wikidata.dbpedia.org/resource/q188920> . ?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p2813> . ?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> ?obj . ?obj <http://www.wikidata.org/entity/p31> <http://wikidata.dbpedia.org/resource/q1002697> } ",
+        "question": "what periodical literature does delta air lines use as a moutpiece?"
+    },
+    {
+        "answer": "-no_answer",
+        "features": [
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "15554",
+        "query": "select ?answer where { ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://wikidata.dbpedia.org/resource/q169794> . ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p26>. ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> ?x . ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> ?x. ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p22> . ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> ?answer . }",
+        "question": "who is the child of ranavalona i's husband?"
+    },
+    {
+        "answer": "-without_path",
+        "features": [
+            "boolean",
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "974",
+        "query": " ask { ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://wikidata.dbpedia.org/resource/q174843> . ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p106> . ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <http://wikidata.dbpedia.org/resource/q1804811>. ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://wikidata.dbpedia.org/resource/q174843> . ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p106> . ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <http://wikidata.dbpedia.org/resource/q33231>. } ",
+        "question": "is it true jeff_bridges occupation lane chandler and photographer ?"
+    },
+    {
+        "answer": "-no_answer",
+        "features": [
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "15803",
+        "query": "select ?answer where { ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://wikidata.dbpedia.org/resource/q675176> . ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p515>. ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> ?x . ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> ?x. ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p156> . ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> ?answer . }",
+        "question": "what is the pre-requisite of phase matter of galinstan?"
+    },
+    {
+        "answer": "-no_answer",
+        "features": [
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "27610",
+        "query": "select distinct ?answer where { ?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://wikidata.dbpedia.org/resource/q32491> . ?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p3362> . ?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> ?answer. }",
+        "question": "which is the operating income for qantas?"
+    },
+    {
+        "answer": "-no_answer",
+        "features": [
+            "filter",
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "24488",
+        "query": "select distinct ?sbj ?sbj_label { ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> ?sbj . ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p31> . ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <http://wikidata.dbpedia.org/resource/q134041>. ?sbj rdfs:label ?sbj_label . filter(strstarts(lcase(?sbj_label), 'p')) . filter (lang(?sbj_label) = 'en') } limit 25",
+        "question": "which cola starts with the letter p"
+    },
+    {
+        "answer": "-without_path",
+        "features": [
+            "multivar",
+            "filter",
+            "boolean",
+            "comparison",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "18423",
+        "query": "ask { ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://wikidata.dbpedia.org/resource/q4180017> . ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p6257>. ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> ?obj. filter(?obj < 15.1398) }",
+        "question": "is the right ascension of malin 1 less than 15.1398?"
+    },
+    {
+        "answer": "-no_answer",
+        "features": [
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "21845",
+        "query": "select distinct ?obj where { ?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://wikidata.dbpedia.org/resource/q202729> . ?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p358> . ?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> ?obj . ?obj <http://www.wikidata.org/entity/p31> <http://wikidata.dbpedia.org/resource/q273057> } ",
+        "question": "what is the complete list of records released by jerry lee lewis?"
+    },
+    {
+        "answer": "-no_answer",
+        "features": [
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "26800",
+        "query": "select distinct ?answer where { ?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://wikidata.dbpedia.org/resource/q235975> . ?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p3171> . ?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> ?answer. }",
+        "question": "what's mary lou retton's international olympic committee athlete id."
+    },
+    {
+        "answer": "-no_answer",
+        "features": [
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "14923",
+        "query": "select ?answer where { ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://wikidata.dbpedia.org/resource/q1356316> . ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p156>. ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> ?x . ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> ?x. ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p1346> . ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> ?answer . }",
+        "question": "who won the prize at the sequel of the 1885 wimbledon championships- gentlemen's singles?"
+    },
+    {
+        "answer": "-without_path",
+        "features": [
+            "boolean",
+            "filter",
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "18165",
+        "query": "ask { ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://wikidata.dbpedia.org/resource/q56599233> . ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p5991>. ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> ?obj. filter(?obj = 106) }",
+        "question": "is it true that the carbon footprint of the iphone x max is 106?"
+    },
+    {
+        "answer": "-no_answer",
+        "features": [
+            "filter",
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "25156",
+        "query": "select distinct ?sbj ?sbj_label { ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> ?sbj . ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p31> . ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <http://wikidata.dbpedia.org/resource/q58863414>. ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> ?sbj . ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p2541> . ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <http://wikidata.dbpedia.org/resource/q62900839>. ?sbj rdfs:label ?sbj_label . filter(contains(lcase(?sbj_label), 'model')) . filter (lang(?sbj_label) = 'en') } limit 25",
+        "question": "tell me the female beauty pageant that operates in all countries and contains the word model in it's name?"
+    },
+    {
+        "answer": "-without_path",
+        "features": [
+            "boolean",
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "519",
+        "query": " ask { ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://wikidata.dbpedia.org/resource/q10068> . ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p1344> . ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <http://wikidata.dbpedia.org/resource/q1428251>. ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://wikidata.dbpedia.org/resource/q10068> . ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p1344> . ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <http://wikidata.dbpedia.org/resource/q15263420>. } ",
+        "question": "did lindsey vonn participate in the fis alpine world ski championships in 1999 and 2019?"
+    },
+    {
+        "answer": "-no_answer",
+        "features": [
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "3708",
+        "query": "select distinct ?obj  where {\n?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://wikidata.dbpedia.org/resource/q567> .\n?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p39> .\n?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> ?obj .\n?statement <http://www.wikidata.org/entity/p580> <1994-11-10>\n} \n",
+        "question": "when position did angela merkel hold on november 10, 1994?"
+    },
+    {
+        "answer": "-no_answer",
+        "features": [
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "7974",
+        "query": "select distinct ?obj  where {\n?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://wikidata.dbpedia.org/resource/q187805> .\n?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p1082> .\n?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> ?obj .\n?statement <http://www.wikidata.org/entity/p585> <2007-0-0>\n} \n",
+        "question": "on 0-0-2007, what is the populaton of spokane?"
+    },
+    {
+        "answer": "-no_answer",
+        "features": [
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "21093",
+        "query": "select distinct ?subj where { ?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> ?subj . ?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p2175> . ?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <http://wikidata.dbpedia.org/resource/q36956> . ?subj <http://www.wikidata.org/entity/p31> <http://wikidata.dbpedia.org/resource/q35456> } ",
+        "question": "what essential medicine is needed to treat leprosy?"
+    },
+    {
+        "answer": "-no_answer",
+        "features": [
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "27677",
+        "query": "select distinct ?answer where { ?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://wikidata.dbpedia.org/resource/q180852> . ?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p3045> . ?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> ?answer. }",
+        "question": "which is hancinema person id for zhang ziyi?"
+    },
+    {
+        "answer": "-without_path",
+        "features": [
+            "boolean",
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "712",
+        "query": " ask { ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://wikidata.dbpedia.org/resource/q28054> . ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p166> . ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <http://wikidata.dbpedia.org/resource/q640374>. ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://wikidata.dbpedia.org/resource/q28054> . ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p166> . ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <http://wikidata.dbpedia.org/resource/q268670>. } ",
+        "question": "did judi densch receive a tony award for best direction of the play premium imperiale?"
+    },
+    {
+        "answer": "-no_answer",
+        "features": [
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "6826",
+        "query": "select distinct ?value  where {\n?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://wikidata.dbpedia.org/resource/q753> .\n?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p2102> .\n?statement <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> <4703.0> .\n?statement <http://www.wikidata.org/entity/p2077> ?value. \n} \n",
+        "question": "what is the boiling point of pressure copper as 4703.0?"
+    },
+    {
+        "answer": "-no_answer",
+        "features": [
+            "multivar",
+            "compound"
+        ],
+        "generated_queries": [],
+        "id": "10143",
+        "query": " select ?ans_1 ?ans_2 where { ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://wikidata.dbpedia.org/resource/q40244> . ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p1000> . ?statement1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> ?ans_1. ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#subject> <http://wikidata.dbpedia.org/resource/q40244> . ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate> <http://www.wikidata.org/entity/p138> . ?statement2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#object> ?ans_2. } ",
+        "question": "after what is marathon named and what is the current record?"
+    }
+]
