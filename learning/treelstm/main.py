@@ -32,21 +32,24 @@ from trainer import Trainer
 import datetime
 from fasttext import load_model
 
+sys.path.insert(0, os.path.abspath("..//.."))
 
 def main():
     global args
     args = parse_args()
     # global logger
-    exit(-1)
+
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
     formatter = logging.Formatter("[%(asctime)s] %(levelname)s:%(name)s:%(message)s")
 
-
+    # base_dir = os.path.dirname(os.path.realpath( __file__ ))
+    base_dir = sys.path[0]
     # file logger
     # arg_save = "Tree-LSTM"
     # arg_expname = "Tree-LSTM"
-    fh = logging.FileHandler(os.path.join(args.save, args.expname) + '.log', mode='w')
+    save_dir = base_dir + '\\' + args.save
+    fh = logging.FileHandler(os.path.join(save_dir, args.expname) + '.log', mode='w')
     # fh = logging.FileHandler(os.path.join(arg_save, arg_expname) + '.log', mode='w')
     fh.setLevel(logging.INFO)
     fh.setFormatter(formatter)
@@ -61,10 +64,14 @@ def main():
     args.cuda = args.cuda and torch.cuda.is_available()
     if args.sparse and args.wd != 0:
         logger.error('Sparsity and weight decay are incompatible, pick one!')
-        exit()
+
     logger.debug(args)
-    args.data = 'learning/treelstm/data/LC-QUAD10/'
-    args.save = 'learning/treelstm/checkpoints/'
+    # args.data = 'learning/treelstm/data/LC-QUAD10/'
+    # args.save = 'learning/treelstm/checkpoints/'
+
+    args.data = 'data/LC-QUAD10/'
+    args.save = 'checkpoints/'
+
     torch.manual_seed(args.seed)
     random.seed(args.seed)
     if args.cuda:
@@ -78,7 +85,6 @@ def main():
     test_dir = os.path.join(args.data, 'test/')
 
     # write unique words from all token files
-
     dataset_vocab_file = os.path.join(args.data, 'dataset.vocab')
     if not os.path.isfile(dataset_vocab_file):
         token_files_a = [os.path.join(split, 'a.toks') for split in [train_dir, dev_dir, test_dir]]
