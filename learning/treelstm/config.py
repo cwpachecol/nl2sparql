@@ -6,7 +6,7 @@ def parse_args():
     #
     parser.add_argument('--mode', default='train',
                         help='mode: `train` or `test`')
-    parser.add_argument('--data', default='./learning/treelstm/data/lc_quad/',
+    parser.add_argument('--data', default='./learning/treelstm/data/LC-QUAD10/',
                         help='path to dataset')
     parser.add_argument('--glove', default='./learning/treelstm/data/glove/',
                         help='directory with GLOVE embeddings')
@@ -14,7 +14,7 @@ def parse_args():
                         help='directory to save checkpoints in')
     parser.add_argument('--load', default='checkpoints/',
                         help='directory to load checkpoints in')
-    parser.add_argument('--expname', type=str, default='lc_quad',
+    parser.add_argument('--expname', type=str, default='LC-QUAD10',
                         help='Name to identify experiment')
 
     # model arguments

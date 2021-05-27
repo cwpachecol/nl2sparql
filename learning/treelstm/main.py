@@ -30,21 +30,28 @@ from learning.treelstm.config import parse_args
 # TRAIN AND TEST HELPER FUNCTIONS
 from trainer import Trainer
 import datetime
-from fastText import load_model
+from fasttext import load_model
 
 
 def main():
     global args
     args = parse_args()
     # global logger
+    exit(-1)
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
     formatter = logging.Formatter("[%(asctime)s] %(levelname)s:%(name)s:%(message)s")
+
+
     # file logger
+    # arg_save = "Tree-LSTM"
+    # arg_expname = "Tree-LSTM"
     fh = logging.FileHandler(os.path.join(args.save, args.expname) + '.log', mode='w')
+    # fh = logging.FileHandler(os.path.join(arg_save, arg_expname) + '.log', mode='w')
     fh.setLevel(logging.INFO)
     fh.setFormatter(formatter)
     logger.addHandler(fh)
+
     # console logger
     ch = logging.StreamHandler()
     ch.setLevel(logging.DEBUG)
@@ -56,7 +63,7 @@ def main():
         logger.error('Sparsity and weight decay are incompatible, pick one!')
         exit()
     logger.debug(args)
-    args.data = 'learning/treelstm/data/lc_quad/'
+    args.data = 'learning/treelstm/data/LC-QUAD10/'
     args.save = 'learning/treelstm/checkpoints/'
     torch.manual_seed(args.seed)
     random.seed(args.seed)
