@@ -11,7 +11,7 @@ from parsers.answerparser import AnswerParser
 #  "corrected_question": "Which comic characters are painted by Bill Finger?"}
 class LC_Qaud10:
     # def __init__(self, path="./data/LC-QUAD/data_v8.json"):
-    def __init__(self, path="./data/LC-QUAD10/data.json"):
+    def __init__(self, path="./data/lc-quad10/data.json"):
         self.raw_data = []
         self.qapairs = []
         self.path = path

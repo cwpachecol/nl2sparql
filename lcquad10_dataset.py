@@ -1,7 +1,7 @@
 import json
 import requests, json, re, operator
 import sys
-from parsers.lc_quad import LC_Qaud
+from parsers.lc_quad10 import LC_Qaud10
 
 
 def prepare_dataset(ds):
@@ -37,21 +37,21 @@ def has_answer(t):
 
 if __name__ == "__main__":
 
-    with open('data/LC-QUAD10/train-data.json', 'r', encoding='utf-8') as f:
+    with open('data/lc_quad10/train-data.json', 'r', encoding='utf-8') as f:
         train = json.load(f)
 
-    with open('data/LC-QUAD10/test-data.json', 'r', encoding='utf-8') as f:
+    with open('data/lc_quad10/test-data.json', 'r', encoding='utf-8') as f:
         test = json.load(f)
 
     data = train + test
     print('data len: ', len(data))
 
-    with open("data/LC-QUAD10/data.json", "w") as write_file:
+    with open("data/lc_quad10/data.json", "w") as write_file:
         json.dump(data, write_file)
 
-    ds = LC_Qaud(path="./data/LC-QUAD10/data.json")
+    ds = LC_Qaud10(path="./data/lc_quad10/data.json")
     tmp = []
-    for idx, qapair in enumerate(prepare_dataset(ds).qapairs[:10]):
+    for idx, qapair in enumerate(prepare_dataset(ds).qapairs):
         raw_row = dict()
         raw_row["id"] = qapair.id.__str__()
         raw_row["question"] = qapair.question.text
@@ -64,7 +64,7 @@ if __name__ == "__main__":
 
         tmp.append(raw_row)
         print(f"No: {idx} \n qapair:\n{raw_row}")
-    with open('data/LC-QUAD10/linked_answer.json', 'w') as jsonFile:
+    with open('data/lc_quad10/linked_answer.json', 'w') as jsonFile:
         json.dump(tmp, jsonFile)
 
     print('data len: ', len(tmp))
