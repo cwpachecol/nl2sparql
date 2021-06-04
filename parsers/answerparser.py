@@ -22,7 +22,6 @@ class AnswerParser(object):
             return [
                 AnswerRow(raw_answerset, lambda x: [Answer("uri", raw_answerset["string"], self.__parse_answer)])]
 
-
         return answer_rows
 
     def __parse_answerrow(self, raw_answerrow):
