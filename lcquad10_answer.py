@@ -118,7 +118,7 @@ if __name__ == "__main__":
     logger = logging.getLogger(__name__)
     utility.setup_logging()
 
-    ds = LC_Qaud10_Linked(path="./data/lc_quad10/linked_answer.json")
+    ds = LC_Qaud10_Linked(path="./data/lcquad10/linked_answer.json")
     ds.load()
     ds.parse()
 
@@ -131,7 +131,7 @@ if __name__ == "__main__":
 
     stats = Stats()
     linker = GoldLinker()
-    output_file = 'lcquad10_gold'
+    output_file = 'lc_quad10_gold'
 
     tmp = []
     output = []
@@ -173,6 +173,6 @@ if __name__ == "__main__":
         json.dump(output, data_file, sort_keys=True, indent=4, separators=(',', ': '))
     print('stats: ', stats)
 
-    with open('na_list_lcquad10gold.txt', 'w') as f:
+    with open('na_list_lc_quad10_gold.txt', 'w') as f:
         for i in na_list:
             f.write("{}\n".format(i))

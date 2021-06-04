@@ -33,20 +33,20 @@ def has_answer(t):
 
 if __name__ == "__main__":
 
-    with open('data/lc_quad20/train.json', 'r', encoding='utf-8') as f:
+    with open('data/lcquad20/train.json', 'r', encoding='utf-8') as f:
         train = json.load(f)
 
-    with open('data/lc_quad20/test.json', 'r', encoding='utf-8') as f:
+    with open('data/lcquad20/test.json', 'r', encoding='utf-8') as f:
         test = json.load(f)
 
     data = train + test
     print('data len: ', len(data))
 
-    with open("data/lc_quad20/data.json", "w") as write_file:
+    with open("data/lcquad20/data.json", "w") as write_file:
         json.dump(data, write_file)
 
-    # ds = LC_Qaud20(path="./data/lc_quad20/data.json", sparql_field="sparql_wikidata")
-    ds = LC_Qaud20(path="./data/lc_quad20/data.json", sparql_field="sparql_dbpedia18")
+    # ds = LC_Qaud20(path="./data/lcquad20/data.json", sparql_field="sparql_wikidata")
+    ds = LC_Qaud20(path="./data/lcquad20/data.json", sparql_field="sparql_dbpedia18")
     tmp = []
     for idx, qapair in enumerate(prepare_dataset(ds).qapairs):
         raw_row = dict()
@@ -62,7 +62,7 @@ if __name__ == "__main__":
         tmp.append(raw_row)
         if idx % 100 == 0:
             print(f"No: {idx} \n row: {raw_row}")
-    with open('data/lc_quad20/linked_answer.json', 'w') as jsonFile:
+    with open('data/lcquad20/linked_answer.json', 'w') as jsonFile:
         json.dump(tmp, jsonFile)
 
     print('data len: ', len(tmp))
