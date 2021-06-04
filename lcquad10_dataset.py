@@ -3,19 +3,16 @@ import requests, json, re, operator
 import sys
 from parsers.lc_quad10 import LC_Qaud10
 
-
 def prepare_dataset(ds):
     ds.load()
     ds.parse()
     return ds
-
 
 def ask_query(uri):
     if uri == "<https://www.w3.org/1999/02/22-rdf-syntax-ns#type>":
         return 200, json.loads("{\"boolean\": \"True\"}")
     uri = uri.replace("https://", "http://")
     return query(u'ASK WHERE {{ {} ?u ?x }}'.format(uri))
-
 
 def query(q):
     q = q.replace("https://", "http://")
@@ -63,7 +60,8 @@ if __name__ == "__main__":
             raw_row["answers"] = []
 
         tmp.append(raw_row)
-        print(f"No: {idx} \n qapair:\n{raw_row}")
+        if idx % 100 == 0:
+            print(f"No: {idx} \nqapair:\n{raw_row}")
     with open('data/lc_quad10/linked_answer.json', 'w') as jsonFile:
         json.dump(tmp, jsonFile)
 
