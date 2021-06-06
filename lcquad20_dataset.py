@@ -1,9 +1,10 @@
 import json
 import os
-
+import argparse
 import requests, json, re, operator
 import sys
 from parsers.lc_quad20 import LC_Qaud20
+import shutil
 
 def show_json(filename='data.json', start_rec=0, end_rec=0):
     with open(filename, 'r', encoding='utf-8') as json_file:
@@ -93,9 +94,22 @@ def has_answer(t):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Drive directory from colab')
+    parser.add_argument('--copy_to_drive', action='store_true',
+                        help='Enable capacity to save in drive')
+    parser.add_argument('--drive_directory', default='/content/gdrive/MyDrive/Colab Notebooks/nl2sparql/data/lcquad20/',
+                        help='directory in drive to save json files')
+    parser.add_argument('--start_index', default=0, type=int,
+                        help='start index of dataset')
+    parser.add_argument('--end_index', default=0, type=int,
+                        help='end index of dataset')
 
-    start_record = 0
-    end_record = 0
+    args = parser.parse_args()
+    start_index = args.start_index
+    end_index = args.end_index
+    copy_to_drive = args.copy_to_drive
+    # copy_to_drive = False
+    drive_directory = args.drive_directory
     # show_json(filename='data/lcquad10/data.json', start_rec=start_record, end_rec=end_record)
 
     with open('data/lcquad20/train.json', 'r', encoding='utf-8') as f:
@@ -106,8 +120,8 @@ if __name__ == "__main__":
 
     data = train + test
 
-    if end_record == 0:
-        end_record = len(data)
+    if end_index == 0:
+        end_index = len(data)
 
     print('data len: ', len(data))
 
@@ -117,7 +131,7 @@ if __name__ == "__main__":
     # ds = LC_Qaud20(path="./data/lcquad20/data.json", sparql_field="sparql_wikidata")
     ds = LC_Qaud20(path="./data/lcquad20/data.json", sparql_field="sparql_dbpedia18")
     tmp = []
-    for idx, qapair in enumerate(prepare_dataset(ds).qapairs[start_record: end_record]):
+    for idx, qapair in enumerate(prepare_dataset(ds).qapairs[start_index: end_index]):
         raw_row = dict()
         raw_row["id"] = qapair.id.__str__()
         raw_row["question"] = qapair.question.text
@@ -133,7 +147,10 @@ if __name__ == "__main__":
             print(f"No: {idx} \n row: {raw_row}")
         # write_json(raw_row, filename='data/lcquad20/linked_answer.json')
 
-            with open('data/lcquad20/linked_answer_' + str(start_record) + '_to_' + str(idx) + '.json', 'w') as jsonFile:
+            with open('data/lcquad20/linked_answer_' + str(start_index) + '_to_' + str(idx) + '.json', 'w') as jsonFile:
                 json.dump(tmp, jsonFile)
+                jsonFile.close()
+            if copy_to_drive:
+                shutil.copy('data/lcquad20/linked_answer_' + str(start_index) + '_to_' + str(idx) + '.json', drive_directory)
 
     print('data len: ', len(tmp))
