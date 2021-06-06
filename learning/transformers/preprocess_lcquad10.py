@@ -211,19 +211,28 @@ if __name__ == '__main__':
 
     base_dir = os.path.dirname(os.path.realpath(__file__))
     # base_dir = sys.path[0]
-    print('base_dir: ', base_dir)
+    # print(base_dir)
+    # print('base_dir: ', base_dir)
     data_dir = os.path.join(base_dir, 'data')
-    lc_quad10_dir = os.path.join(data_dir, 'LC-QUAD10')
+    # print('data_dir: ', data_dir)
+    lcquad10_dir = os.path.join(data_dir, 'lc_quad10')
+    # print('lcquad10_dir: ', lcquad10_dir)
     lib_dir = os.path.join(base_dir, 'lib')
-    train_dir = os.path.join(lc_quad10_dir, 'train')
-    dev_dir = os.path.join(lc_quad10_dir, 'dev')
-    test_dir = os.path.join(lc_quad10_dir, 'test')
+    # print('lib_dir: ', lib_dir)
+    train_dir = os.path.join(lcquad10_dir, 'train')
+    # print('train_dir: ', train_dir)
+    dev_dir = os.path.join(lcquad10_dir, 'dev')
+    # print('dev_dir: ', dev_dir)
+    test_dir = os.path.join(lcquad10_dir, 'test')
+    # print('test_dir: ', test_dir)
     make_dirs([train_dir, dev_dir, test_dir])
     output_dir = os.path.join(sys.path[0], 'output')
+    # print('output_dir: ', output_dir)
+
     # split into separate files
-    train_filepath = os.path.join(lc_quad10_dir, 'LCQuad10_train.json')
-    trail_filepath = os.path.join(lc_quad10_dir, 'LCQuad10_trial.json')
-    test_filepath = os.path.join(lc_quad10_dir, 'LCQuad10_test.json')
+    train_filepath = os.path.join(lcquad10_dir, 'LCQuad10_train.json')
+    trail_filepath = os.path.join(lcquad10_dir, 'LCQuad10_trial.json')
+    test_filepath = os.path.join(lcquad10_dir, 'LCQuad10_test.json')
 
     ds = json.load(open(os.path.join(output_dir, 'lcquad10_gold.json')))
 
@@ -259,9 +268,9 @@ if __name__ == '__main__':
 
     # get vocabulary
     build_vocab(
-        glob.glob(os.path.join(lc_quad10_dir, '*/*.toks')),
-        os.path.join(lc_quad10_dir, 'vocab.txt'))
+        glob.glob(os.path.join(lcquad10_dir, '*/*.toks')),
+        os.path.join(lcquad10_dir, 'vocab.txt'))
     build_vocab(
-        glob.glob(os.path.join(lc_quad10_dir, '*/*.toks')),
-        os.path.join(lc_quad10_dir, 'vocab-cased.txt'),
+        glob.glob(os.path.join(lcquad10_dir, '*/*.toks')),
+        os.path.join(lcquad10_dir, 'vocab-cased.txt'),
         lowercase=False)
