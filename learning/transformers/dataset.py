@@ -74,7 +74,7 @@ class QGDataset(data.Dataset):
                     # print(idx)
                     # print(parents[:])
                     # print(parents[idx - 1])
-                    if(len(parents) < idx - 1):
+                    if(len(parents) < idx):
                         parent = parents[idx - 1]
                         if parent == -1:
                             break

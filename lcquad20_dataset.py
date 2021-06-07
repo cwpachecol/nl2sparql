@@ -92,10 +92,9 @@ def has_answer(t):
         return True
     return False
 
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Drive directory from colab')
-    parser.add_argument('--copy_to_drive', action='store_true',
+    parser.add_argument('--copy_to_drive', default=True, action='store_true',
                         help='Enable capacity to save in drive')
     parser.add_argument('--drive_directory', default='/content/gdrive/MyDrive/Colab Notebooks/nl2sparql/data/lcquad20/',
                         help='directory in drive to save json files')
@@ -131,6 +130,7 @@ if __name__ == "__main__":
     # ds = LC_Qaud20(path="./data/lcquad20/data.json", sparql_field="sparql_wikidata")
     ds = LC_Qaud20(path="./data/lcquad20/data.json", sparql_field="sparql_dbpedia18")
     tmp = []
+    actual_index = start_index
     for idx, qapair in enumerate(prepare_dataset(ds).qapairs[start_index: end_index]):
         raw_row = dict()
         raw_row["id"] = qapair.id.__str__()
@@ -143,14 +143,15 @@ if __name__ == "__main__":
             raw_row["answers"] = []
 
         tmp.append(raw_row)
-        if idx % 100 == 0:
+        actual_index += 1
+        if ((actual_index > 0) and (actual_index % 100 == 0)) or actual_index >= end_index:
             print(f"No: {idx} \n row: {raw_row}")
         # write_json(raw_row, filename='data/lcquad20/linked_answer.json')
 
-            with open('data/lcquad20/linked_answer_' + str(start_index) + '_to_' + str(idx) + '.json', 'w') as jsonFile:
+            with open('data/lcquad20/linked_answer_' + str(start_index) + '_to_' + str(actual_index) + '.json', 'w') as jsonFile:
                 json.dump(tmp, jsonFile)
                 jsonFile.close()
             if copy_to_drive:
-                shutil.copy('data/lcquad20/linked_answer_' + str(start_index) + '_to_' + str(idx) + '.json', drive_directory)
+                shutil.copy('data/lcquad20/linked_answer_' + str(start_index) + '_to_' + str(actual_index) + '.json', drive_directory)
 
     print('data len: ', len(tmp))

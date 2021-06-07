@@ -15,20 +15,20 @@ import sys
 # IMPORT CONSTANTS
 import constants
 # NEURAL NETWORK MODULES/LAYERS
-from model import *
+from learning.transformers.model import *
 # DATA HANDLING CLASSES
 from tree import Tree
-from vocab import Vocab
+from learning.transformers.vocab import Vocab
 # DATASET CLASS FOR SICK DATASET
-from dataset import QGDataset
+from learning.transformers.dataset import QGDataset
 # METRICS CLASS FOR EVALUATION
-from metrics import Metrics
+from learning.transformers.metrics import Metrics
 # UTILITY FUNCTIONS
 from learning.transformers.utils import load_word_vectors, build_vocab
 # CONFIG PARSER
 from learning.transformers.config import parse_args
 # TRAIN AND TEST HELPER FUNCTIONS
-from trainer import Trainer
+from learning.transformers.trainer import Trainer
 import datetime
 from fasttext import load_model
 
@@ -109,7 +109,7 @@ def main():
         # print(args.num_classes)
         train_dataset = QGDataset(train_dir, vocab, args.num_classes)
         print(train_dataset)
-        torch.save(base_dir + '\\' + train_dataset, train_file)
+        torch.save(train_dataset, train_file)
     logger.debug('==> Size of train data   : %d ' % len(train_dataset))
 
     dev_file = os.path.join(base_dir + '\\' + args.data, 'dataset_dev.pth')
@@ -194,20 +194,25 @@ def main():
         emb = emb.cuda()
     model.emb.weight.data.copy_(emb)
 
-    checkpoint_filename = '%s.pt' % os.path.join(args.save, args.expname)
+    checkpoint_filename = '%s.pt' % os.path.join(base_dir + '\\' + args.save, args.expname)
     if args.mode == "test":
         checkpoint = torch.load(checkpoint_filename)
         model.load_state_dict(checkpoint['model'])
         args.epochs = 1
 
     # create trainer object for training and testing
+
     trainer = Trainer(args, model, criterion, optimizer)
+    # logger.debug(f"==> Trainer parameters (args)     : { args }")
+    #logger.debug(f"==> Trainer parameters (model)     : {model}")
+    # logger.debug(f"==> Trainer parameters (criterion)     : {criterion}")
+    # logger.debug(f"==> Trainer parameters (optimizer)     : {optimizer}")
 
     for epoch in range(args.epochs):
         if args.mode == "train":
-            scheduler.step()
-
+            # scheduler.step()
             train_loss = trainer.train(train_dataset)
+            exit()
             train_loss, train_pred = trainer.test(train_dataset)
             logger.info(
                 '==> Epoch {}, Train \tLoss: {} {}'.format(epoch, train_loss,
@@ -218,7 +223,7 @@ def main():
                                                          args.expname + ',epoch={},train_loss={}'.format(epoch + 1,
                                                                                                        train_loss))
             torch.save(checkpoint, checkpoint_filename)
-
+            exit()
         dev_loss, dev_pred = trainer.test(dev_dataset)
         test_loss, test_pred = trainer.test(test_dataset)
         logger.info(
