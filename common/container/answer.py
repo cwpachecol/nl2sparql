@@ -12,8 +12,8 @@ class Answer:
 		if self.answer_type == "bool":
 			return str(self.answer)
 		elif self.answer_type == "uri":
-			# return self.answer.__str__().encode("ascii", "ignore")
-			return self.answer.__str__()
+			return self.answer.__str__().encode("ascii", "ignore")
+			# return self.answer.__str__()
 
-		# return self.answer.encode("ascii", "ignore")
-		return self.answer
+		return self.answer.encode("ascii", "ignore")
+		# return self.answer

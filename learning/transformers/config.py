@@ -16,7 +16,10 @@ def parse_args():
                         help='directory to load checkpoints in')
     parser.add_argument('--expname', type=str, default='lcquad10',
                         help='Name to identify experiment')
-
+    parser.add_argument('--checkpoint_path', default='learning/transformers/checkpoints/',
+                        help='directory to load checkpoints in')
+    parser.add_argument('--checkpoint_name', type=str, default='lcquad10',
+                        help='Name to identify experiment')
     # model arguments
     parser.add_argument('--input_dim', default=300, type=int,
                         help='Size of input word vector')

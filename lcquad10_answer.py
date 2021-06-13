@@ -118,9 +118,12 @@ if __name__ == "__main__":
     logger = logging.getLogger(__name__)
     utility.setup_logging()
 
-    ds = LC_Qaud10_Linked(path="./data/lcquad10/linked_answer.json")
+    ds = LC_Qaud10_Linked(path="data/lcquad10/linked_answer.json")
     ds.load()
     ds.parse()
+
+    ds.print_pairs(20)
+    exit()
 
     if not ds.parser.kb.server_available:
         logger.error("Server is not available. Please check the endpoint at: {}".format(ds.parser.kb.endpoint))

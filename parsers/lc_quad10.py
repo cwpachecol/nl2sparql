@@ -31,7 +31,7 @@ class LC_Qaud10:
     def print_pairs(self, n=-1):
         for item in self.qapairs[0:n]:
             print(item)
-            print("")
+            print("--")
 
 
 class LC_Qaud10Parser(AnswerParser):

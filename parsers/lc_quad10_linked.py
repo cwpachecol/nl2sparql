@@ -20,13 +20,15 @@ class LC_Qaud10_Linked:
 
     def parse(self):
         for raw_row in self.raw_data:
+            print(raw_row)
             self.qapairs.append(
                 QApair(raw_row["question"], raw_row.get("answers"), raw_row["sparql_query"], raw_row, raw_row["id"],
                        self.parser))
 
     def print_pairs(self, n=-1):
+        print(len(self.qapairs[0:n]))
         for item in self.qapairs[0:n]:
-            print(item)
+            print(item['question'])
             print("")
 
 

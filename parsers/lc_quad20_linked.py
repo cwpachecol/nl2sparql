@@ -8,7 +8,7 @@ from parsers.answerparser import AnswerParser
 
 
 class LC_Qaud20_Linked:
-    def __init__(self, path="./data/LC-QUAD20/linked.json"):
+    def __init__(self, path="data/lcquad20/linked.json"):
         self.raw_data = []
         self.qapairs = []
         self.path = path

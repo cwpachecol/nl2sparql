@@ -106,8 +106,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
     start_index = args.start_index
     end_index = args.end_index
-    copy_to_drive = args.copy_to_drive
-    # copy_to_drive = False
+    # copy_to_drive = args.copy_to_drive
+    copy_to_drive = False
     drive_directory = args.drive_directory
     # show_json(filename='data/lcquad10/data.json', start_rec=start_record, end_rec=end_record)
 

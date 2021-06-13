@@ -118,7 +118,30 @@ if __name__ == "__main__":
     logger = logging.getLogger(__name__)
     utility.setup_logging()
 
-    ds = LC_Qaud20_Linked(path="./data/lcquad20/linked_answer.json")
+    # with open('data/lcquad20/linked_answer.json', 'r', encoding='utf-8') as f:
+    #     linked_answer = json.load(f)
+    #     f.close()
+    #
+    # print(len(linked_answer))
+    # print(linked_answer[2])
+    # count = 0
+    # for index, record in enumerate(linked_answer):
+    #     if 'results' in record['answers']:
+    #         if len(record['answers']['results']['bindings']) > 0:
+    #             print(f"indice: {index}")
+    #             print(f"id: {record['id']}")
+    #             print(f"question: {record['question']}")
+    #             print(f"sparql_query: {record['sparql_query']}")
+    #             print(f"answers: {record['answers']}")
+    #             print(f"answers-results: {record['answers']['results']}")
+    #             print(f"answers-results-bindings: {record['answers']['results']['bindings']}")
+    #             # print(record)
+    #         count += 1
+    #
+    # print(f"total questions with answers: {count}")
+    # exit()
+
+    ds = LC_Qaud20_Linked(path="data/lcquad20/linked_answer.json")
     ds.load()
     ds.parse()
 
