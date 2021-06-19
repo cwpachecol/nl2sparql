@@ -12,13 +12,21 @@ def parse_args():
                         help='directory with GLOVE embeddings')
     parser.add_argument('--save', default='learning/transformers/checkpoints/',
                         help='directory to save checkpoints in')
+    parser.add_argument('--save_model', default=True, action='store_true',
+                        help='flag to save model')
+    parser.add_argument('--load_model', default=False, action='store_false',
+                        help='flag to load model')
+    parser.add_argument('--checkpoint_path', default="D:\\Repositorios\\nl2sparql\\learning\\transformers\\checkpoints",
+                        help='directory to save/load checkpoints in')
+    parser.add_argument('--checkpoint_name', type=str, default='lcquad10',
+                        help='Name to identify experiment')
+
+    # parser.add_argument('--my_variable', default=False, action='store_true')
+    # parser.add_argument('--other_variable', default=True, action='store_false')
+
     parser.add_argument('--load', default='learning/transformers/checkpoints/',
                         help='directory to load checkpoints in')
     parser.add_argument('--expname', type=str, default='lcquad10',
-                        help='Name to identify experiment')
-    parser.add_argument('--checkpoint_path', default='learning/transformers/checkpoints/',
-                        help='directory to load checkpoints in')
-    parser.add_argument('--checkpoint_name', type=str, default='lcquad10',
                         help='Name to identify experiment')
     # model arguments
     parser.add_argument('--input_dim', default=300, type=int,

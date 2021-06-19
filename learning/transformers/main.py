@@ -1,5 +1,5 @@
-from __future__ import division
-from __future__ import print_function
+# from __future__ import division
+# from __future__ import print_function
 
 import os
 import random
@@ -45,19 +45,19 @@ def tokenize_eng(text):
 
 tokenize = lambda x: x.split()
 
-def load_dataset(path_datasets, train_file, test_file, valid_file, batch_size=1, device='cpu'):
+def load_dataset(path_dataset, train_file, test_file, valid_file, batch_size=1, device='cpu'):
     question_field = Field(tokenize=tokenize_eng, lower=True, init_token="<sos>", eos_token="<eos>")
     sparql_field = Field(tokenize=tokenize, lower=True, init_token="<sos>", eos_token="<eos>")
-    fields = {'question': ('src', question_field), 'query': ('trg', sparql_field)}
-    train_data, valid_data, test_data = TabularDataset.splits(path=path_datasets,
+    fields = {'question': ('src', question_field), 'sparql': ('trg', sparql_field)}
+    train_data, valid_data, test_data = TabularDataset.splits(path=path_dataset,
                                                               train=train_file,
                                                               test=test_file,
                                                               validation=valid_file,
-                                                              format="json",
+                                                              format="csv",
                                                               fields=fields,
                                                               skip_header=False)
     # question_vocab = question_field.build_vocab(train_data, max_size=None, min_freq=1)
-    question_vocab = question_field.build_vocab(train_data, max_size=1000, vectors="glove.6B.100d")
+    question_vocab = question_field.build_vocab(train_data, max_size=10000, vectors="glove.6B.100d")
     sparql_vocab = sparql_field.build_vocab(train_data, max_size=None, min_freq=1)
 
     train_iterator, valid_iterator, test_iterator = BucketIterator.splits(
@@ -188,9 +188,9 @@ def main():
     #     args.sparse)
 
     dataset_path = base_dir + '\\' + 'learning/transformers/data/lcquad10'
-    train_file = base_dir + '\\' + 'learning/transformers/data/lcquad10/LCQuad10_train.json'
-    test_file = base_dir + '\\' + 'learning/transformers/data/lcquad10/LCQuad10_test.json'
-    valid_file = base_dir + '\\' + 'learning/transformers/data/lcquad10/LCQuad10_trial.json'
+    train_file = base_dir + '\\' + 'learning/transformers/data/lcquad10/lcquad10_train.csv'
+    test_file = base_dir + '\\' + 'learning/transformers/data/lcquad10/lcquad10_test.csv'
+    valid_file = base_dir + '\\' + 'learning/transformers/data/lcquad10/lcquad10_valid.csv'
     batch_size = 100
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Executing in: {device}")
@@ -203,12 +203,12 @@ def main():
     print(src_vocab_size, trg_vocab_size)
     print("-"*10)
     # Model hyperparameters
-    embedding_size = 256
+    embedding_size = 300
     num_heads = 4
     num_encoder_layers = 3
     num_decoder_layers = 3
     dropout = 0.10
-    max_len = 1010
+    max_len = 10010
     forward_expansion = 4
     src_pad_idx = question_field.vocab.stoi["<pad>"]
     last_checkpoint = 0
@@ -305,7 +305,7 @@ def main():
 
     if args.mode == "train":
         trainer = Trainer(args, model, criterion, optimizer, device)
-        train_loss = trainer.train(train_iterator, 10, 0)
+        train_loss = trainer.train(train_iterator, question_field, sparql_field, 10, 0)
         print(f"train loss: { train_loss }")
 
     exit()
