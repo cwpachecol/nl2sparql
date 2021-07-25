@@ -38,42 +38,42 @@ def qg(linker, kb, parser, qapair, force_gold=True):
     count_query = "COUNT(" in qapair.sparql.query
     sort_query = "order by" in qapair.sparql.raw_query.lower()
     entities, ontologies = linker.do(qapair, force_gold=force_gold)
-    print("$"*50)
-    print("Entidades:")
-    print(len(entities))
+    # print("$"*50)
+    # print("Entidades:")
+    # print(len(entities))
     # print(entities[0])
-    for ent in entities:
-        print(ent.uris)
-        for u in ent.uris:
-            print(u)
-    print("$" * 50)
+    # for ent in entities:
+    #     print(ent.uris)
+    #     for u in ent.uris:
+    #         print(u)
+    # print("$" * 50)
     double_relation = False
     entities_uris = [eu for eu in qapair.sparql.uris if eu.is_entity()]
     generic_uris = [gu for gu in qapair.sparql.uris if gu.is_generic()]
     no_relation_uris = [nu for nu in qapair.sparql.uris if not nu.is_ontology() and not nu.is_type()]
 
     relation_uris = [u for u in qapair.sparql.uris if u.is_ontology() or u.is_type()]
-    print("!" * 100)
-    print(len(generic_uris))
-    for gu in generic_uris:
-        print(gu.raw_uri)
-    print("!" * 100)
-
-    print("@" * 100)
-    print(len(entities_uris))
-    for eu in entities_uris:
-        print(eu.raw_uri)
-    print("@" * 100)
-    print("&" * 100)
-    print(len(no_relation_uris))
-    for nru in no_relation_uris:
-        print(nru.raw_uri)
-    print("&" * 100)
-    print("#" * 100)
-    print(len(relation_uris))
-    for ru in relation_uris:
-        print(ru.raw_uri)
-    print("#"*100)
+    # print("!" * 100)
+    # print(len(generic_uris))
+    # for gu in generic_uris:
+    #     print(gu.raw_uri)
+    # print("!" * 100)
+    #
+    # print("@" * 100)
+    # print(len(entities_uris))
+    # for eu in entities_uris:
+    #     print(eu.raw_uri)
+    # print("@" * 100)
+    # print("&" * 100)
+    # print(len(no_relation_uris))
+    # for nru in no_relation_uris:
+    #     print(nru.raw_uri)
+    # print("&" * 100)
+    # print("#" * 100)
+    # print(len(relation_uris))
+    # for ru in relation_uris:
+    #     print(ru.raw_uri)
+    # print("#"*100)
     if len(relation_uris) != len(set(relation_uris)):
         double_relation = True
     else:
@@ -172,13 +172,13 @@ if __name__ == "__main__":
     linker = GoldLinker()
     # print(linker)
 
-    output_file = 'lc_quad10_gold'
+    output_file = 'lcquad10_gold'
 
     tmp = []
     output = []
     na_list = []
 
-    for qapair in ds.qapairs[:5]:
+    for qapair in ds.qapairs:
         # print('='*10)
         stats.inc("total")
         output_row = {"question": qapair.question.text,
@@ -187,8 +187,8 @@ if __name__ == "__main__":
                       "answer": "",
                       "features": list(qapair.sparql.query_features()),
                       "generated_queries": []}
-        print(qapair.sparql.query_features())
-        print("="*100)
+        # print(qapair.sparql.query_features())
+        # print("="*100)
         if qapair.answerset is None or len(qapair.answerset) == 0:
             stats.inc("query_no_answer")
             output_row["answer"] = "-no_answer"
@@ -216,6 +216,6 @@ if __name__ == "__main__":
     print('stats: ', stats)
 
     # Questions without answers
-    with open('output/na_list_lc_quad10_gold.txt', 'w') as f:
+    with open('output/na_list_lcquad10_gold.txt', 'w') as f:
         for i in na_list:
             f.write("{}\n".format(i))
