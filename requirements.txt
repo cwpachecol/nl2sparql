@@ -9,6 +9,7 @@ click==7.1.2
 colorama==0.4.4
 cymem==2.0.5
 en-core-web-lg @ https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.0.0/en_core_web_lg-3.0.0-py3-none-any.whl
+en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.0.0/en_core_web_sm-3.0.0-py3-none-any.whl
 fasttext==0.9.2
 google-api-core==1.28.0
 google-auth==1.30.0
@@ -53,6 +54,10 @@ spacy-legacy==3.0.5
 srsly==2.4.1
 thinc==8.0.3
 threadpoolctl==2.1.0
+torch==1.8.1+cu102
+torchaudio==0.8.1
+torchtext==0.9.1
+torchvision==0.9.1+cu102
 tqdm==4.60.0
 typer==0.3.2
 typing-extensions==3.10.0.0
