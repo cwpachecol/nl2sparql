@@ -24,14 +24,14 @@ class Trainer(object):
         self.exp_name = args.expname
         self.checkpoint_name = args.checkpoint_name
 
-    def train(self, data_loader, epochs=5, last_checkpoint=0):
+    def train(self, data_loader, question_field, sparql_field, epochs=5, last_checkpoint=0):
         self.model.to(self.device)
         self.model.train()
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(self.optimizer, factor=0.1, patience=10, verbose=True)
 
         # Tensorboard to get nice loss plot
         # writer = SummaryWriter("runs/loss_plot")
-        step = 0
+        # step = 0
 
         sentence = "Is Alexander Hamilton a lawyer?"
         bar = tqdm(range(last_checkpoint + 1, epochs + last_checkpoint + 1))
@@ -42,8 +42,8 @@ class Trainer(object):
 
             for batch_idx, batch in enumerate(data_loader):
                 # Get input and targets and get to cuda
-                inp_data = batch.src.to(self.device)
-                target = batch.trg.to(self.device)
+                inp_data, target = batch.src, batch.trg
+                inp_data, target = inp_data.to(self.device), target.to(self.device)
 
                 # Forward prop
                 output = self.model(inp_data, target[:-1, :])
@@ -72,8 +72,8 @@ class Trainer(object):
                 self.optimizer.step()
 
                 # plot to tensorboard
-                writer.add_scalar("Training loss", loss, global_step=step)
-                step += 1
+                # writer.add_scalar("Training loss", loss, global_step=step)
+                # step += 1
 
             mean_loss = sum(losses) / len(losses)
             print(f"loss mean: {(mean_loss)}")
@@ -81,21 +81,21 @@ class Trainer(object):
 
             scheduler.step(mean_loss)
 
-            if self.save_model:
-                # if (epoch + last_check) % 5 == 0:
+            if self.args.save_model and (epoch + last_checkpoint) % 5 == 0:
 
                 save_checkpoint_path = ""
-                save_checkpoint_path = str(self.checkpoint_path) + str('/cp_') + str(self.exp_name) + str('_') \
+                save_checkpoint_path = str(self.args.checkpoint_path) + str('/cp_') + str(self.args.checkpoint_name) + str('_') \
                                        + str(epoch) + str('_epochs.pth.tar')
                 print(f"Saving checkpoint:{save_checkpoint_path}")
                 checkpoint = {"state_dict": self.model.state_dict(), "optimizer": self.optimizer.state_dict()}
                 utils.save_checkpoint(checkpoint, save_checkpoint_path)
 
             self.model.eval()
-            translated_sentence = utils.translate_sentence(self.model, sentence, question_field, sparql_field, self.device, max_length=500)
+            translated_sentence = utils.translate_sentence(self.model, sentence, question_field, sparql_field, self.device, max_length=10000)
             print(f"Sentence: {sentence} \n")
             print(f"Translated example sentence: {translated_sentence} \n ")
         return mean_loss
+
     # helper function for training
     def train_old(self, dataset):
         self.model.train()

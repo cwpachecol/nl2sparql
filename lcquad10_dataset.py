@@ -1,7 +1,7 @@
 import json
 import requests, json, re, operator
 import sys
-from parsers.lc_quad10 import LC_Qaud10
+from parsers.lc_quad10 import LC_Quad10
 
 def prepare_dataset(ds):
     ds.load()
@@ -46,7 +46,7 @@ if __name__ == "__main__":
     with open("data/lcquad10/data.json", "w") as write_file:
         json.dump(data, write_file)
 
-    ds = LC_Qaud10(path="data/lcquad10/data.json")
+    ds = LC_Quad10(path="data/lcquad10/data.json")
 
     tmp = []
     for idx, qapair in enumerate(prepare_dataset(ds).qapairs):

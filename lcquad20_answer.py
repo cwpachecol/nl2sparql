@@ -1,5 +1,5 @@
-from parsers.lc_quad20_linked import LC_Qaud20_Linked
-from parsers.lc_quad20 import LC_Qaud20Parser
+from parsers.lc_quad20_linked import LC_Quad20_Linked
+from parsers.lc_quad20 import LC_Quad20Parser
 from common.container.sparql import SPARQL
 from common.container.answerset import AnswerSet
 from common.graph.graph import Graph
@@ -141,7 +141,7 @@ if __name__ == "__main__":
     # print(f"total questions with answers: {count}")
     # exit()
 
-    ds = LC_Qaud20_Linked(path="data/lcquad20/linked_answer.json")
+    ds = LC_Quad20_Linked(path="data/lcquad20/linked_answer.json")
     ds.load()
     ds.parse()
 
@@ -149,7 +149,7 @@ if __name__ == "__main__":
         logger.error("Server is not available. Please check the endpoint at: {}".format(ds.parser.kb.endpoint))
         sys.exit(0)
 
-    parser = LC_Qaud20Parser()
+    parser = LC_Quad20Parser()
     kb = parser.kb
 
     stats = Stats()

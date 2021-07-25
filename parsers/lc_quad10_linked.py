@@ -7,12 +7,12 @@ from kb.dbpedia import DBpedia
 from parsers.answerparser import AnswerParser
 
 
-class LC_Qaud10_Linked:
-    def __init__(self, path="./data/lc_quad10/linked.json"):
+class LC_Quad10_Linked:
+    def __init__(self, path="./data/lcquad10/linked.json"):
         self.raw_data = []
         self.qapairs = []
         self.path = path
-        self.parser = LC_Qaud10_LinkedParser()
+        self.parser = LC_Quad10_LinkedParser()
 
     def load(self):
         with open(self.path) as data_file:
@@ -20,21 +20,30 @@ class LC_Qaud10_Linked:
 
     def parse(self):
         for raw_row in self.raw_data:
-            print(raw_row)
+            # print(raw_row)
             self.qapairs.append(
                 QApair(raw_row["question"], raw_row.get("answers"), raw_row["sparql_query"], raw_row, raw_row["id"],
                        self.parser))
 
     def print_pairs(self, n=-1):
-        print(len(self.qapairs[0:n]))
         for item in self.qapairs[0:n]:
-            print(item['question'])
-            print("")
+            # print(item.raw_row)
+            # print(item.question.raw_question)
+            # print(item.question.text)
+            print("-" * 30)
+            print(f"sparql.raw_query: {item.sparql.raw_query}")
+            print(f"sparql.query: {item.sparql.query}")
+            print(f"sparql.supported: {item.sparql.supported}")
+            print(f"sparql.uris.raw_uri: {[uri.raw_uri for uri in item.sparql.uris]}")
+            print(f"sparql.uris.type: {[uri.uri_type for uri in item.sparql.uris]}")
 
+            print(f"sparql.where_clause: {item.sparql.where_clause}")
+            print(f"sparql.where_clause_template: {item.sparql.where_clause_template}")
+            print("="*50)
 
-class LC_Qaud10_LinkedParser(AnswerParser):
+class LC_Quad10_LinkedParser(AnswerParser):
     def __init__(self):
-        super(LC_Qaud10_LinkedParser, self).__init__(DBpedia(one_hop_bloom_file="./data/blooms/spo1.bloom"))
+        super(LC_Quad10_LinkedParser, self).__init__(DBpedia(one_hop_bloom_file="./data/blooms/spo1.bloom"))
 
     def parse_question(self, raw_question):
         return raw_question

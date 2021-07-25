@@ -3,7 +3,7 @@ import os
 import argparse
 import requests, json, re, operator
 import sys
-from parsers.lc_quad20 import LC_Qaud20
+from parsers.lc_quad20 import LC_Quad20
 import shutil
 
 def show_json(filename='data.json', start_rec=0, end_rec=0):
@@ -127,8 +127,8 @@ if __name__ == "__main__":
     with open("data/lcquad20/data.json", "w") as write_file:
         json.dump(data, write_file)
 
-    # ds = LC_Qaud20(path="./data/lcquad20/data.json", sparql_field="sparql_wikidata")
-    ds = LC_Qaud20(path="./data/lcquad20/data.json", sparql_field="sparql_dbpedia18")
+    # ds = LC_Quad20(path="./data/lcquad20/data.json", sparql_field="sparql_wikidata")
+    ds = LC_Quad20(path="./data/lcquad20/data.json", sparql_field="sparql_dbpedia18")
     tmp = []
     actual_index = start_index
     for idx, qapair in enumerate(prepare_dataset(ds).qapairs[start_index: end_index]):

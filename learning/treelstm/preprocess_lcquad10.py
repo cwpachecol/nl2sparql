@@ -10,10 +10,9 @@ import spacy
 # sys.path.insert(0, "..//..")
 sys.path.insert(0, os.path.abspath("..//.."))
 from common.utility.utility import find_mentions
-from parsers.lc_quad10_linked import LC_Qaud10_LinkedParser
+from parsers.lc_quad10_linked import LC_Quad10_LinkedParser
 # sys.path.append('/cluster/home/xlig/kg/')
 # sys.path.insert(0, '/cluster/home/xlig/kg/')
-
 
 def make_dirs(dirs):
     for d in dirs:
@@ -138,7 +137,7 @@ def generalize_question(a, b, parser=None):
     # replace entity mention in question with a generic symbol
 
     if parser is None:
-        parser = LC_Qaud10_LinkedParser()
+        parser = LC_Quad10_LinkedParser()
 
     _, _, uris = parser.parse_sparql(b)
     uris = [uri for uri in uris if uri.is_entity()]
@@ -155,7 +154,6 @@ def generalize_question(a, b, parser=None):
     b = b.replace("<", "").replace(">", "")
 
     return a, b
-
 
 def split(data, parser=None):
     if isinstance(data, str):
@@ -213,7 +211,7 @@ if __name__ == '__main__':
     # base_dir = sys.path[0]
     print('base_dir: ', base_dir)
     data_dir = os.path.join(base_dir, 'data')
-    lc_quad10_dir = os.path.join(data_dir, 'LC-QUAD10')
+    lc_quad10_dir = os.path.join(data_dir, 'lcquad10')
     lib_dir = os.path.join(base_dir, 'lib')
     train_dir = os.path.join(lc_quad10_dir, 'train')
     dev_dir = os.path.join(lc_quad10_dir, 'dev')
@@ -221,9 +219,9 @@ if __name__ == '__main__':
     make_dirs([train_dir, dev_dir, test_dir])
     output_dir = os.path.join(sys.path[0], 'output')
     # split into separate files
-    train_filepath = os.path.join(lc_quad10_dir, 'LCQuad10_train.json')
-    trail_filepath = os.path.join(lc_quad10_dir, 'LCQuad10_trial.json')
-    test_filepath = os.path.join(lc_quad10_dir, 'LCQuad10_test.json')
+    train_filepath = os.path.join(lc_quad10_dir, 'lcquad10_train.json')
+    trail_filepath = os.path.join(lc_quad10_dir, 'lcquad10_trial.json')
+    test_filepath = os.path.join(lc_quad10_dir, 'lcquad10_test.json')
 
     ds = json.load(open(os.path.join(output_dir, 'lcquad10_gold.json')))
 
@@ -240,7 +238,7 @@ if __name__ == '__main__':
     json.dump(ds[train_size:train_size + dev_size], open(trail_filepath, "w"))
     json.dump(ds[train_size + dev_size:], open(test_filepath, "w"))
 
-    parser = LC_Qaud10_LinkedParser()
+    parser = LC_Quad10_LinkedParser()
 
     print('Split train set')
     save_split(train_dir, *split(train_filepath, parser))
