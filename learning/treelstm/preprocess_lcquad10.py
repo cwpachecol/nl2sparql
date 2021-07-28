@@ -247,8 +247,8 @@ def split(data, parser=None):
             # Empty query should be ignored
             if len(b) < 5:
                 continue
-            # sim = str(2 if query["correct"] else 1)
-            sim = 2
+            sim = str(2 if query["correct"] else 1)
+            # sim = 2
 
             id_list.append(i + '\n')
             a_list.append(a.encode('ascii', 'ignore').decode('ascii') + '\n')
