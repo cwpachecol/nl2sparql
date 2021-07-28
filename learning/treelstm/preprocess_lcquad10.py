@@ -268,10 +268,11 @@ def save_split(dst_dir, a_list, b_list, q_list, s_list, id_list, sim_list):
             idfile.write(id_list[i])
             afile.write(a_list[i])
             bfile.write(b_list[i])
-            qfile.write(q_list[i])
-            sfile.write(s_list[i])
             simfile.write(sim_list[i])
 
+        for i in range(len(q_list)):
+            qfile.write(q_list[i])
+            sfile.write(s_list[i])
 
 def parse(dirpath, dep_parse=True):
     if dep_parse:

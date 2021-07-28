@@ -11,6 +11,54 @@ from learning.transformers.tree import Tree
 from learning.transformers.vocab import Vocab
 
 
+class Lang:
+    def __init__(self, name):
+        self.name = name
+        self.word2index = {"SOS": 0, "EOS": 1, "PAD": 2}
+        self.word2count = {}
+        self.index2word = {0: "SOS", 1: "EOS", 2: "PAD"}
+        self.n_words = 3  # Count SOS, EOS and PAD
+
+    def addSentence(self, sentence):
+        for word in sentence.split(' '):
+            self.addWord(word)
+
+    def addWord(self, word):
+        if word not in self.word2index:
+            self.word2index[word] = self.n_words
+            self.word2count[word] = 1
+            self.index2word[self.n_words] = word
+            self.n_words += 1
+        else:
+            self.word2count[word] += 1
+
+    def indexesFromSentence(self, sentence):
+        return [self.word2index[word] for word in sentence.split(' ')]
+
+    def sentenceFromIndex(self, index):
+        return [self.index2word[ix] for ix in index]
+
+class NL2SPARQLDataset(torch.utils.data.Dataset):
+    def __init__(self, input_lang, output_lang, pairs, max_length, device):
+        self.input_lang = input_lang
+        self.output_lang = output_lang
+        self.pairs = pairs
+        self.max_length = max_length
+        self.device = device
+    def __len__(self):
+        return len(self.pairs)
+
+    def __getitem__(self, ix):
+        inputs = torch.tensor(self.input_lang.indexesFromSentence(self.pairs[ix][0]), device=self.device,
+                              dtype=torch.long)
+        outputs = torch.tensor(self.output_lang.indexesFromSentence(self.pairs[ix][1]), device=self.device,
+                               dtype=torch.long)
+        # metemos padding a todas las frases hast a la longitud máxima
+        return torch.nn.functional.pad(inputs, (0, self.max_length - len(inputs)), 'constant',
+                                       self.input_lang.word2index['PAD']),\
+               torch.nn.functional.pad(outputs, (0, self.max_length - len(outputs)), 'constant',
+                                       self.output_lang.word2index['PAD'])
+
 class QGDataset(data.Dataset):
     def __init__(self, path, vocab, num_classes):
         super(QGDataset, self).__init__()

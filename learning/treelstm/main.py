@@ -69,7 +69,7 @@ def main():
     # args.data = 'learning/treelstm/data/LC-QUAD10/'
     # args.save = 'learning/treelstm/checkpoints/'
 
-    args.data = 'data/LC-QUAD10/'
+    args.data = 'data/lcquad10/'
     args.save = 'checkpoints/'
 
     torch.manual_seed(args.seed)
@@ -81,14 +81,14 @@ def main():
         os.makedirs(args.save)
 
     train_dir = os.path.join(args.data, 'train/')
-    dev_dir = os.path.join(args.data, 'dev/')
+    valid_dir = os.path.join(args.data, 'valid/')
     test_dir = os.path.join(args.data, 'test/')
 
     # write unique words from all token files
     dataset_vocab_file = os.path.join(args.data, 'dataset.vocab')
     if not os.path.isfile(dataset_vocab_file):
-        token_files_a = [os.path.join(split, 'a.toks') for split in [train_dir, dev_dir, test_dir]]
-        token_files_b = [os.path.join(split, 'b.toks') for split in [train_dir, dev_dir, test_dir]]
+        token_files_a = [os.path.join(split, 'a.toks') for split in [train_dir, valid_dir, test_dir]]
+        token_files_b = [os.path.join(split, 'b.toks') for split in [train_dir, valid_dir, test_dir]]
         token_files = token_files_a + token_files_b
         dataset_vocab_file = os.path.join(args.data, 'dataset.vocab')
         build_vocab(token_files, dataset_vocab_file)

@@ -16,7 +16,7 @@ def parse_args():
                         help='flag to save model')
     parser.add_argument('--load_model', default=False, action='store_false',
                         help='flag to load model')
-    parser.add_argument('--checkpoint_path', default="D:\\Repositorios\\nl2sparql\\learning\\transformers\\checkpoints",
+    parser.add_argument('--checkpoint_path', default='learning/transformers/checkpoints/',
                         help='directory to save/load checkpoints in')
     parser.add_argument('--checkpoint_name', type=str, default='lcquad10',
                         help='Name to identify experiment')

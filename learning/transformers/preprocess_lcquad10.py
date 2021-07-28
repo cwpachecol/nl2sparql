@@ -1,5 +1,6 @@
 import os
 import sys
+import csv
 import glob
 import json
 import anytree
@@ -13,7 +14,6 @@ from common.utility.utility import find_mentions
 from parsers.lc_quad10_linked import LC_Quad10_LinkedParser
 # sys.path.append('/cluster/home/xlig/kg/')
 # sys.path.insert(0, '/cluster/home/xlig/kg/')
-
 
 def make_dirs(dirs):
     for d in dirs:
@@ -134,6 +134,42 @@ def build_vocab(filepaths, dst_path, lowercase=True):
             f.write(w + '\n')
 
 
+def generalize_sparql(q, s, parser=None):
+    # replace entity mention in sparql with a generic symbol
+
+    if parser is None:
+        parser = LC_Quad10_LinkedParser()
+
+    _, _, uris = parser.parse_sparql(s)
+
+    # print("%"*50)
+    # print(f"s: {s}")
+    # e_uris = []
+    # for u in uris:
+    #     print(u.uri_type)
+    #     if u.is_entity():
+    #         e_uris.append(u.raw_uri)
+    #     # if u.is_generic():
+    #     print(u.raw_uri)
+    # print("%" * 50)
+
+    uris = [uri for uri in uris if uri.is_entity()]
+
+    i = 0
+    for item in find_mentions(q, uris):
+        # a = "{} #en{} {}".format(a[:item["start"]], "t" * (i + 1), a[item["end"]:])
+        s = s.replace(item["uri"].raw_uri, "#en{}".format("t" * (i + 1)))
+        s = str(s).strip()
+
+    # remove extra info from the relation's uri and remaining entities
+    # for item in ["http://dbpedia.org/resource/", "http://dbpedia.org/ontology/",
+    #              "http://dbpedia.org/property/", "http://www.w3.org/1999/02/22-rdf-syntax-ns#"]:
+    #     b = b.replace(item, "")
+    # b = b.replace("<", "").replace(">", "")
+
+    return q, s
+
+
 def generalize_question(a, b, parser=None):
     # replace entity mention in question with a generic symbol
 
@@ -141,6 +177,18 @@ def generalize_question(a, b, parser=None):
         parser = LC_Quad10_LinkedParser()
 
     _, _, uris = parser.parse_sparql(b)
+
+    # print("%"*50)
+    # print(f"b: {b}")
+    # e_uris = []
+    # for u in uris:
+    #     print(u.uri_type)
+    #     if u.is_entity():
+    #         e_uris.append(u.raw_uri)
+    #     # if u.is_generic():
+    #     print(u.raw_uri)
+    # print("%" * 50)
+
     uris = [uri for uri in uris if uri.is_entity()]
 
     i = 0
@@ -156,7 +204,6 @@ def generalize_question(a, b, parser=None):
 
     return a, b
 
-
 def split(data, parser=None):
     if isinstance(data, str):
         with open(data) as datafile:
@@ -166,29 +213,59 @@ def split(data, parser=None):
 
     a_list = []
     b_list = []
+    q_list = []
+    s_list = []
+    qs_list = []
     id_list = []
     sim_list = []
-    for item in tqdm(dataset):
+    for item in tqdm(dataset[:100]):
         i = item["id"]
         a = item["question"]
+
+        query = item["query"]
+        # print("*" * 50)
+        # print(query)
+        # print("*"*50)
+        # a, b = generalize_question(a, query["query"], parser)
+        # a, b = generalize_question(a, query, parser)
+        q, s = generalize_sparql(a, query, parser)
+        # Empty query should be ignored
+        # if len(b) < 5:
+        #     continue
+        # sim = str(2 if query["correct"] else 1)
+        # sim = str(2)
+
+        # id_list.append(i + '\n')
+        # a_list.append(a.encode('ascii', 'ignore').decode('ascii') + '\n')
+        # b_list.append(b.encode('ascii', 'ignore').decode('ascii') + '\n')
+        q_list.append(q.encode('ascii', 'ignore').decode('ascii') + '\n')
+        s_list.append(s.encode('ascii', 'ignore').decode('ascii') + '\n')
+        qs_list.append([q.encode('ascii', 'ignore').decode('ascii'), s.encode('ascii', 'ignore').decode('ascii')])
+        # sim_list.append(sim + '\n')
+
         for query in item["generated_queries"]:
             a, b = generalize_question(a, query["query"], parser)
+            # a, b = generalize_question(a, query, parser)
 
             # Empty query should be ignored
             if len(b) < 5:
                 continue
             sim = str(2 if query["correct"] else 1)
+            # sim = 2
 
             id_list.append(i + '\n')
             a_list.append(a.encode('ascii', 'ignore').decode('ascii') + '\n')
             b_list.append(b.encode('ascii', 'ignore').decode('ascii') + '\n')
             sim_list.append(sim + '\n')
-    return a_list, b_list, id_list, sim_list
+    return a_list, b_list, q_list, s_list, qs_list, id_list, sim_list
 
 
-def save_split(dst_dir, a_list, b_list, id_list, sim_list):
+def save_split(dst_dir, a_list, b_list, q_list, s_list, qs_list, id_list, sim_list):
     with open(os.path.join(dst_dir, 'a.txt'), 'w') as afile, \
-            open(os.path.join(dst_dir, 'b.txt'), 'w') as bfile, \
+            open(os.path.join(dst_dir, 'b.txt'), 'w') as bfile,\
+            open(os.path.join(dst_dir, 'q.txt'), 'w') as qfile,\
+            open(os.path.join(dst_dir, 's.txt'), 'w') as sfile,\
+            open(os.path.join(dst_dir, 'qs.csv'), 'w') as qsfile,\
             open(os.path.join(dst_dir, 'id.txt'), 'w') as idfile, \
             open(os.path.join(dst_dir, 'sim.txt'), 'w') as simfile:
         for i in range(len(a_list)):
@@ -197,6 +274,11 @@ def save_split(dst_dir, a_list, b_list, id_list, sim_list):
             bfile.write(b_list[i])
             simfile.write(sim_list[i])
 
+        writer = csv.writer(qsfile)
+        for i in range(len(q_list)):
+            qfile.write(q_list[i])
+            sfile.write(s_list[i])
+            writer.writerow(qs_list[i])
 
 def parse(dirpath, dep_parse=True):
     if dep_parse:
@@ -211,50 +293,42 @@ if __name__ == '__main__':
 
     base_dir = os.path.dirname(os.path.realpath(__file__))
     # base_dir = sys.path[0]
-    # print(base_dir)
-    # print('base_dir: ', base_dir)
+    print('base_dir: ', base_dir)
     data_dir = os.path.join(base_dir, 'data')
-    # print('data_dir: ', data_dir)
-    lcquad10_dir = os.path.join(data_dir, 'lc_quad10')
-    # print('lcquad10_dir: ', lcquad10_dir)
+    lcquad10_dir = os.path.join(data_dir, 'lcquad10')
     lib_dir = os.path.join(base_dir, 'lib')
-    # print('lib_dir: ', lib_dir)
     train_dir = os.path.join(lcquad10_dir, 'train')
-    # print('train_dir: ', train_dir)
-    dev_dir = os.path.join(lcquad10_dir, 'dev')
-    # print('dev_dir: ', dev_dir)
+    valid_dir = os.path.join(lcquad10_dir, 'valid')
     test_dir = os.path.join(lcquad10_dir, 'test')
-    # print('test_dir: ', test_dir)
-    make_dirs([train_dir, dev_dir, test_dir])
+    make_dirs([train_dir, valid_dir, test_dir])
+    # print(sys.path[0])
     output_dir = os.path.join(sys.path[0], 'output')
-    # print('output_dir: ', output_dir)
-
     # split into separate files
-    train_filepath = os.path.join(lcquad10_dir, 'LCQuad10_train.json')
-    trail_filepath = os.path.join(lcquad10_dir, 'LCQuad10_trial.json')
-    test_filepath = os.path.join(lcquad10_dir, 'LCQuad10_test.json')
+    train_filepath = os.path.join(lcquad10_dir, 'lcquad10_train.json')
+    valid_filepath = os.path.join(lcquad10_dir, 'lcquad10_valid.json')
+    test_filepath = os.path.join(lcquad10_dir, 'lcquad10_test.json')
 
     ds = json.load(open(os.path.join(output_dir, 'lcquad10_gold.json')))
 
     total = len(ds)
     train_size = int(.7 * total)
-    dev_size = int(.2 * total)
+    valid_size = int(.2 * total)
     test_size = int(.1 * total)
     print('Total: ', total)
     print('train_size: ', train_size)
-    print('dev_size: ', dev_size)
+    print('valid_size: ', valid_size)
     print('test_size: ', test_size)
 
     json.dump(ds[:train_size], open(train_filepath, "w"))
-    json.dump(ds[train_size:train_size + dev_size], open(trail_filepath, "w"))
-    json.dump(ds[train_size + dev_size:], open(test_filepath, "w"))
+    json.dump(ds[train_size:train_size + valid_size], open(valid_filepath, "w"))
+    json.dump(ds[train_size + valid_size:], open(test_filepath, "w"))
 
     parser = LC_Quad10_LinkedParser()
 
     print('Split train set')
     save_split(train_dir, *split(train_filepath, parser))
-    print('Split dev set')
-    save_split(dev_dir, *split(trail_filepath, parser))
+    print('Split valid set')
+    save_split(valid_dir, *split(valid_filepath, parser))
     print('Split test set')
     save_split(test_dir, *split(test_filepath, parser))
 
@@ -262,7 +336,7 @@ if __name__ == '__main__':
     print("parse train set")
     parse(train_dir)
     print("parse dev set")
-    parse(dev_dir)
+    parse(valid_dir)
     print("parse test set")
     parse(test_dir)
 
