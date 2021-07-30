@@ -10,7 +10,7 @@
     </content>
     <content url="file://$MODULE_DIR$/data/lcquad10" />
     <content url="file://$MODULE_DIR$/data/lcquad20" />
-    <orderEntry type="jdk" jdkName="Python 3.8 (nl2sparql)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.7 (nl2sparql)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PackageRequirementsSettings">
