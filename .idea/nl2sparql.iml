@@ -3,10 +3,13 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/data" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/data/lcquad10" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
       <excludeFolder url="file://$MODULE_DIR$/checkpoints" />
       <excludeFolder url="file://$MODULE_DIR$/runs" />
       <excludeFolder url="file://$MODULE_DIR$/data/lc_quad10" />
+      <excludeFolder url="file://$MODULE_DIR$/data/LC-QUAD" />
+      <excludeFolder url="file://$MODULE_DIR$/data/QALD" />
     </content>
     <content url="file://$MODULE_DIR$/data/lcquad10" />
     <content url="file://$MODULE_DIR$/data/lcquad20" />
