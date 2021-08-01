@@ -1,0 +1,100 @@
+SELECT COUNT(DISTINCT ?uri) WHERE {?uri <http://dbpedia.org/ontology/director> #ent  . }
+SELECT DISTINCT ?uri WHERE {?uri <http://dbpedia.org/ontology/founder> <http://dbpedia.org/resource/John_Forbes_(British_Army_officer)>  . ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/City>}
+SELECT DISTINCT ?uri WHERE {?uri <http://dbpedia.org/ontology/riverMouth> #ent  . ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/River>}
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/property/allegiance> ?uri }
+SELECT COUNT(DISTINCT ?uri) WHERE { ?x <http://dbpedia.org/ontology/breeder> #ent . ?x <http://dbpedia.org/property/race> ?uri  . }
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/ontology/incumbent> ?uri. #ent <http://dbpedia.org/ontology/president> ?uri}
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/ontology/region> ?uri }
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/property/related> #ent . ?x <http://dbpedia.org/ontology/layout> ?uri  . ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Automobile>}
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/property/operator> <http://dbpedia.org/resource/Starwood_Hotels_and_Resorts_Worldwide> . ?x <http://dbpedia.org/property/address> ?uri  . }
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/property/mascot> ?uri }
+SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/190617_Stanford_rugby_teams> <http://dbpedia.org/property/headcoach> ?x . ?x <http://dbpedia.org/ontology/university> ?uri  . }
+SELECT COUNT(DISTINCT ?uri) WHERE {?uri <http://dbpedia.org/property/residence> #ent  . }
+SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/The_Haunted_House_(1929_film)> <http://dbpedia.org/ontology/director> ?x . ?x <http://dbpedia.org/ontology/award> ?uri  . }
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/property/origin> ?uri }
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/property/placeOfBirth> #ent . ?x <http://dbpedia.org/property/knownFor> ?uri  . ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Person>}
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/property/region> #ent . ?x <http://dbpedia.org/ontology/sport> ?uri  . ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/School>}
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/property/developer> ?uri. <http://dbpedia.org/resource/Riddim_Ribbon_feat._The_Black_Eyed_Peas> <http://dbpedia.org/property/distributor> ?uri}
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/ontology/origin> ?uri. #ent <http://dbpedia.org/ontology/origin> ?uri . }
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/ontology/battle> #ent . ?x <http://dbpedia.org/ontology/award> ?uri  . ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Person>}
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/property/restingplace> ?uri }
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/ontology/tenant> #ent . ?x <http://dbpedia.org/ontology/builder> ?uri  . ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Stadium>}
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/ontology/silverMedalist> ?uri }
+SELECT DISTINCT ?uri WHERE {?uri <http://dbpedia.org/property/gender> #ent }
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/property/products> #ent . ?x <http://dbpedia.org/property/parent> ?uri  . }
+SELECT COUNT(DISTINCT ?uri) WHERE { ?x <http://dbpedia.org/ontology/board> #ent . ?x <http://dbpedia.org/ontology/board> ?uri }
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/property/leader> ?uri }
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/property/writer> ?uri. #ent <http://dbpedia.org/ontology/author> ?uri . }
+SELECT DISTINCT ?uri WHERE {?uri <http://dbpedia.org/ontology/mountainRange> #ent . ?uri <http://dbpedia.org/ontology/parentMountainPeak> #ent  . ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Mountain>}
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/ontology/designer> ?x . ?x <http://dbpedia.org/property/placeOfDeath> ?uri  . }
+SELECT COUNT(DISTINCT ?uri) WHERE {?uri <http://dbpedia.org/property/phylum> #ent  . ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Mammal>}
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/property/battles> ?uri }
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/property/publisher> #ent . ?x <http://dbpedia.org/property/subject> ?uri  . ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Book>}
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/ontology/founder> ?uri. #ent <http://dbpedia.org/ontology/appointer> ?uri}
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/ontology/keyPerson> #ent . ?uri <http://dbpedia.org/property/owners> ?x  . ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Newspaper>}
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/property/series> ?uri. <http://dbpedia.org/resource/Sherlock_Holmes_(play)> <http://dbpedia.org/property/characters> ?uri}
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/property/placeOfBirth> #ent . ?x <http://dbpedia.org/property/knownFor> ?uri  . ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Model>}
+SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/Ladonia_(micronation)> <http://dbpedia.org/ontology/officialLanguage> ?uri. #ent <http://dbpedia.org/ontology/officialLanguage> ?uri . }
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/ontology/animator> ?x . ?x <http://dbpedia.org/ontology/award> ?uri  . }
+SELECT DISTINCT ?uri WHERE {?uri <http://dbpedia.org/property/constituency> #ent . ?uri <http://dbpedia.org/ontology/militaryUnit> <http://dbpedia.org/resource/USS_Kittiwake_(ASR-13)>  . ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/OfficeHolder>}
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/ontology/language> ?x . ?x <http://dbpedia.org/property/region> ?uri  . ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/EthnicGroup>}
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/ontology/relation> #ent . ?x <http://dbpedia.org/ontology/religion> ?uri  . ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/MemberOfParliament>}
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/ontology/tenant> ?uri }
+ SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/200001_Aston_Villa_F.C._season> <http://dbpedia.org/property/name> ?uri. <http://dbpedia.org/resource/200910_Middlesbrough_F.C._season> <http://dbpedia.org/ontology/manager> ?uri} 
+ASK WHERE { <http://dbpedia.org/resource/Ganymede_(moon)> <http://dbpedia.org/property/discoverer> #ent }
+SELECT DISTINCT ?uri WHERE {?uri <http://dbpedia.org/property/relatives> #ent . ?uri <http://dbpedia.org/ontology/child> #ent  . ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/FormulaOneRacer>}
+ASK WHERE { #ent <http://dbpedia.org/ontology/automobilePlatform> #ent  . }
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/ontology/product> #ent . ?x <http://dbpedia.org/property/products> ?uri  . ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Bank>}
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/ontology/occupation> ?uri. #ent <http://dbpedia.org/ontology/occupation> ?uri . }
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/ontology/operator> #ent . ?x <http://dbpedia.org/ontology/manufacturer> ?uri  . ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Train>}
+SELECT DISTINCT ?uri WHERE {?uri <http://dbpedia.org/ontology/distributor> #ent . ?uri <http://dbpedia.org/property/themeMusicComposer> <http://dbpedia.org/resource/Primus_(band)>  . ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/TelevisionShow>}
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/ontology/movement> #ent . ?x <http://dbpedia.org/ontology/nationality> ?uri  . ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Writer>}
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/property/position> #ent . ?x <http://dbpedia.org/ontology/formerTeam> ?uri  . }
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/property/currentMembers> #ent . ?x <http://dbpedia.org/ontology/bandMember> ?uri  . ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Band>}
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/ontology/routeEnd> ?uri. #ent <http://dbpedia.org/property/line> ?uri}
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/property/magazine> #ent . ?x <http://dbpedia.org/property/author> ?uri  . }
+SELECT COUNT(DISTINCT ?uri) WHERE {?uri <http://dbpedia.org/ontology/network> #ent  . }
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/property/discipline> ?uri. #ent <http://dbpedia.org/ontology/occupation> ?uri}
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/property/successor> ?x . ?x <http://dbpedia.org/ontology/location> ?uri  . }
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/ontology/locationCity> ?uri. #ent <http://dbpedia.org/property/placeOfBirth> ?uri}
+ASK WHERE { #ent <http://dbpedia.org/property/characters> #ent }
+SELECT DISTINCT ?uri WHERE {?uri <http://dbpedia.org/ontology/order> #ent . ?uri <http://dbpedia.org/property/domain> #ent  . ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Bacteria>}
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/property/place> ?uri. #ent <http://dbpedia.org/property/residence> ?uri}
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/ontology/executiveProducer> #ent . ?uri <http://dbpedia.org/ontology/series> ?x  . }
+ASK WHERE { #ent <http://dbpedia.org/property/album> <http://dbpedia.org/resource/The_Next_Step_(James_Brown_album)> }
+SELECT DISTINCT ?uri WHERE {?uri <http://dbpedia.org/ontology/formerBandMember> #ent . ?uri <http://dbpedia.org/property/pastMembers> #ent  . ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Band>}
+SELECT COUNT(DISTINCT ?uri) WHERE { ?x <http://dbpedia.org/property/manager> <http://dbpedia.org/resource/Luis_Enrique_(footballer)> . ?uri <http://dbpedia.org/property/youthclubs> ?x  . }
+ASK WHERE { #ent <http://dbpedia.org/property/phylum> #ent }
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/property/purpose> ?uri. #ent <http://dbpedia.org/ontology/genre> ?uri}
+SELECT DISTINCT ?uri WHERE { ?uri <http://dbpedia.org/ontology/formerTeam> #ent . ?uri <http://dbpedia.org/ontology/formerTeam> #ent . }
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/property/language> ?uri }
+SELECT DISTINCT ?uri WHERE {?uri <http://dbpedia.org/property/rank> <http://dbpedia.org/resource/Colonel_(United_States)> . ?uri <http://dbpedia.org/property/spouse> #ent  . }
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/property/title> ?uri. <http://dbpedia.org/resource/Salahuddin_Rabbani> <http://dbpedia.org/ontology/nationality> ?uri}
+ASK WHERE { #ent <http://dbpedia.org/ontology/hubAirport> #ent }
+ASK WHERE { #ent <http://dbpedia.org/property/notableInstruments> <http://dbpedia.org/resource/Gibson_Les_Paul> }
+SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/Rising_Star_(U.S._TV_series)> <http://dbpedia.org/property/judges> ?uri. #ent <http://dbpedia.org/property/artist> ?uri}
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/property/headquarters> #ent . ?uri <http://dbpedia.org/ontology/religion> ?x  . }
+SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/Iqbal_Singh_(politician)> <http://dbpedia.org/property/party> ?uri. #ent <http://dbpedia.org/property/party> ?uri . }
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/property/almaMater> ?x . ?x <http://dbpedia.org/ontology/state> ?uri  . }
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/ontology/sport> ?uri. #ent <http://dbpedia.org/ontology/occupation> ?uri}
+SELECT DISTINCT ?uri WHERE {?uri <http://dbpedia.org/ontology/origin> #ent }
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/property/currentMembers> ?uri. #ent <http://dbpedia.org/ontology/musicComposer> ?uri}
+SELECT DISTINCT ?uri WHERE {?uri <http://dbpedia.org/property/distributor> #ent  . ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/TelevisionShow>}
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/ontology/distributingLabel> ?uri }
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/ontology/starring> ?uri }
+SELECT DISTINCT ?uri WHERE { ?uri <http://dbpedia.org/property/children> #ent . ?uri <http://dbpedia.org/property/children> #ent . }
+SELECT COUNT(DISTINCT ?uri) WHERE { ?x <http://dbpedia.org/ontology/owner> #ent . ?x <http://dbpedia.org/ontology/location> ?uri  . }
+SELECT COUNT(DISTINCT ?uri) WHERE { ?x <http://dbpedia.org/ontology/launchSite> #ent . ?x <http://dbpedia.org/ontology/launchSite> ?uri }
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/ontology/timeZone> #ent . ?x <http://dbpedia.org/ontology/leaderName> ?uri  . ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Place>}
+SELECT DISTINCT ?uri WHERE {?uri <http://dbpedia.org/ontology/creator> #ent  . }
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/property/almaMater> ?uri. #ent <http://dbpedia.org/property/education> ?uri}
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/ontology/associate> ?uri. #ent <http://dbpedia.org/ontology/founder> ?uri}
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/property/licensee> ?uri }
+SELECT COUNT(DISTINCT ?uri) WHERE { ?x <http://dbpedia.org/ontology/sport> #ent . ?x <http://dbpedia.org/ontology/sport> ?uri }
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/property/placeOfBurial> #ent . ?x <http://dbpedia.org/property/placeOfBurial> ?uri  . ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Royalty>}
+SELECT DISTINCT ?uri WHERE { ?x <http://dbpedia.org/ontology/battle> #ent . ?x <http://dbpedia.org/ontology/relation> ?uri  . ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Person>}
+SELECT COUNT(DISTINCT ?uri) WHERE { ?x <http://dbpedia.org/property/occupation> #ent . ?x <http://dbpedia.org/property/awards> ?uri  . }
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/ontology/builder> ?uri }
+SELECT COUNT(DISTINCT ?uri) WHERE {?uri <http://dbpedia.org/ontology/operatingSystem> #ent  . ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Software>}
+SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/Counterpoint_(horse)> <http://dbpedia.org/property/grandsire> ?x . ?x <http://dbpedia.org/ontology/honours> ?uri  . ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Horse>}
+SELECT DISTINCT ?uri WHERE { #ent <http://dbpedia.org/ontology/location> ?uri }

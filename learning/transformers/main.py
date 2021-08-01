@@ -33,7 +33,8 @@ from trainer import Trainer
 import datetime
 from fasttext import load_model
 
-sys.path.insert(0, os.path.abspath("..//.."))
+# sys.path.insert(0, os.path.abspath("..//.."))
+sys.path.insert(0, os.path.abspath('../..'))
 
 
 import unicodedata
@@ -90,13 +91,19 @@ def main():
     # file logger
     # arg_save = "Tree-LSTM"
     # arg_expname = "Tree-LSTM"
-    save_dir = base_dir + '\\' + args.save
+    # print("-"*50)
+    # print(base_dir)
+    # print(args.save)
+    save_dir = base_dir + '/' + args.save
+    print(save_dir)
+
     fh = logging.FileHandler(os.path.join(save_dir, args.expname) + '.log', mode='w')
     # fh = logging.FileHandler(os.path.join(arg_save, arg_expname) + '.log', mode='w')
     fh.setLevel(logging.INFO)
     fh.setFormatter(formatter)
     logger.addHandler(fh)
 
+    exit()
     # console logger
     ch = logging.StreamHandler()
     ch.setLevel(logging.DEBUG)

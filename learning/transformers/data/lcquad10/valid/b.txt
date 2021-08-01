@@ -1,0 +1,254 @@
+?u_0 order #ent
+?u_0 network #ent
+?u_0 executiveProducer #ent
+?u_0 type TelevisionShow
+?u_0 network #ent .?u_0 executiveProducer Glen_and_Les_Charles
+?u_0 network #ent .?u_0 type TelevisionShow
+?u_0 executiveProducer Glen_and_Les_Charles .?u_0 type TelevisionShow
+?u_0 network #ent .?u_0 executiveProducer Glen_and_Les_Charles .?u_0 type TelevisionShow
+#ent routeStart ?u_0
+?u_0 office #ent
+Kafue_River riverMouth ?u_0
+#ent riverMouth ?u_0
+?u_1 riverMouth ?u_0
+Kafue_River riverMouth ?u_0 .Shire_River riverMouth ?u_0
+Kafue_River riverMouth ?u_0 .?u_1 riverMouth ?u_0
+Shire_River riverMouth ?u_0 .?u_1 riverMouth ?u_0
+Kafue_River riverMouth ?u_0 .Shire_River riverMouth ?u_0 .?u_1 riverMouth ?u_0
+?u_0 riverMouth ?u_1
+Kafue_River riverMouth ?u_0 .?u_0 riverMouth ?u_1
+Shire_River riverMouth ?u_0 .?u_0 riverMouth ?u_1
+Kafue_River riverMouth ?u_0 .Shire_River riverMouth ?u_0 .?u_0 riverMouth ?u_1
+Kafue_River riverMouth ?u_1
+Kafue_River riverMouth ?u_1 .Shire_River riverMouth ?u_0
+Kafue_River riverMouth ?u_1 .?u_1 riverMouth ?u_0
+Shire_River riverMouth ?u_1
+Kafue_River riverMouth ?u_0 .Shire_River riverMouth ?u_1
+Shire_River riverMouth ?u_1 .?u_1 riverMouth ?u_0
+Kafue_River riverMouth ?u_1 .?u_0 riverMouth ?u_1
+Shire_River riverMouth ?u_1 .?u_0 riverMouth ?u_1
+#ent recordLabel ?u_0
+?u_0 writer Katy_B
+?u_0 type Single
+?u_0 writer Katy_B .?u_0 type Single
+Katy_B recordLabel ?u_0
+?u_0 writer ?u_1
+?u_0 type Single
+?u_0 writer ?u_1 .?u_0 type Single
+Katy_B recordLabel ?u_1
+?u_1 type Single
+?u_0 writer ?u_1 .?u_1 type Single
+Katy_B recordLabel ?u_1 .?u_0 type Single
+Katy_B recordLabel ?u_0 .?u_1 type Single
+?u_1 writer ?u_0
+?u_1 writer ?u_0 .?u_0 type Single
+?u_1 writer ?u_0 .?u_1 type Single
+?u_0 writer Katy_B
+?u_1 recordLabel ?u_0
+?u_0 writer Katy_B .?u_0 type Single
+?u_1 recordLabel ?u_0 .?u_0 type Single
+?u_1 writer Katy_B
+?u_1 writer Katy_B .?u_1 recordLabel ?u_0
+?u_1 writer Katy_B .?u_1 type Single
+?u_1 recordLabel ?u_0 .?u_1 type Single
+?u_1 writer Katy_B .?u_1 recordLabel ?u_0 .?u_1 type Single
+?u_1 writer Katy_B .?u_0 type Single
+?u_0 writer Katy_B .?u_1 type Single
+?u_0 recordLabel ?u_1
+?u_0 writer Katy_B .?u_0 recordLabel ?u_1
+?u_0 recordLabel ?u_1 .?u_0 type Single
+?u_0 writer Katy_B .?u_0 recordLabel ?u_1 .?u_0 type Single
+?u_0 recordLabel ?u_1 .?u_1 type Single
+#ent firstAscentPerson ?u_0
+The_National_Herald_(India) owner ?u_0
+?u_0 associatedBand #ent
+#ent musicalArtist ?u_0
+Teddy_Riley associatedBand ?u_0
+Teddy_Riley associatedBand ?u_0 .Before_I_Let_You_Go musicalArtist ?u_0
+?u_0 keyPerson #ent
+?u_0 routeEnd #ent
+?u_1 routeStart ?u_0
+?u_0 type RailwayLine
+?u_0 routeEnd Kazan .?u_0 type RailwayLine
+?u_1 routeStart ?u_0 .?u_0 type RailwayLine
+?u_1 routeEnd Kazan
+?u_1 type RailwayLine
+?u_1 routeEnd Kazan .?u_1 routeStart ?u_0
+?u_1 routeEnd Kazan .?u_1 type RailwayLine
+?u_1 routeStart ?u_0 .?u_1 type RailwayLine
+?u_1 routeEnd Kazan .?u_1 routeStart ?u_0 .?u_1 type RailwayLine
+?u_1 routeEnd Kazan .?u_0 type RailwayLine
+?u_0 routeEnd Kazan .?u_1 type RailwayLine
+?u_0 routeStart ?u_1
+?u_0 routeEnd Kazan .?u_0 routeStart ?u_1
+?u_0 routeStart ?u_1 .?u_0 type RailwayLine
+?u_0 routeEnd Kazan .?u_0 routeStart ?u_1 .?u_0 type RailwayLine
+?u_0 routeStart ?u_1 .?u_1 type RailwayLine
+?u_0 manufacturer #ent
+?u_0 type InformationAppliance
+?u_0 manufacturer Asus .?u_0 type InformationAppliance
+#ent colour ?u_0
+#ent draftTeam ?u_0
+?u_0 city #ent
+?u_0 type School
+?u_0 city Reading,_Berkshire .?u_0 type School
+#ent foundedBy ?u_0
+?u_0 doctoralStudent #ent
+?u_0 type Scientist
+?u_0 doctoralStudent Erich_Bagge .?u_0 type Scientist
+#ent notableWork ?u_0
+#ent award ?u_0
+?u_0 deathPlace #ent
+?u_1 parent ?u_0
+?u_0 deathPlace Redding,_Connecticut .?u_1 parent ?u_0
+?u_0 parent ?u_1
+?u_0 deathPlace Redding,_Connecticut .?u_0 parent ?u_1
+?u_1 deathPlace Redding,_Connecticut
+?u_1 deathPlace Redding,_Connecticut .?u_1 parent ?u_0
+?u_1 deathPlace Redding,_Connecticut .?u_0 parent ?u_1
+#ent knownFor ?u_0
+#ent part ?u_0
+?u_0 lieutenant #ent
+?u_0 lieutenant #ent
+?u_1 lieutenant ?u_0
+?u_0 type President
+?u_0 lieutenant Winston_Bryant .?u_0 lieutenant Joe_Purcell
+?u_0 lieutenant Winston_Bryant .?u_0 type President
+?u_0 lieutenant Joe_Purcell .?u_0 type President
+?u_1 lieutenant ?u_0 .?u_0 type President
+?u_0 lieutenant Winston_Bryant .?u_0 lieutenant Joe_Purcell .?u_0 type President
+?u_1 lieutenant Winston_Bryant
+?u_1 type President
+?u_1 lieutenant Winston_Bryant .?u_0 lieutenant Joe_Purcell
+?u_1 lieutenant Winston_Bryant .?u_1 lieutenant ?u_0
+?u_1 lieutenant Winston_Bryant .?u_1 type President
+?u_0 lieutenant Joe_Purcell .?u_1 type President
+?u_1 lieutenant ?u_0 .?u_1 type President
+?u_1 lieutenant Winston_Bryant .?u_0 lieutenant Joe_Purcell .?u_1 type President
+?u_1 lieutenant Winston_Bryant .?u_1 lieutenant ?u_0 .?u_1 type President
+?u_1 lieutenant Joe_Purcell
+?u_0 lieutenant Winston_Bryant .?u_1 lieutenant Joe_Purcell
+?u_0 lieutenant Winston_Bryant .?u_1 type President
+?u_1 lieutenant Joe_Purcell .?u_1 lieutenant ?u_0
+?u_1 lieutenant Joe_Purcell .?u_1 type President
+?u_0 lieutenant Winston_Bryant .?u_1 lieutenant Joe_Purcell .?u_1 type President
+?u_1 lieutenant Joe_Purcell .?u_1 lieutenant ?u_0 .?u_1 type President
+?u_1 lieutenant Winston_Bryant .?u_0 type President
+?u_1 lieutenant Winston_Bryant .?u_0 lieutenant Joe_Purcell .?u_0 type President
+?u_1 lieutenant Joe_Purcell .?u_0 type President
+?u_0 lieutenant Winston_Bryant .?u_1 lieutenant Joe_Purcell .?u_0 type President
+?u_0 lieutenant Winston_Bryant .?u_0 lieutenant Joe_Purcell .?u_1 type President
+?u_0 lieutenant ?u_1
+?u_0 lieutenant Winston_Bryant .?u_0 lieutenant ?u_1
+?u_0 lieutenant Joe_Purcell .?u_0 lieutenant ?u_1
+?u_0 lieutenant ?u_1 .?u_0 type President
+?u_0 lieutenant Winston_Bryant .?u_0 lieutenant Joe_Purcell .?u_0 lieutenant ?u_1
+?u_0 lieutenant Winston_Bryant .?u_0 lieutenant ?u_1 .?u_0 type President
+?u_0 lieutenant Joe_Purcell .?u_0 lieutenant ?u_1 .?u_0 type President
+?u_0 lieutenant Winston_Bryant .?u_0 lieutenant Joe_Purcell .?u_0 lieutenant ?u_1 .?u_0 type President
+?u_0 lieutenant ?u_1 .?u_1 type President
+#ent parentOrganisation ?u_0
+?u_1 leader ?u_0
+?u_0 leader ?u_1
+Gestapo parentOrganisation ?u_0 .?u_0 leader ?u_1
+Gestapo parentOrganisation ?u_0
+Gestapo leader ?u_0
+Gestapo leader ?u_0
+?u_1 parentOrganisation ?u_0
+?u_0 parentOrganisation ?u_1
+Gestapo parentOrganisation ?u_1
+Gestapo parentOrganisation ?u_1 .?u_1 leader ?u_0
+Gestapo leader ?u_1
+?u_0 address United_States
+?u_0 type Venue
+#ent instrument #ent
+?u_0 architect Jens_Jensen_(landscape_architect)
+Jens_Jensen_(landscape_architect) deathPlace ?u_0
+?u_0 type Person
+?u_1 architect Jens_Jensen_(landscape_architect)
+?u_0 deathPlace ?u_1
+?u_0 type Person
+?u_1 architect Jens_Jensen_(landscape_architect) .?u_0 deathPlace ?u_1
+?u_1 architect Jens_Jensen_(landscape_architect) .?u_0 type Person
+?u_0 deathPlace ?u_1 .?u_0 type Person
+?u_1 architect Jens_Jensen_(landscape_architect) .?u_0 deathPlace ?u_1 .?u_0 type Person
+?u_0 architect Jens_Jensen_(landscape_architect)
+?u_1 type Person
+?u_0 architect Jens_Jensen_(landscape_architect) .?u_1 type Person
+?u_0 deathPlace ?u_1 .?u_1 type Person
+?u_1 deathPlace ?u_0
+?u_1 deathPlace ?u_0 .?u_0 type Person
+?u_0 architect Jens_Jensen_(landscape_architect) .?u_1 deathPlace ?u_0
+?u_1 deathPlace ?u_0 .?u_1 type Person
+?u_0 architect Jens_Jensen_(landscape_architect) .?u_1 deathPlace ?u_0 .?u_1 type Person
+Jens_Jensen_(landscape_architect) deathPlace ?u_1
+?u_1 architect ?u_0
+Jens_Jensen_(landscape_architect) deathPlace ?u_1 .?u_0 type Person
+?u_1 architect ?u_0 .?u_0 type Person
+Jens_Jensen_(landscape_architect) deathPlace ?u_0
+Jens_Jensen_(landscape_architect) deathPlace ?u_0 .?u_1 type Person
+?u_1 architect ?u_0 .?u_1 type Person
+?u_0 architect ?u_1
+?u_0 architect ?u_1 .?u_0 type Person
+?u_0 architect ?u_1 .?u_1 type Person
+?u_0 subsequentWork #ent
+?u_0 openingTheme #ent
+?u_0 type TelevisionShow
+?u_0 subsequentWork Frasier .?u_0 openingTheme Where_Everybody_Knows_Your_Name
+?u_0 subsequentWork Frasier .?u_0 type TelevisionShow
+?u_0 openingTheme Where_Everybody_Knows_Your_Name .?u_0 type TelevisionShow
+?u_0 subsequentWork Frasier .?u_0 openingTheme Where_Everybody_Knows_Your_Name .?u_0 type TelevisionShow
+#ent coverArtist ?u_0
+#ent team ?u_0
+?u_0 bandMember #ent
+?u_0 notableWork #ent
+?u_1 award ?u_0
+?u_0 type Writer
+?u_0 notableWork Creature_Comforts .?u_0 type Writer
+?u_1 award ?u_0 .?u_0 type Writer
+?u_1 notableWork Creature_Comforts
+?u_1 type Writer
+?u_1 notableWork Creature_Comforts .?u_1 award ?u_0
+?u_1 notableWork Creature_Comforts .?u_1 type Writer
+?u_1 award ?u_0 .?u_1 type Writer
+?u_1 notableWork Creature_Comforts .?u_1 award ?u_0 .?u_1 type Writer
+?u_1 notableWork Creature_Comforts .?u_0 type Writer
+?u_0 notableWork Creature_Comforts .?u_1 type Writer
+?u_0 award ?u_1
+?u_0 notableWork Creature_Comforts .?u_0 award ?u_1
+?u_0 award ?u_1 .?u_0 type Writer
+?u_0 notableWork Creature_Comforts .?u_0 award ?u_1 .?u_0 type Writer
+?u_0 award ?u_1 .?u_1 type Writer
+?u_0 composer #ent
+Elizabeth_Alexander_(press_secretary) vicePresident ?u_0
+?u_1 channel #ent
+?u_0 presenter ?u_1
+?u_0 type Person
+?u_0 presenter ?u_1 .?u_0 type Person
+?u_0 channel #ent
+?u_1 type Person
+?u_0 channel #ent .?u_0 presenter ?u_1
+?u_0 presenter ?u_1 .?u_1 type Person
+?u_0 channel #ent .?u_0 type Person
+?u_0 channel #ent .?u_0 presenter ?u_1 .?u_0 type Person
+?u_1 channel #ent .?u_1 type Person
+?u_1 presenter ?u_0
+?u_1 channel #ent .?u_1 presenter ?u_0
+?u_1 presenter ?u_0 .?u_0 type Person
+?u_1 presenter ?u_0 .?u_1 type Person
+?u_1 channel #ent .?u_1 presenter ?u_0 .?u_1 type Person
+#ent producer ?u_0
+#ent nearestCity ?u_0
+David_W._Brown_House nearestCity ?u_0
+?u_0 nearestCity ?u_1
+LoDaisKa_Site nearestCity ?u_0 .David_W._Brown_House nearestCity ?u_0
+?u_1 nearestCity ?u_0
+LoDaisKa_Site nearestCity ?u_0 .?u_1 nearestCity ?u_0
+David_W._Brown_House nearestCity ?u_0 .?u_1 nearestCity ?u_0
+LoDaisKa_Site nearestCity ?u_0 .David_W._Brown_House nearestCity ?u_0 .?u_1 nearestCity ?u_0
+LoDaisKa_Site nearestCity ?u_1
+LoDaisKa_Site nearestCity ?u_1 .David_W._Brown_House nearestCity ?u_0
+LoDaisKa_Site nearestCity ?u_1 .?u_0 nearestCity ?u_1
+David_W._Brown_House nearestCity ?u_1
+LoDaisKa_Site nearestCity ?u_0 .David_W._Brown_House nearestCity ?u_1
+David_W._Brown_House nearestCity ?u_1 .?u_0 nearestCity ?u_1

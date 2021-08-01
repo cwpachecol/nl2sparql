@@ -1,0 +1,222 @@
+#ent binomialAuthority ?u_0
+#ent state ?u_0
+Govinda_(actor) party ?u_0
+#ent leaderName ?u_0
+Govinda_(actor) party ?u_0 .Rishikesh leaderName ?u_0
+?u_0 cpu #ent
+?u_0 type InformationAppliance
+?u_0 cpu Marvell_Technology_Group .?u_0 type InformationAppliance
+?u_1 deathPlace #ent
+?u_1 founder ?u_0
+?u_0 type Magazine
+?u_1 deathPlace Berkeley,_California .?u_0 type Magazine
+?u_0 deathPlace Berkeley,_California
+?u_1 type Magazine
+?u_0 deathPlace Berkeley,_California .?u_1 founder ?u_0
+?u_0 deathPlace Berkeley,_California .?u_1 type Magazine
+?u_1 founder ?u_0 .?u_1 type Magazine
+?u_0 deathPlace Berkeley,_California .?u_1 founder ?u_0 .?u_1 type Magazine
+?u_0 founder ?u_1
+?u_1 deathPlace Berkeley,_California .?u_0 founder ?u_1
+?u_0 founder ?u_1 .?u_0 type Magazine
+?u_1 deathPlace Berkeley,_California .?u_0 founder ?u_1 .?u_0 type Magazine
+?u_0 manufacturer #ent
+?u_0 type InformationAppliance
+?u_0 manufacturer Foxconn .?u_0 type InformationAppliance
+#ent region ?u_0
+Cathedral_Peak_(California) firstAscentPerson #ent
+?u_0 institution #ent
+?u_0 birthPlace ?u_1
+?u_0 institution Harvard_Medical_School .?u_0 birthPlace ?u_1
+?u_1 institution Harvard_Medical_School
+?u_0 locatedInArea Yosemite_National_Park
+?u_0 firstAscentPerson ?u_1
+?u_0 locatedInArea Yosemite_National_Park .?u_0 firstAscentPerson ?u_1
+?u_1 locatedInArea Yosemite_National_Park
+#ent type ?u_0
+#ent country ?u_0
+#ent citizenship ?u_0
+Dafydd_Benfras country ?u_0 .Jasmine_Lowson citizenship ?u_0
+?u_0 deathCause #ent
+?u_0 occupation ?u_1
+?u_0 deathCause Suicide .?u_0 occupation ?u_1
+?u_1 occupation ?u_0
+?u_0 deathCause Suicide .?u_1 occupation ?u_0
+?u_1 deathCause Suicide
+?u_1 deathCause Suicide .?u_0 occupation ?u_1
+?u_1 deathCause Suicide .?u_1 occupation ?u_0
+?u_0 college #ent
+?u_0 type GolfPlayer
+?u_0 college Arizona_State_Sun_Devils .?u_0 type GolfPlayer
+?u_1 subsequentWork #ent
+?u_0 musicComposer ?u_1
+?u_0 type TelevisionEpisode
+?u_1 subsequentWork Butters'_Very_Own_Episode .?u_0 type TelevisionEpisode
+?u_0 musicComposer ?u_1 .?u_0 type TelevisionEpisode
+?u_0 subsequentWork Butters'_Very_Own_Episode
+?u_1 type TelevisionEpisode
+?u_0 subsequentWork Butters'_Very_Own_Episode .?u_0 musicComposer ?u_1
+?u_0 subsequentWork Butters'_Very_Own_Episode .?u_1 type TelevisionEpisode
+?u_0 musicComposer ?u_1 .?u_1 type TelevisionEpisode
+?u_0 subsequentWork Butters'_Very_Own_Episode .?u_0 type TelevisionEpisode
+?u_0 subsequentWork Butters'_Very_Own_Episode .?u_0 musicComposer ?u_1 .?u_0 type TelevisionEpisode
+?u_1 subsequentWork Butters'_Very_Own_Episode .?u_1 type TelevisionEpisode
+?u_1 musicComposer ?u_0
+?u_1 subsequentWork Butters'_Very_Own_Episode .?u_1 musicComposer ?u_0
+?u_1 musicComposer ?u_0 .?u_0 type TelevisionEpisode
+?u_1 musicComposer ?u_0 .?u_1 type TelevisionEpisode
+?u_1 subsequentWork Butters'_Very_Own_Episode .?u_1 musicComposer ?u_0 .?u_1 type TelevisionEpisode
+Butters'_Very_Own_Episode subsequentWork ?u_1
+Butters'_Very_Own_Episode subsequentWork ?u_1 .?u_0 type TelevisionEpisode
+Butters'_Very_Own_Episode subsequentWork ?u_0
+Butters'_Very_Own_Episode subsequentWork ?u_0 .?u_1 type TelevisionEpisode
+Butters'_Very_Own_Episode subsequentWork ?u_0 .?u_0 type TelevisionEpisode
+Butters'_Very_Own_Episode subsequentWork ?u_1 .?u_1 type TelevisionEpisode
+?u_0 developer #ent
+?u_0 type Software
+?u_0 developer Shawn_Fanning .?u_0 type Software
+#ent voice ?u_0
+#ent voice ?u_0
+?u_0 voice ?u_1
+Allen_Walker voice ?u_0 .Kimihiro_Watanuki voice ?u_0
+?u_1 voice ?u_0
+Allen_Walker voice ?u_0 .?u_1 voice ?u_0
+Kimihiro_Watanuki voice ?u_0 .?u_1 voice ?u_0
+Allen_Walker voice ?u_0 .Kimihiro_Watanuki voice ?u_0 .?u_1 voice ?u_0
+Allen_Walker voice ?u_1
+Allen_Walker voice ?u_1 .Kimihiro_Watanuki voice ?u_0
+Allen_Walker voice ?u_1 .?u_0 voice ?u_1
+Kimihiro_Watanuki voice ?u_1
+Allen_Walker voice ?u_0 .Kimihiro_Watanuki voice ?u_1
+Kimihiro_Watanuki voice ?u_1 .?u_0 voice ?u_1
+Easy_Street_(film) editing ?u_0
+Singhasan_Battisi_(TV_series) starring ?u_0
+?u_0 birthPlace ?u_1
+Singhasan_Battisi_(TV_series) starring ?u_0 .?u_0 birthPlace ?u_1
+Singhasan_Battisi_(TV_series) starring ?u_1
+#ent regionServed ?u_0
+#ent country ?u_0
+Toll_Global_Express regionServed ?u_0 .LPGA country ?u_0
+#ent territory ?u_0
+Ryan_Powell_(lacrosse) team ?u_0
+?u_1 draftTeam #ent
+?u_1 placeOfDeath ?u_0
+?u_0 type Location
+?u_1 placeOfDeath ?u_0 .?u_0 type Location
+?u_0 draftTeam Detroit_Pistons
+?u_1 type Location
+#ent club ?u_0
+#ent riverMouth ?u_0
+?u_0 headquarter #ent
+?u_0 type Newspaper
+?u_0 headquarter 1211_Avenue_of_the_Americas .?u_0 type Newspaper
+#ent formerBandMember #ent
+#ent university Columbia_University
+#ent successor ?u_0
+?u_1 primeminister ?u_0
+?u_0 type OfficeHolder
+Kingsley_Wood successor ?u_0 .?u_1 primeminister ?u_0
+Kingsley_Wood successor ?u_0 .?u_0 type OfficeHolder
+?u_1 primeminister ?u_0 .?u_0 type OfficeHolder
+Kingsley_Wood successor ?u_0 .?u_1 primeminister ?u_0 .?u_0 type OfficeHolder
+Kingsley_Wood successor ?u_1
+?u_1 type OfficeHolder
+Kingsley_Wood successor ?u_1 .?u_1 primeminister ?u_0
+Kingsley_Wood successor ?u_1 .?u_1 type OfficeHolder
+?u_1 primeminister ?u_0 .?u_1 type OfficeHolder
+Kingsley_Wood successor ?u_1 .?u_1 primeminister ?u_0 .?u_1 type OfficeHolder
+Kingsley_Wood successor ?u_1 .?u_0 type OfficeHolder
+Kingsley_Wood successor ?u_1 .?u_1 primeminister ?u_0 .?u_0 type OfficeHolder
+Kingsley_Wood successor ?u_0 .?u_1 type OfficeHolder
+Kingsley_Wood successor ?u_0 .?u_1 primeminister ?u_0 .?u_1 type OfficeHolder
+?u_0 primeminister ?u_1
+Kingsley_Wood successor ?u_0 .?u_0 primeminister ?u_1
+?u_0 primeminister ?u_1 .?u_0 type OfficeHolder
+Kingsley_Wood successor ?u_0 .?u_0 primeminister ?u_1 .?u_0 type OfficeHolder
+Kingsley_Wood successor ?u_1 .?u_0 primeminister ?u_1
+?u_0 primeminister ?u_1 .?u_1 type OfficeHolder
+Kingsley_Wood successor ?u_1 .?u_0 primeminister ?u_1 .?u_1 type OfficeHolder
+Kingsley_Wood successor ?u_1 .?u_0 primeminister ?u_1 .?u_0 type OfficeHolder
+Kingsley_Wood successor ?u_0 .?u_0 primeminister ?u_1 .?u_1 type OfficeHolder
+?u_0 successor Kingsley_Wood
+?u_0 successor Kingsley_Wood .?u_0 type OfficeHolder
+?u_1 successor Kingsley_Wood
+?u_1 successor Kingsley_Wood .?u_1 type OfficeHolder
+?u_1 successor Kingsley_Wood .?u_0 type OfficeHolder
+?u_0 successor Kingsley_Wood .?u_1 type OfficeHolder
+?u_0 foundedBy Jim_Harris_(entrepreneur)
+?u_0 employer #ent
+?u_0 employer ?u_1
+?u_1 employer ?u_0
+?u_0 employer McDonnell_Aircraft .?u_0 employer ?u_1
+?u_0 employer ?u_1 .?u_1 employer ?u_0
+?u_1 employer McDonnell_Aircraft
+?u_1 employer McDonnell_Aircraft .?u_1 employer ?u_0
+#ent voice ?u_0
+?u_0 developer ?u_1
+Lightning_McQueen voice ?u_0 .?u_0 developer ?u_1
+Lightning_McQueen voice ?u_1
+?u_0 genre #ent
+?u_1 recordLabel ?u_0
+?u_0 genre Jazz_fusion .?u_1 recordLabel ?u_0
+?u_0 recordLabel ?u_1
+?u_0 genre Jazz_fusion .?u_0 recordLabel ?u_1
+?u_0 genre Jazz_fusion
+?u_0 recordLabel Jazz_fusion
+?u_0 recordLabel Jazz_fusion
+?u_0 genre ?u_1
+?u_1 genre ?u_0
+?u_1 genre Jazz_fusion
+?u_1 genre Jazz_fusion .?u_1 recordLabel ?u_0
+?u_1 genre Jazz_fusion .?u_0 recordLabel ?u_1
+?u_1 recordLabel Jazz_fusion
+Secrets_and_Lies_(U.S._TV_series) distributor ?u_0
+?u_0 regionServed ?u_1
+Secrets_and_Lies_(U.S._TV_series) distributor ?u_0 .?u_0 regionServed ?u_1
+Secrets_and_Lies_(U.S._TV_series) distributor ?u_1
+Toms_Creek_(Monocacy_River) state ?u_0
+?u_0 leftTributary ?u_1
+Toms_Creek_(Monocacy_River) leftTributary ?u_0
+?u_1 leftTributary ?u_0
+Toms_Creek_(Monocacy_River) leftTributary ?u_0
+?u_0 state ?u_1
+Toms_Creek_(Monocacy_River) leftTributary ?u_0 .?u_0 state ?u_1
+?u_1 state ?u_0
+Toms_Creek_(Monocacy_River) state ?u_1
+Toms_Creek_(Monocacy_River) leftTributary ?u_1
+Toms_Creek_(Monocacy_River) leftTributary ?u_1 .?u_1 state ?u_0
+?u_0 award #ent
+?u_1 award ?u_0
+?u_0 award ?u_1
+?u_0 award SIGGRAPH .?u_0 award ?u_1
+?u_1 award ?u_0 .?u_0 award ?u_1
+?u_1 award SIGGRAPH
+?u_1 award SIGGRAPH .?u_1 award ?u_0
+?u_0 citizenship Statelessness
+#ent occupation ?u_0
+?u_0 commander #ent
+?u_0 territory ?u_1
+?u_0 type MilitaryConflict
+?u_0 commander Zuo_Zongtang .?u_0 territory ?u_1
+?u_0 commander Zuo_Zongtang .?u_0 type MilitaryConflict
+?u_0 territory ?u_1 .?u_0 type MilitaryConflict
+?u_0 commander Zuo_Zongtang .?u_0 territory ?u_1 .?u_0 type MilitaryConflict
+?u_1 commander Zuo_Zongtang
+?u_1 type MilitaryConflict
+?u_1 commander Zuo_Zongtang .?u_1 type MilitaryConflict
+?u_0 territory ?u_1 .?u_1 type MilitaryConflict
+?u_1 commander Zuo_Zongtang .?u_0 type MilitaryConflict
+?u_0 commander Zuo_Zongtang .?u_1 type MilitaryConflict
+?u_1 territory ?u_0
+?u_1 territory ?u_0 .?u_0 type MilitaryConflict
+?u_1 commander Zuo_Zongtang .?u_1 territory ?u_0
+?u_1 territory ?u_0 .?u_1 type MilitaryConflict
+?u_1 commander Zuo_Zongtang .?u_1 territory ?u_0 .?u_1 type MilitaryConflict
+?u_0 literaryGenre #ent
+?u_0 writer #ent
+?u_0 type Film
+?u_0 writer Nick_Castle .?u_0 type Film
+#ent languageFamily #ent
+?u_0 team #ent
+?u_0 type BasketballPlayer
+?u_0 team Chicago_Bulls .?u_0 type BasketballPlayer

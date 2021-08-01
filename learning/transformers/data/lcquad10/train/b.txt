@@ -1,0 +1,247 @@
+?u_0 director #ent
+?u_0 riverMouth #ent
+?u_0 type River
+?u_0 riverMouth Dead_Sea .?u_0 type River
+#ent region ?u_0
+The_Haunted_House_(1929_film) director ?u_0
+?u_0 award ?u_1
+The_Haunted_House_(1929_film) director ?u_0 .?u_0 award ?u_1
+The_Haunted_House_(1929_film) director ?u_1
+#ent origin ?u_0
+#ent origin ?u_0
+?u_0 origin ?u_1
+Xynisteri origin ?u_0 .Mavro origin ?u_0
+?u_1 origin ?u_0
+Xynisteri origin ?u_0 .?u_1 origin ?u_0
+Mavro origin ?u_0 .?u_1 origin ?u_0
+Xynisteri origin ?u_0 .Mavro origin ?u_0 .?u_1 origin ?u_0
+Xynisteri origin ?u_1
+Xynisteri origin ?u_1 .Mavro origin ?u_0
+Xynisteri origin ?u_1 .?u_0 origin ?u_1
+Mavro origin ?u_1
+Xynisteri origin ?u_0 .Mavro origin ?u_1
+Mavro origin ?u_1 .?u_0 origin ?u_1
+?u_1 battle #ent
+?u_1 award ?u_0
+?u_0 type Person
+?u_1 battle Battle_of_France .?u_1 award ?u_0
+?u_1 award ?u_0 .?u_0 type Person
+?u_1 battle Battle_of_France .?u_1 award ?u_0 .?u_0 type Person
+?u_0 battle Battle_of_France
+?u_1 type Person
+?u_1 award ?u_0 .?u_1 type Person
+?u_0 battle Battle_of_France .?u_0 type Person
+?u_1 battle Battle_of_France .?u_1 type Person
+?u_1 battle Battle_of_France .?u_1 award ?u_0 .?u_1 type Person
+?u_0 award ?u_1
+?u_0 award ?u_1 .?u_0 type Person
+?u_0 battle Battle_of_France .?u_0 award ?u_1
+?u_0 award ?u_1 .?u_1 type Person
+?u_0 battle Battle_of_France .?u_0 award ?u_1 .?u_1 type Person
+?u_0 battle Battle_of_France .?u_0 award ?u_1 .?u_0 type Person
+#ent silverMedalist ?u_0
+?u_0 gender #ent
+?u_0 board #ent
+?u_1 board ?u_0
+?u_0 board ?u_1
+?u_0 board Creative_Commons .?u_0 board ?u_1
+?u_1 board Creative_Commons
+?u_1 board Creative_Commons .?u_1 board ?u_0
+?u_0 phylum #ent
+?u_0 type Mammal
+?u_0 publisher #ent
+?u_1 subject ?u_0
+?u_0 type Book
+?u_0 publisher Random_House .?u_0 type Book
+?u_1 subject ?u_0 .?u_0 type Book
+?u_1 publisher Random_House
+?u_1 type Book
+?u_1 publisher Random_House .?u_1 subject ?u_0
+?u_1 publisher Random_House .?u_1 type Book
+?u_1 subject ?u_0 .?u_1 type Book
+?u_1 publisher Random_House .?u_1 subject ?u_0 .?u_1 type Book
+?u_1 publisher Random_House .?u_0 type Book
+?u_0 publisher Random_House .?u_1 type Book
+?u_0 subject ?u_1
+?u_0 publisher Random_House .?u_0 subject ?u_1
+?u_0 subject ?u_1 .?u_0 type Book
+?u_0 publisher Random_House .?u_0 subject ?u_1 .?u_0 type Book
+?u_0 subject ?u_1 .?u_1 type Book
+Ladonia_(micronation) officialLanguage ?u_0
+#ent officialLanguage ?u_0
+?u_0 officialLanguage ?u_1
+Ladonia_(micronation) officialLanguage ?u_0 .Empire_of_Atlantium officialLanguage ?u_0
+?u_1 officialLanguage ?u_0
+Ladonia_(micronation) officialLanguage ?u_0 .?u_1 officialLanguage ?u_0
+Empire_of_Atlantium officialLanguage ?u_0 .?u_1 officialLanguage ?u_0
+Ladonia_(micronation) officialLanguage ?u_0 .Empire_of_Atlantium officialLanguage ?u_0 .?u_1 officialLanguage ?u_0
+Ladonia_(micronation) officialLanguage ?u_1
+Ladonia_(micronation) officialLanguage ?u_1 .Empire_of_Atlantium officialLanguage ?u_0
+Ladonia_(micronation) officialLanguage ?u_1 .?u_0 officialLanguage ?u_1
+Empire_of_Atlantium officialLanguage ?u_1
+Ladonia_(micronation) officialLanguage ?u_0 .Empire_of_Atlantium officialLanguage ?u_1
+Empire_of_Atlantium officialLanguage ?u_1 .?u_0 officialLanguage ?u_1
+#ent animator ?u_0
+?u_0 award ?u_1
+The_Skeleton_Dance animator ?u_0 .?u_0 award ?u_1
+The_Skeleton_Dance animator ?u_1
+?u_0 relation #ent
+?u_0 religion ?u_1
+?u_0 type MemberOfParliament
+?u_0 relation Sarathchandra_Rajakaruna .?u_0 religion ?u_1
+?u_0 relation Sarathchandra_Rajakaruna .?u_0 type MemberOfParliament
+?u_0 religion ?u_1 .?u_0 type MemberOfParliament
+?u_0 relation Sarathchandra_Rajakaruna .?u_0 religion ?u_1 .?u_0 type MemberOfParliament
+?u_1 relation Sarathchandra_Rajakaruna
+?u_1 type MemberOfParliament
+?u_1 relation Sarathchandra_Rajakaruna .?u_1 type MemberOfParliament
+?u_1 relation Sarathchandra_Rajakaruna .?u_0 type MemberOfParliament
+?u_0 relation Sarathchandra_Rajakaruna .?u_1 type MemberOfParliament
+#ent tenant ?u_0
+#ent occupation ?u_0
+#ent occupation ?u_0
+?u_0 occupation ?u_1
+Irving_Chernev occupation ?u_0 .Karen_Grigorian occupation ?u_0
+?u_1 occupation ?u_0
+Irving_Chernev occupation ?u_0 .?u_1 occupation ?u_0
+Karen_Grigorian occupation ?u_0 .?u_1 occupation ?u_0
+Irving_Chernev occupation ?u_0 .Karen_Grigorian occupation ?u_0 .?u_1 occupation ?u_0
+Irving_Chernev occupation ?u_1
+Irving_Chernev occupation ?u_1 .Karen_Grigorian occupation ?u_0
+Irving_Chernev occupation ?u_1 .?u_0 occupation ?u_1
+Karen_Grigorian occupation ?u_1
+Irving_Chernev occupation ?u_0 .Karen_Grigorian occupation ?u_1
+Karen_Grigorian occupation ?u_1 .?u_0 occupation ?u_1
+?u_0 operator #ent
+?u_1 manufacturer ?u_0
+?u_0 type Train
+?u_0 operator #ent .?u_0 type Train
+?u_1 manufacturer ?u_0 .?u_0 type Train
+?u_1 operator #ent
+?u_1 type Train
+?u_1 operator #ent .?u_1 manufacturer ?u_0
+?u_1 operator #ent .?u_1 type Train
+?u_1 manufacturer ?u_0 .?u_1 type Train
+?u_1 operator #ent .?u_1 manufacturer ?u_0 .?u_1 type Train
+?u_1 operator #ent .?u_0 type Train
+?u_0 operator #ent .?u_1 type Train
+?u_0 manufacturer ?u_1
+?u_0 operator #ent .?u_0 manufacturer ?u_1
+?u_0 manufacturer ?u_1 .?u_0 type Train
+?u_0 operator #ent .?u_0 manufacturer ?u_1 .?u_0 type Train
+?u_0 manufacturer ?u_1 .?u_1 type Train
+#ent operator ?u_0
+#ent operator ?u_1
+#ent operator ?u_1 .?u_0 type Train
+#ent operator ?u_0 .?u_1 type Train
+?u_0 movement #ent
+?u_0 nationality ?u_1
+?u_0 type Writer
+?u_0 movement Feminism .?u_0 nationality ?u_1
+?u_0 movement Feminism .?u_0 type Writer
+?u_0 nationality ?u_1 .?u_0 type Writer
+?u_0 movement Feminism .?u_0 nationality ?u_1 .?u_0 type Writer
+?u_1 movement Feminism
+?u_1 type Writer
+?u_1 movement Feminism .?u_1 type Writer
+?u_1 movement Feminism .?u_0 type Writer
+?u_0 movement Feminism .?u_1 type Writer
+?u_0 network #ent
+?u_0 executiveProducer #ent
+?u_1 series ?u_0
+?u_0 executiveProducer Ricky_Gervais .?u_1 series ?u_0
+?u_1 executiveProducer Ricky_Gervais
+?u_0 formerTeam #ent
+?u_0 formerTeam #ent
+?u_0 formerTeam ?u_1
+?u_0 formerTeam Indianapolis_Colts .?u_0 formerTeam Carolina_Panthers
+?u_0 formerTeam Indianapolis_Colts .?u_0 formerTeam ?u_1
+?u_0 formerTeam Carolina_Panthers .?u_0 formerTeam ?u_1
+?u_0 formerTeam Indianapolis_Colts .?u_0 formerTeam Carolina_Panthers .?u_0 formerTeam ?u_1
+?u_1 formerTeam ?u_0
+?u_1 formerTeam Indianapolis_Colts
+?u_1 formerTeam Indianapolis_Colts .?u_0 formerTeam Carolina_Panthers
+?u_1 formerTeam Carolina_Panthers
+?u_0 formerTeam Indianapolis_Colts .?u_1 formerTeam Carolina_Panthers
+?u_1 formerTeam Indianapolis_Colts .?u_1 formerTeam ?u_0
+?u_1 formerTeam Carolina_Panthers .?u_1 formerTeam ?u_0
+#ent hubAirport #ent
+#ent sport ?u_0
+#ent occupation ?u_0
+Lagos_Preparatory_School sport ?u_0 .William_Garne occupation ?u_0
+?u_0 origin #ent
+#ent distributingLabel ?u_0
+#ent starring ?u_0
+?u_0 owner #ent
+?u_0 location ?u_1
+?u_0 owner Canal_&_River_Trust .?u_0 location ?u_1
+?u_1 owner Canal_&_River_Trust
+?u_0 launchSite #ent
+?u_0 launchSite ?u_1
+?u_1 launchSite ?u_0
+?u_0 launchSite Cape_Canaveral_Air_Force_Station .?u_0 launchSite ?u_1
+?u_0 launchSite Cape_Canaveral_Air_Force_Station .?u_1 launchSite ?u_0
+?u_1 launchSite Cape_Canaveral_Air_Force_Station
+?u_1 launchSite Cape_Canaveral_Air_Force_Station .?u_0 launchSite ?u_1
+?u_1 launchSite Cape_Canaveral_Air_Force_Station .?u_1 launchSite ?u_0
+?u_1 timeZone #ent
+?u_0 leaderName ?u_1
+?u_0 type Place
+?u_0 leaderName ?u_1 .?u_0 type Place
+?u_0 timeZone Indian_Standard_Time
+?u_1 type Place
+?u_0 timeZone Indian_Standard_Time .?u_0 leaderName ?u_1
+?u_0 leaderName ?u_1 .?u_1 type Place
+?u_0 timeZone Indian_Standard_Time .?u_0 leaderName ?u_1 .?u_1 type Place
+?u_0 timeZone Indian_Standard_Time .?u_0 type Place
+?u_0 timeZone Indian_Standard_Time .?u_0 leaderName ?u_1 .?u_0 type Place
+?u_1 timeZone Indian_Standard_Time .?u_1 type Place
+?u_1 leaderName ?u_0
+?u_1 timeZone Indian_Standard_Time .?u_1 leaderName ?u_0
+?u_1 leaderName ?u_0 .?u_0 type Place
+?u_1 timeZone Indian_Standard_Time .?u_1 leaderName ?u_0 .?u_0 type Place
+?u_1 leaderName ?u_0 .?u_1 type Place
+?u_1 timeZone Indian_Standard_Time .?u_1 leaderName ?u_0 .?u_1 type Place
+?u_0 creator #ent
+#ent associate ?u_0
+#ent founder ?u_0
+Thomas_Bryan_Martin associate ?u_0 .Pittsburgh founder ?u_0
+?u_0 sport #ent
+?u_0 sport ?u_1
+?u_1 sport ?u_0
+?u_0 sport Hockey .?u_0 sport ?u_1
+?u_0 sport ?u_1 .?u_1 sport ?u_0
+?u_1 sport Hockey
+?u_1 sport Hockey .?u_1 sport ?u_0
+?u_1 battle #ent
+?u_1 relation ?u_0
+?u_0 type Person
+?u_1 battle Operation_Barbarossa .?u_1 relation ?u_0
+?u_1 relation ?u_0 .?u_0 type Person
+?u_1 battle Operation_Barbarossa .?u_1 relation ?u_0 .?u_0 type Person
+?u_0 battle Operation_Barbarossa
+?u_1 type Person
+?u_0 battle Operation_Barbarossa .?u_1 relation ?u_0
+?u_1 relation ?u_0 .?u_1 type Person
+?u_0 battle Operation_Barbarossa .?u_1 relation ?u_0 .?u_1 type Person
+?u_0 battle Operation_Barbarossa .?u_0 type Person
+?u_0 battle Operation_Barbarossa .?u_1 relation ?u_0 .?u_0 type Person
+?u_1 battle Operation_Barbarossa .?u_1 type Person
+?u_1 battle Operation_Barbarossa .?u_1 relation ?u_0 .?u_1 type Person
+?u_0 relation ?u_1
+?u_1 battle Operation_Barbarossa .?u_0 relation ?u_1
+?u_0 relation ?u_1 .?u_0 type Person
+?u_1 battle Operation_Barbarossa .?u_0 relation ?u_1 .?u_0 type Person
+?u_0 battle Operation_Barbarossa .?u_0 relation ?u_1
+?u_0 relation ?u_1 .?u_1 type Person
+?u_0 battle Operation_Barbarossa .?u_0 relation ?u_1 .?u_1 type Person
+?u_0 battle Operation_Barbarossa .?u_0 relation ?u_1 .?u_0 type Person
+?u_1 battle Operation_Barbarossa .?u_0 relation ?u_1 .?u_1 type Person
+?u_0 occupation #ent
+?u_0 awards ?u_1
+?u_0 occupation Screenwriter .?u_0 awards ?u_1
+?u_1 occupation Screenwriter
+?u_0 operatingSystem #ent
+?u_0 type Software
+?u_0 operatingSystem Microsoft_Windows .?u_0 type Software
+#ent location ?u_0
