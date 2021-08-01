@@ -3,7 +3,21 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="\learning\transformers\data\lcquad10\lcquad10_train.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\learning\transformers\data\lcquad10\test\qs.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\learning\transformers\data\lcquad10\train\qs.csv">
           <value>
             <Attribute>
               <option name="separator" value=":" />

@@ -218,7 +218,7 @@ def split(data, parser=None):
     qs_list = []
     id_list = []
     sim_list = []
-    for item in tqdm(dataset[:100]):
+    for item in tqdm(dataset):
         i = item["id"]
         a = item["question"]
 
@@ -243,6 +243,7 @@ def split(data, parser=None):
         qs_list.append([q.encode('ascii', 'ignore').decode('ascii'), s.encode('ascii', 'ignore').decode('ascii')])
         # sim_list.append(sim + '\n')
 
+        # print([q.encode('ascii', 'ignore').decode('ascii'), s.encode('ascii', 'ignore').decode('ascii')])
         for query in item["generated_queries"]:
             a, b = generalize_question(a, query["query"], parser)
             # a, b = generalize_question(a, query, parser)
@@ -268,17 +269,21 @@ def save_split(dst_dir, a_list, b_list, q_list, s_list, qs_list, id_list, sim_li
             open(os.path.join(dst_dir, 'qs.csv'), 'w') as qsfile,\
             open(os.path.join(dst_dir, 'id.txt'), 'w') as idfile, \
             open(os.path.join(dst_dir, 'sim.txt'), 'w') as simfile:
+        writer = csv.writer(qsfile, delimiter=',', lineterminator='\n')
+
         for i in range(len(a_list)):
             idfile.write(id_list[i])
             afile.write(a_list[i])
             bfile.write(b_list[i])
             simfile.write(sim_list[i])
 
-        writer = csv.writer(qsfile)
-        for i in range(len(q_list)):
-            qfile.write(q_list[i])
-            sfile.write(s_list[i])
-            writer.writerow(qs_list[i])
+        for j in range(len(q_list)):
+            qfile.write(q_list[j])
+            sfile.write(s_list[j])
+            # print("Inicio----------")
+            # print(qs_list[j])
+            # print("Fin--------------")
+            writer.writerow(qs_list[j])
 
 def parse(dirpath, dep_parse=True):
     if dep_parse:

@@ -63,19 +63,32 @@ def read_txt_file(file, reverse=False):
 
 def read_csv_file(file, reverse=False):
     # Read csv file
-    with open(file) as csv_file:
+    with open(file, 'r') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
-        line_count = 0
+        pairs = []
         for row in csv_reader:
-            if line_count == 0:
-                print(f'Column names are {", ".join(row)}')
-                line_count += 1
-            else:
-                print(f'\t{row[0]} works in the {row[1]} department, and was born in {row[2]}.')
-                line_count += 1
-        print(f'Processed {line_count} lines.')
+            pairs.append([row[0], row[1]])
 
-    return csv_reader
+        # pairs = [[normalizeString(s) for s in row.split(',')[:2]] for row in csv_reader]
+
+    return pairs
+
+    # with open(file) as csv_file:
+    #     csv_reader = csv.reader(csv_file, delimiter=',')
+    #     pairs = []
+    #     for row in csv_reader:
+    #         pairs.append(row)
+    #     # line_count = 0
+        # for row in csv_reader:
+        #     if line_count == 0:
+        #         print(f'Column names are {", ".join(row)}')
+        #         line_count += 1
+        #     else:
+        #         print(f'\t{row[0]} works in the {row[1]} department, and was born in {row[2]}.')
+        #         line_count += 1
+        # print(f'Processed {line_count} lines.')
+
+    return pairs
 
 def main():
     global args
@@ -95,7 +108,7 @@ def main():
     # print(base_dir)
     # print(args.save)
     save_dir = base_dir + '/' + args.save
-    print(save_dir)
+    # print(save_dir)
 
     fh = logging.FileHandler(os.path.join(save_dir, args.expname) + '.log', mode='w')
     # fh = logging.FileHandler(os.path.join(arg_save, arg_expname) + '.log', mode='w')
@@ -103,7 +116,6 @@ def main():
     fh.setFormatter(formatter)
     logger.addHandler(fh)
 
-    exit()
     # console logger
     ch = logging.StreamHandler()
     ch.setLevel(logging.DEBUG)
@@ -122,7 +134,7 @@ def main():
     args.save = 'checkpoints/'
 
     torch.manual_seed(args.seed)
-    random.seed(args.seed)
+    # random.seed(args.seed)
     if args.cuda:
         torch.cuda.manual_seed(args.seed)
         torch.backends.cudnn.benchmark = True
@@ -170,6 +182,11 @@ def main():
         torch.save(test_dataset, test_file)
     logger.debug('==> Size of test data    : %d ' % len(test_dataset))
 
+    os.path.join(args.data, 'dataset_train.pth')
+    file_test = os.path.join(args.data, 'train/qs.csv')
+    pairs = read_csv_file(file_test)
+    # print(pairs[:10])
+    print(random.choice(pairs))
     exit()
     similarity = DASimilarity(args.mem_dim, args.hidden_dim, args.num_classes)
     # if args.sim == "cos":
