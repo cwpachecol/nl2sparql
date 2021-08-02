@@ -21,7 +21,7 @@ from model import *
 from tree import Tree
 from vocab import Vocab
 # DATASET CLASS FOR SICK DATASET
-from dataset import QGDataset
+from dataset import QGDataset, NL2SPARQLDataset, Lang
 # METRICS CLASS FOR EVALUATION
 from metrics import Metrics
 # UTILITY FUNCTIONS
@@ -35,7 +35,6 @@ from fasttext import load_model
 
 # sys.path.insert(0, os.path.abspath("..//.."))
 sys.path.insert(0, os.path.abspath('../..'))
-
 
 import unicodedata
 import re
@@ -88,7 +87,42 @@ def read_csv_file(file, reverse=False):
         #         line_count += 1
         # print(f'Processed {line_count} lines.')
 
-    return pairs
+    # return pairs
+
+
+def prepareData(file, filters=None, max_length=None, reverse=False):
+    pairs = read_csv_file(file, reverse)
+    print(f"Tenemos {len(pairs)} pares de frases")
+
+    # if filters is not None:
+    #     assert max_length is not None
+    #     pairs = filterPairs(pairs, filters, max_length, int(reverse))
+    #     print(f"Filtramos a {len(pairs)} pares de frases")
+
+    # Reverse pairs, make Lang instances
+    if reverse:
+        pairs = [list(reversed(p)) for p in pairs]
+        input_lang = Lang('sparql')
+        output_lang = Lang('query')
+    else:
+        input_lang = Lang('query')
+        output_lang = Lang('sparql')
+
+    for pair in pairs:
+        input_lang.addSentence(pair[0])
+        output_lang.addSentence(pair[1])
+
+        # add <eos> token
+        pair[0] += " EOS"
+        pair[1] += " EOS"
+
+    print("Longitud vocabularios:")
+    print(input_lang.name, input_lang.n_words)
+    print(output_lang.name, output_lang.n_words)
+
+    return input_lang, output_lang, pairs
+
+
 
 def main():
     global args
@@ -160,33 +194,53 @@ def main():
     logger.debug('==> Dataset vocabulary size : %d ' % vocab.size())
 
     # load dataset splits
+    # train_file = os.path.join(args.data, 'dataset_train.pth')
+    # if os.path.isfile(train_file):
+    #     train_dataset = torch.load(train_file)
+    # else:
+    #     train_dataset = QGDataset(train_dir, vocab, args.num_classes)
+    #     torch.save(train_dataset, train_file)
+    # logger.debug('==> Size of train data   : %d ' % len(train_dataset))
+    # valid_file = os.path.join(args.data, 'dataset_valid.pth')
+    # if os.path.isfile(valid_file):
+    #     valid_dataset = torch.load(valid_file)
+    # else:
+    #     valid_dataset = QGDataset(valid_dir, vocab, args.num_classes)
+    #     torch.save(valid_dataset, valid_file)
+    # logger.debug('==> Size of valid data     : %d ' % len(valid_dataset))
+    # test_file = os.path.join(args.data, 'dataset_test.pth')
+    # if os.path.isfile(test_file):
+    #     test_dataset = torch.load(test_file)
+    # else:
+    #     test_dataset = QGDataset(test_dir, vocab, args.num_classes)
+    #     torch.save(test_dataset, test_file)
+    # logger.debug('==> Size of test data    : %d ' % len(test_dataset))
+
+    # load dataset splits
+    MAX_LENGTH = 1000
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+
     train_file = os.path.join(args.data, 'dataset_train.pth')
     if os.path.isfile(train_file):
         train_dataset = torch.load(train_file)
     else:
-        train_dataset = QGDataset(train_dir, vocab, args.num_classes)
+        raw_train_file = os.path.join(args.data, 'train/qs.csv')
+        input_lang, output_lang, pairs = prepareData(raw_train_file)
+
+        # train_dataset = QGDataset(train_dir, vocab, args.num_classes)
+        train_dataset = NL2SPARQLDataset(pairs, vocab, MAX_LENGTH, device=device)
         torch.save(train_dataset, train_file)
     logger.debug('==> Size of train data   : %d ' % len(train_dataset))
-    valid_file = os.path.join(args.data, 'dataset_valid.pth')
-    if os.path.isfile(valid_file):
-        valid_dataset = torch.load(valid_file)
-    else:
-        valid_dataset = QGDataset(valid_dir, vocab, args.num_classes)
-        torch.save(valid_dataset, valid_file)
-    logger.debug('==> Size of valid data     : %d ' % len(valid_dataset))
-    test_file = os.path.join(args.data, 'dataset_test.pth')
-    if os.path.isfile(test_file):
-        test_dataset = torch.load(test_file)
-    else:
-        test_dataset = QGDataset(test_dir, vocab, args.num_classes)
-        torch.save(test_dataset, test_file)
-    logger.debug('==> Size of test data    : %d ' % len(test_dataset))
 
-    os.path.join(args.data, 'dataset_train.pth')
-    file_test = os.path.join(args.data, 'train/qs.csv')
-    pairs = read_csv_file(file_test)
-    # print(pairs[:10])
-    print(random.choice(pairs))
+    print(train_dataset[0][0])
+    for e in train_dataset[:10][0]:
+        print(vocab.convertToLabels(e, 1000))
+    # pairs = read_csv_file(file_test)
+
+    # descomentar para usar el dataset filtrado
+    # input_lang, output_lang, pairs = prepareData('spa.txt', filters=eng_prefixes, max_length=MAX_LENGTH)
+
+    # print(random.choice(pairs))
     exit()
     similarity = DASimilarity(args.mem_dim, args.hidden_dim, args.num_classes)
     # if args.sim == "cos":

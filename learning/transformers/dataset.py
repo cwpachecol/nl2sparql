@@ -39,25 +39,35 @@ class Lang:
         return [self.index2word[ix] for ix in index]
 
 class NL2SPARQLDataset(torch.utils.data.Dataset):
-    def __init__(self, input_lang, output_lang, pairs, max_length, device):
-        self.input_lang = input_lang
-        self.output_lang = output_lang
+    def __init__(self, pairs, vocab, max_length, device):
+        # self.input_lang = input_lang
+        # self.output_lang = output_lang
         self.pairs = pairs
+        self.vocab = vocab
         self.max_length = max_length
         self.device = device
+        self.queries = self.read_queries(self.pairs)
+        self.sparqls = self.read_sparqls(self.pairs)
+
     def __len__(self):
         return len(self.pairs)
 
-    def __getitem__(self, ix):
-        inputs = torch.tensor(self.input_lang.indexesFromSentence(self.pairs[ix][0]), device=self.device,
-                              dtype=torch.long)
-        outputs = torch.tensor(self.output_lang.indexesFromSentence(self.pairs[ix][1]), device=self.device,
-                               dtype=torch.long)
-        # metemos padding a todas las frases hast a la longitud máxima
-        return torch.nn.functional.pad(inputs, (0, self.max_length - len(inputs)), 'constant',
-                                       self.input_lang.word2index['PAD']),\
-               torch.nn.functional.pad(outputs, (0, self.max_length - len(outputs)), 'constant',
-                                       self.output_lang.word2index['PAD'])
+    def __getitem__(self, index):
+        query = deepcopy(self.queries[index])
+        sparql = deepcopy(self.sparqls[index])
+        return (query, sparql)
+
+    def read_queries(self, pairs):
+        queries = [self.read_sentence(row[0]) for row in tqdm(pairs)]
+        return queries
+
+    def read_sparqls(self, pairs):
+        sparqls = [self.read_sentence(row[1]) for row in tqdm(pairs)]
+        return sparqls
+
+    def read_sentence(self, line):
+        indices = self.vocab.convertToIdx(line.split(), constants.UNK_WORD)
+        return torch.LongTensor(indices)
 
 class QGDataset(data.Dataset):
     def __init__(self, path, vocab, num_classes):
