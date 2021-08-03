@@ -182,9 +182,12 @@ def main():
     # write unique words from all token files
     dataset_vocab_file = os.path.join(args.data, 'dataset.vocab')
     if not os.path.isfile(dataset_vocab_file):
-        token_files_a = [os.path.join(split, 'a.toks') for split in [train_dir, valid_dir, test_dir]]
-        token_files_b = [os.path.join(split, 'b.toks') for split in [train_dir, valid_dir, test_dir]]
-        token_files = token_files_a + token_files_b
+        # token_files_a = [os.path.join(split, 'a.toks') for split in [train_dir, valid_dir, test_dir]]
+        # token_files_b = [os.path.join(split, 'b.toks') for split in [train_dir, valid_dir, test_dir]]
+        # token_files = token_files_a + token_files_b
+        token_files_q = [os.path.join(split, 'q.txt') for split in [train_dir, valid_dir, test_dir]]
+        token_files_s = [os.path.join(split, 's.txt') for split in [train_dir, valid_dir, test_dir]]
+        token_files = token_files_q + token_files_s
         dataset_vocab_file = os.path.join(args.data, 'dataset.vocab')
         build_vocab(token_files, dataset_vocab_file)
 
@@ -224,17 +227,27 @@ def main():
     if os.path.isfile(train_file):
         train_dataset = torch.load(train_file)
     else:
-        raw_train_file = os.path.join(args.data, 'train/qs.csv')
-        input_lang, output_lang, pairs = prepareData(raw_train_file)
+        train_dataset = NL2SPARQLDataset(train_dir, vocab, MAX_LENGTH, device=device)
+        torch.save(train_dataset, train_file)
+
+        # raw_train_file = os.path.join(args.data, 'train/qs.csv')
+        # input_lang, output_lang, pairs = prepareData(raw_train_file)
 
         # train_dataset = QGDataset(train_dir, vocab, args.num_classes)
-        train_dataset = NL2SPARQLDataset(pairs, vocab, MAX_LENGTH, device=device)
-        torch.save(train_dataset, train_file)
+        #train_dataset = NL2SPARQLDataset(pairs, vocab, MAX_LENGTH, device=device)
+        #torch.save(train_dataset, train_file)
     logger.debug('==> Size of train data   : %d ' % len(train_dataset))
 
-    print(train_dataset[0][0])
-    for e in train_dataset[:10][0]:
-        print(vocab.convertToLabels(e, 1000))
+    print("==++"*20)
+    print(train_dataset[:5][0])
+    print("&&&&" * 20)
+    for e in train_dataset[:5][0]:
+        # print(e.squeeze().tolist())
+        # print(e.flatten().tolist())
+        print(e.tolist())
+
+        # print(vocab.convertToLabels(e.flatten().tolist(), 1880))
+        print(vocab.convertToLabels(e.tolist(), 3))
     # pairs = read_csv_file(file_test)
 
     # descomentar para usar el dataset filtrado

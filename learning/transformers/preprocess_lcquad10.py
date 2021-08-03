@@ -346,10 +346,25 @@ if __name__ == '__main__':
     parse(test_dir)
 
     # get vocabulary
+    # build_vocab(
+    #     glob.glob(os.path.join(lcquad10_dir, '*/*.toks')),
+    #     os.path.join(lcquad10_dir, 'vocab.txt'))
+    # build_vocab(
+    #     glob.glob(os.path.join(lcquad10_dir, '*/*.toks')),
+    #     os.path.join(lcquad10_dir, 'vocab-cased.txt'),
+    #     lowercase=False)
+
     build_vocab(
-        glob.glob(os.path.join(lcquad10_dir, '*/*.toks')),
-        os.path.join(lcquad10_dir, 'vocab.txt'))
+        glob.glob(os.path.join(lcquad10_dir, '*/q.txt')),
+        os.path.join(lcquad10_dir, 'vocab_q.txt'))
     build_vocab(
-        glob.glob(os.path.join(lcquad10_dir, '*/*.toks')),
-        os.path.join(lcquad10_dir, 'vocab-cased.txt'),
+        glob.glob(os.path.join(lcquad10_dir, '*/q.txt')),
+        os.path.join(lcquad10_dir, 'vocab-cased_q.txt'),
+        lowercase=False)
+    build_vocab(
+        glob.glob(os.path.join(lcquad10_dir, '*/s.txt')),
+        os.path.join(lcquad10_dir, 'vocab_s.txt'))
+    build_vocab(
+        glob.glob(os.path.join(lcquad10_dir, '*/s.txt')),
+        os.path.join(lcquad10_dir, 'vocab-cased_s.txt'),
         lowercase=False)
