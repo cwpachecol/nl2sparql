@@ -10,61 +10,41 @@ import learning.transformers.constants as constants
 from learning.transformers.tree import Tree
 from learning.transformers.vocab import Vocab
 
-
-class Lang:
-    def __init__(self, name):
-        self.name = name
-        self.word2index = {"SOS": 0, "EOS": 1, "PAD": 2}
-        self.word2count = {}
-        self.index2word = {0: "SOS", 1: "EOS", 2: "PAD"}
-        self.n_words = 3  # Count SOS, EOS and PAD
-
-    def addSentence(self, sentence):
-        for word in sentence.split(' '):
-            self.addWord(word)
-
-    def addWord(self, word):
-        if word not in self.word2index:
-            self.word2index[word] = self.n_words
-            self.word2count[word] = 1
-            self.index2word[self.n_words] = word
-            self.n_words += 1
-        else:
-            self.word2count[word] += 1
-
-    def indexesFromSentence(self, sentence):
-        return [self.word2index[word] for word in sentence.split(' ')]
-
-    def sentenceFromIndex(self, index):
-        return [self.index2word[ix] for ix in index]
-
-class NL2SPARQLDataset(torch.utils.data.Dataset):
-    def __init__(self, path, vocab, max_length, device):
+class NL2SPARQLDataset(data.Dataset):
+    def __init__(self, path, vocab_q, vocab_s, max_length, device):
         # self.input_lang = input_lang
         # self.output_lang = output_lang
         # self.pairs = pairs
-        self.vocab = vocab
+        self.vocab_q = vocab_q
+        self.vocab_s = vocab_s
         self.max_length = max_length
         self.device = device
-        self.queries = self.read_sentences(os.path.join(path, 'q.txt'))
-        self.sparqls = self.read_sentences(os.path.join(path, 's.txt'))
+        self.queries = self.read_sentences(os.path.join(path, 'q.txt'), self.vocab_q)
+        self.sparqls = self.read_sentences(os.path.join(path, 's.txt'), self.vocab_s)
         self.size = len(self.queries)
 
     def __len__(self):
         return self.size
 
     def __getitem__(self, index):
-        query = deepcopy(self.queries[index])
-        sparql = deepcopy(self.sparqls[index])
-        return (query, sparql)
+        query = torch.tensor(deepcopy(self.queries[index]), device=self.device, dtype=torch.long)
+        sparql = torch.tensor(deepcopy(self.sparqls[index]), device=self.device, dtype=torch.long)
 
-    def read_sentences(self, filename):
+        # metemos padding a todas las frases hast a la longitud máxima
+        return torch.nn.functional.pad(query, (0, self.max_length - len(query)), 'constant',
+                                       self.vocab_q.getIndex("<pad>")), \
+               torch.nn.functional.pad(sparql, (0, self.max_length - len(sparql)), 'constant',
+                                       self.vocab_s.getIndex("<pad>"))
+
+        # return (query, sparql)
+
+    def read_sentences(self, filename, vocab):
         with open(filename, 'r') as f:
-            sentences = [self.read_sentence(line) for line in tqdm(f.readlines())]
+            sentences = [self.read_sentence(line, vocab) for line in tqdm(f.readlines())]
         return sentences
 
-    def read_sentence(self, line):
-        indices = self.vocab.convertToIdx(line.split(), constants.UNK_WORD)
+    def read_sentence(self, line, vocab):
+        indices = vocab.convertToIdx(line.split(), constants.UNK_WORD)
         return torch.LongTensor(indices)
 
 class QGDataset(data.Dataset):
