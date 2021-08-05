@@ -188,17 +188,10 @@ def main():
     print(vocab_q.convertToLabels(query_sentence.tolist(), 0))
     print(vocab_s.convertToLabels(sparql_sentence.tolist(), 0))
 
-    # print(train_dataset[0][0])
-    # print("==++"*20)
-    # print(train_dataset[:5][0])
-    # print("&&&&" * 20)
-    # for e in train_dataset[:5][0]:
-    #     # print(e.squeeze().tolist())
-    #     # print(e.flatten().tolist())
-    #     print(e.tolist())
-    #
-    #     # print(vocab.convertToLabels(e.flatten().tolist(), 1880))
-    #     print(vocab.convertToLabels(e.tolist(), 3))
+    # print(e.squeeze().tolist())
+    # print(e.flatten().tolist())
+    # print(e.tolist())
+    # print(vocab.convertToLabels(e.flatten().tolist(), 1880))
 
     # Training hyperparameters
     num_epochs = 10000
@@ -210,8 +203,8 @@ def main():
     trg_vocab_size = vocab_s.size()
     print(f"src_vocab_size: {src_vocab_size} , trg_vocab_size: {trg_vocab_size}")
 
-    embedding_size = 256
-    num_heads = 8
+    embedding_size = 300
+    num_heads = 10
     num_encoder_layers = 3
     num_decoder_layers = 3
     dropout = 0.10
@@ -220,13 +213,21 @@ def main():
     q_pad_idx = vocab_q.getIndex("<pad>")
     last_check = 0
 
-    train_iterator, valid_iterator, test_iterator = BucketIterator.splits(
-        (train_dataset, valid_dataset, test_dataset),
-        batch_size=batch_size,
-        sort_within_batch=True,
-        sort_key=lambda x: len(x[0]),
-        device=device,
-    )
+    dataloader = {
+        'train': torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True),
+        'test': torch.utils.data.DataLoader(test_dataset, batch_size=batch_size, shuffle=False),
+    }
+
+    inputs, outputs = next(iter(dataloader['train']))
+    print(inputs.shape, outputs.shape)
+
+    # train_iterator, valid_iterator, test_iterator = BucketIterator.splits(
+    #     (train_dataset, valid_dataset, test_dataset),
+    #     batch_size=batch_size,
+    #     sort_within_batch=True,
+    #     sort_key=lambda x: len(x[0]),
+    #     device=device,
+    # )
 
     model = Transformer(
         embedding_size,
@@ -265,87 +266,27 @@ def main():
 #         #   buffer = io.BytesIO(f.read())
 #         #   load_checkpoint(torch.load(buffer), model, optimizer)
 
-    exit()
 # Training
-    sentence = "Which city's foundeer is John Forbes?"
 
-    for epoch in range(last_check + 1, num_epochs):
-        print(f"[Epoch {epoch} / {num_epochs}]")
 
-        # if save_model:
-        #     # if (epoch + last_check) % 5 == 0:
-        #     checkpoint = {"state_dict": model.state_dict(), "optimizer": optimizer.state_dict()}
-        #     save_checkpoint(checkpoint,
-        #                     filename='/content/drive/MyDrive/Colab Notebooks/nl_to_sparql/checks/lcquad10/check_nl_to_sparql_' + str(
-        #                         epoch) + '_epochs.pth.tar')
-        #
-        # model.eval()
-        # translated_sentence = translate_sentence(model, sentence, question_field, sparql_field, device, max_length=50)
-        #
-        # print(f"Sentence: {sentence} \n")
-        # print(f"Translated example sentence: {translated_sentence} \n ")
-        # # print(" ".join(translated_sentence))
+    # criterion = nn.KLDivLoss()  # nn.HingeEmbeddingLoss()
 
-        model.train()
-        losses = []
-
-        for batch_idx, batch in enumerate(train_iterator):
-            # Get input and targets and get to cuda
-            inp_data = batch.src.to(device)
-            target = batch.trg.to(device)
-
-            # Forward prop
-            output = model(inp_data, target[:-1, :])
-
-            # Output is of shape (trg_len, batch_size, output_dim) but Cross Entropy Loss
-            # doesn't take input in that form. For example if we have MNIST we want to have
-            # output to be: (N, 10) and targets just (N). Here we can view it in a similar
-            # way that we have output_words * batch_size that we want to send in into
-            # our cost function, so we need to do some reshapin.
-            # Let's also remove the start token while we're at it
-            output = output.reshape(-1, output.shape[2])
-            target = target[1:].reshape(-1)
-
-            optimizer.zero_grad()
-
-            loss = criterion(output, target)
-            losses.append(loss.item())
-
-            # Back prop
-            loss.backward()
-            # Clip to avoid exploding gradient issues, makes sure grads are
-            # within a healthy range
-            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1)
-
-            # Gradient descent step
-            optimizer.step()
-
-            # plot to tensorboard
-            # writer.add_scalar("Training loss", loss, global_step=step)
-            # step += 1
-
-        mean_loss = sum(losses) / len(losses)
-        print(f"loss mean: {(mean_loss)}")
-        # scheduler.step(mean_loss)
-
-    exit()
-
-    criterion = nn.KLDivLoss()  # nn.HingeEmbeddingLoss()
-
-    if args.cuda:
-        model.cuda(), criterion.cuda()
-    else:
-        torch.set_num_threads(4)
-    logger.info("number of available cores: {}".format(torch.get_num_threads()))
+    # if args.cuda:
+    #     model.cuda(), criterion.cuda()
+    # else:
+    #     torch.set_num_threads(4)
+    # logger.info("number of available cores: {}".format(torch.get_num_threads()))
     if args.optim == 'adam':
         optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.wd)
     elif args.optim == 'adagrad':
         optimizer = optim.Adagrad(model.parameters(), lr=args.lr, weight_decay=args.wd)
     elif args.optim == 'sgd':
         optimizer = optim.SGD(model.parameters(), lr=args.lr, weight_decay=args.wd)
-    metrics = Metrics(args.num_classes)
+    # metrics = Metrics(args.num_classes)
 
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=2, gamma=0.25)
+
+    num_epochs = 10
 
     # for words common to dataset vocab and GLOVE, use GLOVE vectors
     # for other words in dataset vocab, use random normal vectors
@@ -354,15 +295,15 @@ def main():
         emb = torch.load(emb_file)
     else:
         EMBEDDING_DIM = 300
-        emb = torch.zeros(vocab.size(), EMBEDDING_DIM, dtype=torch.float)
+        emb = torch.zeros(vocab_q.size(), EMBEDDING_DIM, dtype=torch.float)
         fasttext_model = load_model("data/fasttext/wiki.en.bin")
         print('Use Fasttext Embedding')
-        for word in vocab.labelToIdx.keys():
+        for word in vocab_q.labelToIdx.keys():
             word_vector = fasttext_model.get_word_vector(word)
             if word_vector.all() != None and len(word_vector) == EMBEDDING_DIM:
-                emb[vocab.getIndex(word)] = torch.Tensor(word_vector)
+                emb[vocab_q.getIndex(word)] = torch.Tensor(word_vector)
             else:
-                emb[vocab.getIndex(word)] = torch.Tensor(EMBEDDING_DIM).uniform_(-1, 1)
+                emb[vocab_q.getIndex(word)] = torch.Tensor(EMBEDDING_DIM).uniform_(-1, 1)
         # # load glove embeddings and vocab
         # args.glove = 'learning/treelstm/data/glove/'
         # print('Use Glove Embedding')
@@ -379,7 +320,8 @@ def main():
     # plug these into embedding matrix inside model
     if args.cuda:
         emb = emb.cuda()
-    model.emb.weight.data.copy_(emb)
+    model.src_word_embedding.weight.data.copy_(emb)
+    # model.emb.weight.data.copy_(emb)
 
     checkpoint_filename = '%s.pt' % os.path.join(args.save, args.expname)
     if args.mode == "test":
@@ -388,17 +330,20 @@ def main():
         args.epochs = 1
 
     # create trainer object for training and testing
-    trainer = Trainer(args, model, criterion, optimizer)
+    trainer = Trainer(args, model, device, criterion, optimizer, args.epochs)
 
     for epoch in range(args.epochs):
         if args.mode == "train":
             scheduler.step()
 
-            train_loss = trainer.train(train_dataset)
-            train_loss, train_pred = trainer.test(train_dataset)
+            # train_loss = trainer.train(dataloader)
+            train_loss, train_pred = trainer.test(dataloader, vocab_s, MAX_LENGTH)
             logger.info(
-                '==> Epoch {}, Train \tLoss: {} {}'.format(epoch, train_loss,
-                                                           metrics.all(train_pred, train_dataset.labels)))
+                '==> Epoch {}, Train \tLoss: {}'.format(epoch, train_loss))
+            # logger.info(
+            #     '==> Epoch {}, Train \tLoss: {} {}'.format(epoch, train_loss,
+            #                                                metrics.all(train_pred, train_dataset.labels)))
+
             checkpoint = {'model': trainer.model.state_dict(), 'optim': trainer.optimizer,
                           'args': args, 'epoch': epoch, 'scheduler': scheduler}
             checkpoint_filename = '%s.pt' % os.path.join(args.save,
@@ -406,12 +351,14 @@ def main():
                                                                                                        train_loss))
             torch.save(checkpoint, checkpoint_filename)
 
-        dev_loss, dev_pred = trainer.test(dev_dataset)
-        test_loss, test_pred = trainer.test(test_dataset)
-        logger.info(
-            '==> Epoch {}, Dev \tLoss: {} {}'.format(epoch, dev_loss, metrics.all(dev_pred, dev_dataset.labels)))
-        logger.info(
-            '==> Epoch {}, Test \tLoss: {} {}'.format(epoch, test_loss, metrics.all(test_pred, test_dataset.labels)))
+    exit()
+
+        # dev_loss, dev_pred = trainer.test(dev_dataset)
+        # test_loss, test_pred = trainer.test(test_dataset)
+        # logger.info(
+        #     '==> Epoch {}, Dev \tLoss: {} {}'.format(epoch, dev_loss, metrics.all(dev_pred, dev_dataset.labels)))
+        # logger.info(
+        #     '==> Epoch {}, Test \tLoss: {} {}'.format(epoch, test_loss, metrics.all(test_pred, test_dataset.labels)))
 
 
 if __name__ == "__main__":
