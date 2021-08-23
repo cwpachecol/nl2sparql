@@ -178,6 +178,36 @@ def generalize_question(a, b, parser=None):
 
     _, _, uris = parser.parse_sparql(b)
 
+    uris = [uri for uri in uris if uri.is_entity()]
+
+    i = 0
+    # print("%%%%%" * 50)
+    # print(a)
+    # print("-----" * 50)
+    for item in find_mentions(a, uris):
+        # print(f"{a[:item['start']]} -- i: {i} -- {a[item['end']:]}")
+        a = "{} #en{} {}".format(a[:item["start"]], "t" * (i + 1), a[item["end"]:])
+        b = b.replace(item["uri"].raw_uri, "#en{}".format("t" * (i + 1)))
+    # print("%%%%%" * 50)
+
+    # remove extra info from the relation's uri and remaining entities
+    for item in ["http://dbpedia.org/resource/", "http://dbpedia.org/ontology/",
+                 "http://dbpedia.org/property/", "http://www.w3.org/1999/02/22-rdf-syntax-ns#"]:
+        b = b.replace(item, "")
+    b = b.replace("<", "").replace(">", "")
+
+    return a, b
+
+def extract_postu(a, b, parser=None):
+    # replace entity mention in question with a generic symbol
+
+    if parser is None:
+        parser = LC_Quad10_LinkedParser()
+
+    _, _, uris = parser.parse_sparql(b)
+    posgt_list = []
+    posgu_list = []
+    # posgtu_list = []
     # print("%"*50)
     # print(f"b: {b}")
     # e_uris = []
@@ -192,17 +222,40 @@ def generalize_question(a, b, parser=None):
     uris = [uri for uri in uris if uri.is_entity()]
 
     i = 0
+    print("%%%%%" * 50)
+    print(f"Question: {a}")
+    print("-----" * 50)
+    # print(find_mentions(a, uris))
     for item in find_mentions(a, uris):
-        a = "{} #en{} {}".format(a[:item["start"]], "t" * (i + 1), a[item["end"]:])
-        b = b.replace(item["uri"].raw_uri, "#en{}".format("t" * (i + 1)))
+        # print(f"start: {item['start']}")
+        # print(f"end: {item['end']}")
+
+        # print(f"{a[:item['start']]} -- i: {i} -- {a[item['end']:]}")
+        posgt_list.append(a[item['start']:item['end']])
+        # print(f"-->[{a[item['start']:item['end']]}]")
+        posgu_list.append(item["uri"].raw_uri)
+        # print(f"URI: {item['uri'].raw_uri}")
+
+        # a = "{} #en{} {}".format(a[:item["start"]], "t" * (i + 1), a[item["end"]:])
+        # i += 1
+        # b = b.replace(item["uri"].raw_uri, "#en{}".format("t" * (i + 1)))
+    print(">>>>>" * 50)
+    print(posgt_list)
+    print(posgu_list)
+    print("%%%%%" * 50)
 
     # remove extra info from the relation's uri and remaining entities
-    for item in ["http://dbpedia.org/resource/", "http://dbpedia.org/ontology/",
-                 "http://dbpedia.org/property/", "http://www.w3.org/1999/02/22-rdf-syntax-ns#"]:
-        b = b.replace(item, "")
-    b = b.replace("<", "").replace(">", "")
-
-    return a, b
+    # for item in ["http://dbpedia.org/resource/", "http://dbpedia.org/ontology/",
+    #              "http://dbpedia.org/property/", "http://www.w3.org/1999/02/22-rdf-syntax-ns#"]:
+    #     b = b.replace(item, "")
+    # b = b.replace("<", "").replace(">", "")
+    # posgt_str = " "
+    # posgt_str = posgt_str.join(posgt_list)
+    # posgu_str = " "
+    # posgu_str = posgu_str.join(posgu_list)
+    # print(f"==> {posgt_str, posgu_str}")
+    # return posgt_str, posgu_str
+    return posgt_list, posgu_list
 
 def split(data, parser=None):
     if isinstance(data, str):
@@ -216,12 +269,17 @@ def split(data, parser=None):
     q_list = []
     s_list = []
     qs_list = []
+    posgt_list = []
+    posgu_list = []
+    posgtu_list = []
     id_list = []
     sim_list = []
-    for item in tqdm(dataset):
+    for item in tqdm(dataset[:5]):
         i = item["id"]
         a = item["question"]
-
+        print("!!!!!" * 50)
+        print(a)
+        print("+++++" * 50)
         query = item["query"]
         # print("*" * 50)
         # print(query)
@@ -243,7 +301,14 @@ def split(data, parser=None):
         qs_list.append([q.encode('ascii', 'ignore').decode('ascii'), s.encode('ascii', 'ignore').decode('ascii')])
         # sim_list.append(sim + '\n')
 
-        # print([q.encode('ascii', 'ignore').decode('ascii'), s.encode('ascii', 'ignore').decode('ascii')])
+        posgt, posgu = extract_postu(a, query, parser)
+
+        if len(posgt) > 0:
+            for idx in range(len(posgt)):
+                posgt_list.append(posgt[idx].encode('ascii', 'ignore').decode('ascii') + '\n')
+                posgu_list.append(posgu[idx].encode('ascii', 'ignore').decode('ascii') + '\n')
+                posgtu_list.append([posgt[idx].encode('ascii', 'ignore').decode('ascii'), posgu[idx].encode('ascii', 'ignore').decode('ascii')])
+
         for query in item["generated_queries"]:
             a, b = generalize_question(a, query["query"], parser)
             # a, b = generalize_question(a, query, parser)
@@ -257,19 +322,24 @@ def split(data, parser=None):
             id_list.append(i + '\n')
             a_list.append(a.encode('ascii', 'ignore').decode('ascii') + '\n')
             b_list.append(b.encode('ascii', 'ignore').decode('ascii') + '\n')
+
             sim_list.append(sim + '\n')
-    return a_list, b_list, q_list, s_list, qs_list, id_list, sim_list
+    return a_list, b_list, q_list, s_list, qs_list, posgt_list, posgu_list, posgtu_list, id_list, sim_list
 
 
-def save_split(dst_dir, a_list, b_list, q_list, s_list, qs_list, id_list, sim_list):
+def save_split(dst_dir, a_list, b_list, q_list, s_list, qs_list, posgt_list, posgu_list, posgtu_list, id_list, sim_list):
     with open(os.path.join(dst_dir, 'a.txt'), 'w') as afile, \
             open(os.path.join(dst_dir, 'b.txt'), 'w') as bfile,\
             open(os.path.join(dst_dir, 'q.txt'), 'w') as qfile,\
             open(os.path.join(dst_dir, 's.txt'), 'w') as sfile,\
             open(os.path.join(dst_dir, 'qs.csv'), 'w') as qsfile,\
+            open(os.path.join(dst_dir, 'posgt.txt'), 'w') as posgtfile,\
+            open(os.path.join(dst_dir, 'posgu.txt'), 'w') as posgufile, \
+            open(os.path.join(dst_dir, 'posgtu.csv'), 'w') as posgtufile, \
             open(os.path.join(dst_dir, 'id.txt'), 'w') as idfile, \
             open(os.path.join(dst_dir, 'sim.txt'), 'w') as simfile:
-        writer = csv.writer(qsfile, delimiter=',', lineterminator='\n')
+        qs_writer = csv.writer(qsfile, delimiter=',', lineterminator='\n')
+        posgtu_writer = csv.writer(posgtufile, delimiter=',', lineterminator='\n')
 
         for i in range(len(a_list)):
             idfile.write(id_list[i])
@@ -283,7 +353,13 @@ def save_split(dst_dir, a_list, b_list, q_list, s_list, qs_list, id_list, sim_li
             # print("Inicio----------")
             # print(qs_list[j])
             # print("Fin--------------")
-            writer.writerow(qs_list[j])
+            qs_writer.writerow(qs_list[j])
+
+        for k in range(len(posgt_list)):
+            posgtfile.write(posgt_list[k])
+            posgufile.write(posgu_list[k])
+            posgtu_writer.writerow(posgtu_list[k])
+
 
 def parse(dirpath, dep_parse=True):
     if dep_parse:
@@ -346,25 +422,10 @@ if __name__ == '__main__':
     parse(test_dir)
 
     # get vocabulary
-    # build_vocab(
-    #     glob.glob(os.path.join(lcquad10_dir, '*/*.toks')),
-    #     os.path.join(lcquad10_dir, 'vocab.txt'))
-    # build_vocab(
-    #     glob.glob(os.path.join(lcquad10_dir, '*/*.toks')),
-    #     os.path.join(lcquad10_dir, 'vocab-cased.txt'),
-    #     lowercase=False)
-
     build_vocab(
-        glob.glob(os.path.join(lcquad10_dir, '*/q.txt')),
-        os.path.join(lcquad10_dir, 'vocab_q.txt'))
+        glob.glob(os.path.join(lcquad10_dir, '*/*.toks')),
+        os.path.join(lcquad10_dir, 'vocab.txt'))
     build_vocab(
-        glob.glob(os.path.join(lcquad10_dir, '*/q.txt')),
-        os.path.join(lcquad10_dir, 'vocab-cased_q.txt'),
-        lowercase=False)
-    build_vocab(
-        glob.glob(os.path.join(lcquad10_dir, '*/s.txt')),
-        os.path.join(lcquad10_dir, 'vocab_s.txt'))
-    build_vocab(
-        glob.glob(os.path.join(lcquad10_dir, '*/s.txt')),
-        os.path.join(lcquad10_dir, 'vocab-cased_s.txt'),
+        glob.glob(os.path.join(lcquad10_dir, '*/*.toks')),
+        os.path.join(lcquad10_dir, 'vocab-cased.txt'),
         lowercase=False)

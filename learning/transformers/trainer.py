@@ -21,20 +21,18 @@ class Trainer(object):
         self.model.to(self.device)
 
     # helper function for training
-    def train(self, dataloader):
+    def train(self, train_iterator):
         self.model.train()
         losses = []
-        bar = tqdm(dataloader['train'])
-        for batch_idx, batch in enumerate(bar):
-            # for batch_idx, batch in enumerate(dataloader['train']):
+        bar = tqdm(train_iterator)
+        for batch in bar:
+            # for batch_idx, batch in enumerate(train_iterator):
             # Get input and targets and get to cuda
-            inp_data, target = batch
-            inp_data = inp_data.to(self.device)
-            target = target.to(self.device)
+            inp_data = batch.src.to(self.device)
+            target = batch.trg.to(self.device)
 
             # Forward prop
             output = self.model(inp_data, target[:-1, :])
-
             # Output is of shape (trg_len, batch_size, output_dim) but Cross Entropy Loss
             # doesn't take input in that form. For example if we have MNIST we want to have
             # output to be: (N, 10) and targets just (N). Here we can view it in a similar
@@ -59,39 +57,37 @@ class Trainer(object):
             self.optimizer.step()
 
         mean_loss = sum(losses) / len(losses)
-        # print(f"loss mean: {(mean_loss)}")
+        print(f"loss mean: {(mean_loss)}")
         return mean_loss
 
     # helper function for testing
-    def test(self, dataloader, vocab_s, max_length):
+    def test(self, test_iterator):
         val_loss = []
         self.model.eval()
+        losses = []
+        outputs = []
         with torch.no_grad():
-            bar = tqdm(dataloader['test'])
+
+            bar = tqdm(test_iterator)
             for batch in bar:
-                input_sentences, output_sentences = batch
-                outputs = []
-                outputs.insert(0, vocab_s.getIndex("<bos>"))
-                outputs.extend(input_sentences.unsqueeze(1))
-                outputs.append(vocab_s.getIndex("<eos>"))
-                print(outputs)
-                outputs = torch.tensor(outputs)
+                inp_data = batch.src.to(self.device)
+                target = batch.trg.to(self.device)
 
-                # bs = input_sentences.shape[0]
-                # outputs = torch.tensor([vocab_s.getIndex("<bos>") for b in range(bs)], device=self.device)
-                print(outputs)
-                print("^"*20)
-                for i in range(max_length):
-                    # trg_tensor = torch.LongTensor(outputs).unsqueeze(1).to(self.device)
-                    trg_tensor = outputs.to(self.device)
-                    # trg_tensor = outputs.unsqueeze(1).to(self.device)
-                    with torch.no_grad():
-                        output = self.model(outputs, trg_tensor)
+                # Forward prop
+                output = self.model(inp_data, target[:-1, :])
 
-                    best_guess = output.argmax(2)[-1, :].item()
-                    outputs.append(best_guess)
+                # Output is of shape (trg_len, batch_size, output_dim) but Cross Entropy Loss
+                # doesn't take input in that form. For example if we have MNIST we want to have
+                # output to be: (N, 10) and targets just (N). Here we can view it in a similar
+                # way that we have output_words * batch_size that we want to send in into
+                # our cost function, so we need to do some reshapin.
+                # Let's also remove the start token while we're at it
+                output = output.reshape(-1, output.shape[2])
+                target = target[1:].reshape(-1)
+                loss = self.criterion(output, target)
+                losses.append(loss.item())
+                outputs.append(output)
+        mean_loss = sum(losses) / len(losses)
+        print(f"loss mean: {(mean_loss)}")
+        return mean_loss, outputs
 
-                    if best_guess == vocab_s.getIndex("<eos>"):
-                        break
-
-                translated_sentence = [vocab_s.getLabel(idx) for idx in outputs]
