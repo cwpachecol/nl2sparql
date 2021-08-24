@@ -38,7 +38,7 @@ def parse_args():
     parser.add_argument('--num_classes', default=2, type=int,
                         help='Number of classes in dataset')
     # training arguments
-    parser.add_argument('--epochs', default=15, type=int,
+    parser.add_argument('--epochs', default=100, type=int,
                         help='number of total epochs to run')
     parser.add_argument('--batchsize', default=25, type=int,
                         help='batchsize for optimizer updates')

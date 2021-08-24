@@ -169,7 +169,6 @@ def generalize_sparql(q, s, parser=None):
 
     return q, s
 
-
 def generalize_question(a, b, parser=None):
     # replace entity mention in question with a generic symbol
 
@@ -274,7 +273,7 @@ def split(data, parser=None):
     posgtu_list = []
     id_list = []
     sim_list = []
-    for item in tqdm(dataset[:5]):
+    for item in tqdm(dataset):
         i = item["id"]
         a = item["question"]
         print("!!!!!" * 50)

@@ -24,9 +24,10 @@ class Trainer(object):
     def train(self, train_iterator):
         self.model.train()
         losses = []
-        bar = tqdm(train_iterator)
-        for batch in bar:
-            # for batch_idx, batch in enumerate(train_iterator):
+        # bar = tqdm(train_iterator)
+        # for batch in bar:
+        for batch_idx, batch in enumerate(train_iterator):
+            # for batch_idx, batch in enumerate(dataloader['train']):
             # Get input and targets and get to cuda
             inp_data = batch.src.to(self.device)
             target = batch.trg.to(self.device)
@@ -45,6 +46,9 @@ class Trainer(object):
             self.optimizer.zero_grad()
 
             loss = self.criterion(output, target)
+            print("-"*20)
+            print(loss.item())
+            print("-" * 20)
             losses.append(loss.item())
 
             # Back prop
@@ -61,7 +65,7 @@ class Trainer(object):
         return mean_loss
 
     # helper function for testing
-    def test(self, test_iterator):
+    def test(self, test_iterator, max_length):
         val_loss = []
         self.model.eval()
         losses = []
