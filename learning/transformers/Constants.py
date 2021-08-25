@@ -1,9 +1,9 @@
 PAD = 0
 UNK = 1
-BOS = 2
+SOS = 2
 EOS = 3
 
 PAD_WORD = '<pad>'
 UNK_WORD = '<unk>'
-BOS_WORD = '<bos>'
+SOS_WORD = '<sos>'
 EOS_WORD = '<eos>'

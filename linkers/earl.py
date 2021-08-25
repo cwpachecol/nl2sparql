@@ -7,7 +7,7 @@ from common.utility.utility import closest_string
 
 
 class Earl:
-    def __init__(self, path="data/LC-QUAD/EARL/output_original.json"):
+    def __init__(self, path="data/lcquad10/EARL/output_original.json"):
         self.parser = DBpedia.parse_uri
         self.gold_linker = GoldLinker()
         with open(path, 'r') as data_file:
