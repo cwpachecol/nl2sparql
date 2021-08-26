@@ -14,6 +14,7 @@ class Earl:
             self.raw_data = json.load(data_file)
             self.questions = {}
             for item in self.raw_data:
+                # print(item)
                 self.questions[item["question"]] = item
 
     def __force_gold(self, golden_list, surfaces, items):

@@ -4,7 +4,7 @@ from common.container.uri import Uri
 from common.container.answerrow import AnswerRow
 from common.container.answer import Answer
 from kb.dbpedia import DBpedia
-from parser.answerparser import AnswerParser
+from parsers.answerparser import AnswerParser
 from xml.dom import minidom
 import sys
 
