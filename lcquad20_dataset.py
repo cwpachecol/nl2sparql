@@ -6,13 +6,6 @@ import sys
 from parsers.lc_quad20 import LC_Quad20
 import shutil
 
-# def merge_json_files(path_first_file, path_second_file):
-#     with open(path_first_file) as f1, open(path_second_file) as f2:
-#         first_list = json.load(f1)
-#         second_list = json.load(f2)
-#         first_list.update(second_list)
-#     return first_list
-
 def show_json(filename='data.json', start_rec=0, end_rec=0):
     with open(filename, 'r', encoding='utf-8') as json_file:
         data = json.load(json_file)
@@ -43,6 +36,9 @@ def append_json(new_data, filename='data.json'):
             with open(filename, 'w', encoding='utf-8') as file:
                 json.dump(temp, file, indent=4)
                 file.close()
+
+
+
 
 def write_json(new_data, filename='data.json'):
 
@@ -108,45 +104,34 @@ if __name__ == "__main__":
                         help='end index of dataset')
 
     args = parser.parse_args()
+    start_index = args.start_index
+    end_index = args.end_index
     # copy_to_drive = args.copy_to_drive
-    args.start_index = 0
-    args.end_index = 0
     copy_to_drive = False
     drive_directory = args.drive_directory
     # show_json(filename='data/lcquad10/data.json', start_rec=start_record, end_rec=end_record)
 
+    with open('data/lcquad20/train.json', 'r', encoding='utf-8') as f:
+        train = json.load(f)
 
-    # data_json_file = os.path.join(args.data, 'data.json')
-    data_json_file = 'data/lcquad20/data.json'
+    with open('data/lcquad20/test.json', 'r', encoding='utf-8') as f:
+        test = json.load(f)
 
-    if not os.path.isfile(data_json_file):
-        with open('data/lcquad20/train.json', 'r', encoding='utf-8') as f:
-            train = json.load(f)
+    data = train + test
 
-        with open('data/lcquad20/test.json', 'r', encoding='utf-8') as f:
-            test = json.load(f)
+    if end_index == 0:
+        end_index = len(data)
 
-        data = train + test
+    print('data len: ', len(data))
 
-        with open("data/lcquad20/data.json", "w") as write_file:
-            json.dump(data, write_file)
+    with open("data/lcquad20/data.json", "w") as write_file:
+        json.dump(data, write_file)
 
-    # ds = LC_Quad20(path="./data/lcquad20/data.json", sparql_field="sparql_dbpedia18")
-    ds = LC_Quad20(path="./data/lcquad20/data.json", sparql_field="sparql_wikidata")
-    ds.load()
-    ds.parse()
-
-    start_index = args.start_index
-    if args.end_index > start_index:
-        end_index = args.end_index
-    else:
-        end_index = len(ds.qapairs)
-
-    print(f'data len: {end_index - start_index}')
-
+    # ds = LC_Quad20(path="./data/lcquad20/data.json", sparql_field="sparql_wikidata")
+    ds = LC_Quad20(path="./data/lcquad20/data.json", sparql_field="sparql_dbpedia18")
     tmp = []
     actual_index = start_index
-    for idx, qapair in enumerate(ds.qapairs[start_index: end_index]):
+    for idx, qapair in enumerate(prepare_dataset(ds).qapairs[start_index: end_index]):
         raw_row = dict()
         raw_row["id"] = qapair.id.__str__()
         raw_row["question"] = qapair.question.text
