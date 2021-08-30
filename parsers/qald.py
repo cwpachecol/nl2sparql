@@ -10,8 +10,8 @@ import sys
 
 
 class Qald:
-    qald_7 = "./data/QALD/qald-7-train-multilingual.json"
-    qaldtest_7 = "./data/QALD/qald-7-test-multilingual.json"
+    qald_7 = "./data/qald/qald-7-train-multilingual.json"
+    qaldtest_7 = "./data/qald/qald-7-test-multilingual.json"
 
     def __init__(self, path):
         self.raw_data = []

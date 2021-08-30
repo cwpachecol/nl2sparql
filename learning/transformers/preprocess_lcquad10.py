@@ -225,29 +225,40 @@ def extract_postu(a, b, parser=None):
     print(f"Question: {a}")
     print("-----" * 50)
     # print(find_mentions(a, uris))
+    # posgt_aux = []
+    # posgu_aux = ''
     for item in find_mentions(a, uris):
         # print(f"start: {item['start']}")
         # print(f"end: {item['end']}")
 
         # print(f"{a[:item['start']]} -- i: {i} -- {a[item['end']:]}")
-        posgt_list.append(a[item['start']:item['end']])
+        posgt_aux = a[item['start']:item['end']]
+        posgu_aux = item["uri"].raw_uri
+        # posgt_list.append(a[item['start']:item['end']])
         # print(f"-->[{a[item['start']:item['end']]}]")
-        posgu_list.append(item["uri"].raw_uri)
+        # posgu_list.append(item["uri"].raw_uri)
         # print(f"URI: {item['uri'].raw_uri}")
 
         # a = "{} #en{} {}".format(a[:item["start"]], "t" * (i + 1), a[item["end"]:])
         # i += 1
         # b = b.replace(item["uri"].raw_uri, "#en{}".format("t" * (i + 1)))
+
+        # remove extra info from the relation's uri and remaining entities
+        # for item in ["http://dbpedia.org/resource/", "http://dbpedia.org/ontology/",
+        #              "http://dbpedia.org/property/", "http://www.w3.org/1999/02/22-rdf-syntax-ns#"]:
+        for item in ["http://dbpedia.org/", "http://www.w3.org/1999/02/22-rdf-syntax-ns#"]:
+
+            posgu_aux = posgu_aux.replace(item, "")
+        posgu_aux = posgu_aux.replace("<", "").replace(">", "").replace("_", " _ ").replace("/", " / ")
+
+        posgt_list.append(posgt_aux)
+        posgu_list.append(posgu_aux)
+
     print(">>>>>" * 50)
     print(posgt_list)
     print(posgu_list)
     print("%%%%%" * 50)
 
-    # remove extra info from the relation's uri and remaining entities
-    # for item in ["http://dbpedia.org/resource/", "http://dbpedia.org/ontology/",
-    #              "http://dbpedia.org/property/", "http://www.w3.org/1999/02/22-rdf-syntax-ns#"]:
-    #     b = b.replace(item, "")
-    # b = b.replace("<", "").replace(">", "")
     # posgt_str = " "
     # posgt_str = posgt_str.join(posgt_list)
     # posgu_str = " "
@@ -346,6 +357,7 @@ def save_split(dst_dir, a_list, b_list, q_list, s_list, qs_list, posgt_list, pos
             bfile.write(b_list[i])
             simfile.write(sim_list[i])
 
+        qs_writer.writerow(["question", "sparql"])
         for j in range(len(q_list)):
             qfile.write(q_list[j])
             sfile.write(s_list[j])
@@ -354,6 +366,7 @@ def save_split(dst_dir, a_list, b_list, q_list, s_list, qs_list, posgt_list, pos
             # print("Fin--------------")
             qs_writer.writerow(qs_list[j])
 
+        posgtu_writer.writerow(["text", "uri"])
         for k in range(len(posgt_list)):
             posgtfile.write(posgt_list[k])
             posgufile.write(posgu_list[k])
