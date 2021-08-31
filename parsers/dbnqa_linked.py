@@ -12,7 +12,7 @@ class DBNQA_Linked:
         self.raw_data = []
         self.qapairs = []
         self.path = path
-        self.parser = DBNQA_Linked_LinkedParser()
+        self.parser = DBNQA_LinkedParser()
 
     def load(self):
         with open(self.path) as data_file:

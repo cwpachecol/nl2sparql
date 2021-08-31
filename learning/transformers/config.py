@@ -28,10 +28,6 @@ def parse_args():
                         help='directory to load checkpoints in')
     parser.add_argument('--expname', type=str, default='lcquad10',
                         help='Name to identify experiment')
-    parser.add_argument('--expname_nl2sparql', type=str, default='lcquad10_nl2sparql',
-                        help='Name to identify experiment')
-    parser.add_argument('--expname_posgt2uri', type=str, default='lcquad10_posgt2uri',
-                        help='Name to identify experiment')
     # model arguments
     parser.add_argument('--input_dim', default=300, type=int,
                         help='Size of input word vector')

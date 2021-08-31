@@ -3,13 +3,13 @@ import datetime
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description='PyTorch for prepare sentences from dbnqa')
+        description='PyTorch TreeLSTM for Sentence Similarity on Dependency Trees')
     # data arguments
     parser.add_argument('--data', default='data/dbnqa/',
                         help='path to dataset')
     parser.add_argument('--save', default='data/dbnqa/checkpoints/',
                         help='directory to save checkpoints in')
-    parser.add_argument('--expname', type=str, default='dbnqa',
+    parser.add_argument('--expname', type=str, default='lc_quad10',
                         help='Name to identify experiment')
     # model arguments
     parser.add_argument('--mem_dim', default=150, type=int,
