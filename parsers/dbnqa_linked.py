@@ -22,7 +22,7 @@ class DBNQA_Linked:
         for raw_row in self.raw_data:
             # print(raw_row)
             self.qapairs.append(
-                QApair(raw_row["question"], raw_row.get("answers"), raw_row["sparql_query"], raw_row, raw_row["id"],
+                QApair(raw_row["question"], raw_row.get("answers"), raw_row["sparql"], raw_row, raw_row["id"],
                        self.parser))
 
     def print_pairs(self, n=-1):

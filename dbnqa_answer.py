@@ -15,7 +15,7 @@ import logging
 import sys
 import os
 import numpy as np
-
+from config_dbnqa import parse_args
 
 def safe_div(x, y):
     if y == 0:
@@ -148,10 +148,17 @@ def qg(linker, kb, parser, qapair, force_gold=True):
 
 
 if __name__ == "__main__":
+    global args
+    args = parse_args()
+
+    data_dir = args.data
+    linked_answer_json_file = os.path.join(data_dir, 'linked_answer.json')
+
     logger = logging.getLogger(__name__)
     utility.setup_logging()
 
-    ds = DBNQA_Linked(path="data/lcquad10/linked_answer.json")
+    print(linked_answer_json_file)
+    ds = DBNQA_Linked(path=linked_answer_json_file)
     ds.load()
     ds.parse()
 
@@ -172,13 +179,32 @@ if __name__ == "__main__":
     linker = GoldLinker()
     # print(linker)
 
-    output_file = 'dbnqa_gold'
+
+    # output_file = 'dbnqa_gold.json'
 
     tmp = []
     output = []
     na_list = []
 
-    for qapair in ds.qapairs:
+# //////////////////////////////////////
+    dbnqa_gold_list = []
+    start_element = 0
+    output_dir = args.output
+    dbnqa_gold_json_file = os.path.join(data_dir, 'dbnqa_gold.json')
+
+    # linked_answer_json_file = os.path.join(data_dir, 'linked_answer.json')
+
+    if os.path.isfile(dbnqa_gold_json_file):
+        with open(dbnqa_gold_json_file, 'r', encoding='utf-8') as dbnqag_json_file:
+            dbnqa_gold_list = json.load(dbnqag_json_file)
+        dbnqag_json_file.close()
+
+        if len(dbnqa_gold_list) > 0 and dbnqa_gold_list[-1].get('id') is not None:
+            start_element = int(dbnqa_gold_list[-1].get('id'))
+
+# /////////////////////////////////////////
+
+    for qapair in ds.qapairs[start_element:]:
         # print('='*10)
         stats.inc("total")
         output_row = {"question": qapair.question.text,
@@ -205,13 +231,13 @@ if __name__ == "__main__":
             logger.info(result)
 
         logger.info(stats)
-        output.append(output_row)
+        dbnqa_gold_list.append(output_row)
 
         if stats["total"] % 100 == 0:
-            with open("output/{}.json".format(output_file), "w") as data_file:
+            with open(dbnqa_gold_json_file, "w") as data_file:
                 json.dump(output, data_file, sort_keys=True, indent=4, separators=(',', ': '))
 
-    with open("output/{}.json".format(output_file), "w") as data_file:
+    with open(dbnqa_gold_json_file, "w") as data_file:
         json.dump(output, data_file, sort_keys=True, indent=4, separators=(',', ': '))
     print('stats: ', stats)
 

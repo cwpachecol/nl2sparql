@@ -4,7 +4,7 @@ import requests, json, re, operator
 import sys
 from parsers.dbnqa import DBNQA
 import csv
-from config import parse_args
+from config_dbnqa import parse_args
 
 def prepare_dataset(ds):
     ds.load()
@@ -134,10 +134,14 @@ if __name__ == "__main__":
 
         linked_answer_list.append(raw_row)
 
-        if qapair.id % 100 == 0:
+        if qapair.id % 10 == 0:
             print(f'Id: {qapair.id.__str__()}')
             with open(os.path.join(data_dir, 'linked_answer.json'), 'w') as jsonFile:
                 json.dump(linked_answer_list, jsonFile)
             jsonFile.close()
+
+    with open(os.path.join(data_dir, 'linked_answer.json'), 'w') as jsonFile:
+        json.dump(linked_answer_list, jsonFile)
+    jsonFile.close()
 
     print('data len: ', len(linked_answer_list))
