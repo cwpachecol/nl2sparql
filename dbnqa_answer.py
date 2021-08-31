@@ -190,11 +190,12 @@ if __name__ == "__main__":
     dbnqa_gold_list = []
     start_element = 0
     output_dir = args.output
-    dbnqa_gold_json_file = os.path.join(data_dir, 'dbnqa_gold.json')
+    dbnqa_gold_json_file = os.path.join(output_dir, 'dbnqa_gold.json')
 
     # linked_answer_json_file = os.path.join(data_dir, 'linked_answer.json')
 
     if os.path.isfile(dbnqa_gold_json_file):
+        print("existe")
         with open(dbnqa_gold_json_file, 'r', encoding='utf-8') as dbnqag_json_file:
             dbnqa_gold_list = json.load(dbnqag_json_file)
         dbnqag_json_file.close()
@@ -232,13 +233,16 @@ if __name__ == "__main__":
 
         logger.info(stats)
         dbnqa_gold_list.append(output_row)
-
-        if stats["total"] % 100 == 0:
+        print(f'Id: {qapair.id}')
+        if int(qapair.id) % 10 == 0:
             with open(dbnqa_gold_json_file, "w") as data_file:
                 json.dump(output, data_file, sort_keys=True, indent=4, separators=(',', ': '))
+            data_file.close()
 
     with open(dbnqa_gold_json_file, "w") as data_file:
         json.dump(output, data_file, sort_keys=True, indent=4, separators=(',', ': '))
+    data_file.close()
+
     print('stats: ', stats)
 
     # Questions without answers
