@@ -17,6 +17,7 @@ import os
 import numpy as np
 from config_dbnqa import parse_args
 
+
 def safe_div(x, y):
     if y == 0:
         return None
@@ -130,7 +131,7 @@ def qg(linker, kb, parser, qapair, force_gold=True):
             else:
                 target_var = "?u_0"
             raw_answer = kb.query_where(where["where"], target_var, count_query, ask_query)
-            print("Q_H ",)
+            print("Q_H ", )
             # print(raw_answer)
             print("Q_")
             answerset = AnswerSet(raw_answer, parser.parse_queryresult)
@@ -179,23 +180,24 @@ if __name__ == "__main__":
     linker = GoldLinker()
     # print(linker)
 
-
     # output_file = 'dbnqa_gold.json'
 
     tmp = []
     output = []
     na_list = []
 
-# //////////////////////////////////////
-    dbnqa_gold_list = []
-    start_element = 0
+    # //////////////////////////////////////
     output_dir = args.output
+    start_dbnqa_gold_element = 0
+    dbnqa_gold_list = []
     dbnqa_gold_json_file = os.path.join(output_dir, 'dbnqa_gold.json')
-
+    start_no_dbnqa_gold_element = 0
+    na_dbnqa_gold_list = []
+    na_dbnqa_gold_txt_file = os.path.join(output_dir, 'na_dbnqa_gold.json')
     # linked_answer_json_file = os.path.join(data_dir, 'linked_answer.json')
 
     if os.path.isfile(dbnqa_gold_json_file):
-        print("existe")
+        print("existe dbnqa_gold_json_file")
         with open(dbnqa_gold_json_file, 'r', encoding='utf-8') as dbnqag_json_file:
             dbnqa_gold_list = json.load(dbnqag_json_file)
         dbnqag_json_file.close()
@@ -203,9 +205,15 @@ if __name__ == "__main__":
         if len(dbnqa_gold_list) > 0 and dbnqa_gold_list[-1].get('id') is not None:
             start_element = int(dbnqa_gold_list[-1].get('id'))
 
-# /////////////////////////////////////////
+    if os.path.isfile(na_dbnqa_gold_txt_file):
+        print("existe na_dbnqa_gold_json_file")
+        with open(na_dbnqa_gold_txt_file, 'r', encoding='utf-8') as na_dbnqag_txt_file:
+            na_dbnqa_gold_list = na_dbnqag_txt_file.read().split('\n')
+        na_dbnqag_txt_file.close()
 
-    for qapair in ds.qapairs[start_element:]:
+    # /////////////////////////////////////////
+
+    for qapair in ds.qapairs[start_dbnqa_gold_element:]:
         # print('='*10)
         stats.inc("total")
         output_row = {"question": qapair.question.text,
@@ -219,7 +227,7 @@ if __name__ == "__main__":
         if qapair.answerset is None or len(qapair.answerset) == 0:
             stats.inc("query_no_answer")
             output_row["answer"] = "-no_answer"
-            na_list.append(output_row['id'])
+            na_dbnqa_gold_list.append(output_row['id'])
         else:
             result, where = qg(linker, ds.parser.kb, ds.parser, qapair, False)
             stats.inc(result)
@@ -238,6 +246,10 @@ if __name__ == "__main__":
             with open(dbnqa_gold_json_file, "w") as data_file:
                 json.dump(output, data_file, sort_keys=True, indent=4, separators=(',', ': '))
             data_file.close()
+            with open(na_dbnqa_gold_txt_file, 'w') as na_data_file:
+                for i in na_dbnqa_gold_list:
+                    na_data_file.write("{}\n".format(i))
+            na_data_file.close()
 
     with open(dbnqa_gold_json_file, "w") as data_file:
         json.dump(output, data_file, sort_keys=True, indent=4, separators=(',', ': '))
@@ -246,6 +258,7 @@ if __name__ == "__main__":
     print('stats: ', stats)
 
     # Questions without answers
-    with open('output/na_list_dbnqa_gold.txt', 'w') as f:
-        for i in na_list:
-            f.write("{}\n".format(i))
+    with open(na_dbnqa_gold_txt_file, 'w') as na_data_file:
+        for i in na_dbnqa_gold_list:
+            na_data_file.write("{}\n".format(i))
+    na_data_file.close()
