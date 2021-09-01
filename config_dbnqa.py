@@ -11,6 +11,14 @@ def parse_args():
                         help='directory to save checkpoints in')
     parser.add_argument('--output', default='output/',
                         help='directory to save outputs in')
+
+    # parser.add_argument('--data', default='/content/gdrive/MyDrive/Colab Notebooks/nl2sparql/data/dbnqa/',
+    #                     help='path to dataset')
+    # parser.add_argument('--save', default='/content/gdrive/MyDrive/Colab Notebooks/nl2sparql/data/dbnqa/checkpoints/',
+    #                     help='directory to save checkpoints in')
+    # parser.add_argument('--output', default='/content/gdrive/MyDrive/Colab Notebooks/nl2sparql/output/',
+    #                     help='directory to save outputs in')
+
     parser.add_argument('--expname', type=str, default='dbnqa',
                         help='Name to identify experiment')
     # model arguments
