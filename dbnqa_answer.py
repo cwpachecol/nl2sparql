@@ -242,7 +242,7 @@ if __name__ == "__main__":
         logger.info(stats)
         dbnqa_gold_list.append(output_row)
         print(f'Id: {qapair.id}')
-        if int(qapair.id) % 2 == 0:
+        if int(qapair.id) % 100 == 0:
             with open(dbnqa_gold_json_file, "w") as data_file:
                 json.dump(dbnqa_gold_list, data_file, sort_keys=True, indent=4, separators=(',', ': '))
             data_file.close()
