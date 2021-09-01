@@ -203,7 +203,7 @@ if __name__ == "__main__":
         dbnqag_json_file.close()
 
         if len(dbnqa_gold_list) > 0 and dbnqa_gold_list[-1].get('id') is not None:
-            start_element = int(dbnqa_gold_list[-1].get('id'))
+            start_dbnqa_gold_element = int(dbnqa_gold_list[-1].get('id'))
 
     if os.path.isfile(na_dbnqa_gold_txt_file):
         print("existe na_dbnqa_gold_json_file")
@@ -242,7 +242,7 @@ if __name__ == "__main__":
         logger.info(stats)
         dbnqa_gold_list.append(output_row)
         print(f'Id: {qapair.id}')
-        if int(qapair.id) % 100 == 0:
+        if int(qapair.id) % 2 == 0:
             with open(dbnqa_gold_json_file, "w") as data_file:
                 json.dump(dbnqa_gold_list, data_file, sort_keys=True, indent=4, separators=(',', ': '))
             data_file.close()
