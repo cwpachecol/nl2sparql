@@ -60,7 +60,8 @@ if __name__ == "__main__":
                             replace('var_amath_gtvar_b', '?var_a > ?var_b')
                         # sparql_text = sparql_text.
                         sparql_text = sparql_text.replace('dbr_','http://dbpedia.org/resource/').\
-                            replace('dbo_', 'http://dbpedia.org/ontology/').replace('dbp_', 'http://dbpedia.org/property/')
+                            replace('dbo_', 'http://dbpedia.org/ontology/').replace('dbp_', 'http://dbpedia.org/property/').\
+                            replace('rdf_', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#/').replace('rdfs_', 'http://www.w3.org/TR/2014/PER-rdf-schema-20140109/')
                         # file3.write((line1.strip(), line2.strip()))
                         # print(line1.strip(), line2.strip(), file=file3)
                         new_sparql_text = ""
@@ -106,7 +107,7 @@ if __name__ == "__main__":
     ds.parse()
 
     linked_answer_list = []
-    start_element = 0
+    start_element = 1
 
     linked_answer_json_file = os.path.join(data_dir, 'linked_answer.json')
 
@@ -116,7 +117,7 @@ if __name__ == "__main__":
         la_json_file.close()
 
         if len(linked_answer_list) > 0 and linked_answer_list[-1].get('id') is not None:
-            start_element = int(linked_answer_list[-1].get('id'))
+            start_element = int(linked_answer_list[-1].get('id')) + 1
 
     # print(f'start_element: {start_element.__str__() }')
 

@@ -203,7 +203,7 @@ if __name__ == "__main__":
         dbnqag_json_file.close()
 
         if len(dbnqa_gold_list) > 0 and dbnqa_gold_list[-1].get('id') is not None:
-            start_dbnqa_gold_element = int(dbnqa_gold_list[-1].get('id'))
+            start_dbnqa_gold_element = int(dbnqa_gold_list[-1].get('id')) + 1
 
     if os.path.isfile(na_dbnqa_gold_txt_file):
         print("existe na_dbnqa_gold_json_file")
