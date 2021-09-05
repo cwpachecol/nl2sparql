@@ -56,12 +56,18 @@ if __name__ == "__main__":
                         question_text = line1.strip()
                         sparql_text = line2.strip().replace('brack_open', '{').replace('brack_close', '}').replace('sep_dot', '.').\
                             replace('attr_open ', '(').replace(' attr_close', ')').replace('_ ', '_').replace('( ', '(').\
-                            replace(' )', ')').replace(' var_a ', ' ?var_a ').replace(' var_b ', ' ?var_b ').replace(' var_uri ', ' ?var_uri ').\
+                            replace(' )', ')').replace(' var_a ', ' ?var_a ').replace(' var_b ', ' ?var_b '). \
+                            replace(' var_l ', ' ?var_l ').\
+                            replace(' var_uri ', ' ?var_uri ').replace(' var_ad ', ' ?var_ad ').replace(' var_an ', ' ?var_an ').\
+                            replace(' var_bd ', ' ?var_bd ').replace(' var_bn ', ' ?var_bn '). \
+                            replace('var_admath_gtvar_bd', '?var_ad > ?var_bd').\
+                            replace('var_anmath_gtvar_bn', '?var_an > ?var_bn'). \
                             replace('var_amath_gtvar_b', '?var_a > ?var_b')
                         # sparql_text = sparql_text.
                         sparql_text = sparql_text.replace('dbr_','http://dbpedia.org/resource/').\
                             replace('dbo_', 'http://dbpedia.org/ontology/').replace('dbp_', 'http://dbpedia.org/property/').\
-                            replace('rdf_', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#/').replace('rdfs_', 'http://www.w3.org/TR/2014/PER-rdf-schema-20140109/')
+                            replace('rdf_', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#').\
+                            replace('rdfs_', 'http://www.w3.org/2000/01/rdf-schema#').replace('foaf_', 'http://xmlns.com/foaf/0.1/')
                         # file3.write((line1.strip(), line2.strip()))
                         # print(line1.strip(), line2.strip(), file=file3)
                         new_sparql_text = ""
@@ -69,7 +75,8 @@ if __name__ == "__main__":
                             # print(word)
                             temp_word = ''
                             for item in ['http://dbpedia.org/resource/', 'http://dbpedia.org/ontology/',
-                                         'http://dbpedia.org/property/', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#']:
+                                         'http://dbpedia.org/property/', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+                                         'http://www.w3.org/2000/01/rdf-schema#', 'http://xmlns.com/foaf/0.1/']:
                                 if word.rfind(item) != -1:
                                     temp_word = '<' + word + '>'
                                     break
@@ -107,7 +114,7 @@ if __name__ == "__main__":
     ds.parse()
 
     linked_answer_list = []
-    start_element = 1
+    start_element = 285
 
     linked_answer_json_file = os.path.join(data_dir, 'linked_answer.json')
 

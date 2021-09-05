@@ -60,6 +60,7 @@ class SPARQL:
     def __eq__(self, other):
         if isinstance(other, SPARQL):
             mapping = {}
+            print(f"len whereclause:{ len(self.where_clause) }")
             for line in self.where_clause:
                 found = False
                 for other_line in other.where_clause:
