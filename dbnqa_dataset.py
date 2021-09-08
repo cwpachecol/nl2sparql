@@ -56,14 +56,13 @@ if __name__ == "__main__":
                         question_text = line1.strip()
                         sparql_text = line2.strip().replace('brack_open', '{').replace('brack_close', '}').replace('sep_dot', '.').\
                             replace('attr_open ', '(').replace(' attr_close', ')').replace('_ ', '_').replace('( ', '(').\
-                            replace(' )', ')').replace(' var_a ', ' ?var_a ').replace(' var_b ', ' ?var_b ').replace(' var_c ', ' ?var_c ').\
-                            replace(' var_l ', ' ?var_l ').\
-                            replace(' var_uri ', ' ?var_uri ').replace(' var_ad ', ' ?var_ad ').replace(' var_an ', ' ?var_an ').\
-                            replace(' var_bd ', ' ?var_bd ').replace(' var_bn ', ' ?var_bn '). \
-                            replace('var_admath_gtvar_bd', '?var_ad > ?var_bd').\
-                            replace('var_anmath_gtvar_bn', '?var_an > ?var_bn'). \
-                            replace('var_amath_gtvar_b', '?var_a > ?var_b').\
-                            replace(' _oba_var_c ', ' order by asc(?var_c) ')
+                            replace(' )', ')').replace('var_', '?var_').\
+                            replace('math_gt', ' > ').replace('math_lt', ' < ').\
+                            replace(' _oba_?var_b ', ' order by asc(?var_b) ').\
+                            replace(' _oba_?var_c ', ' order by asc(?var_c) ').\
+                            replace(' _oba_?var_d ', ' order by asc(?var_d) ').\
+                            replace(' _oba_?var_pop ', ' order by asc(?var_pop) ')
+
                         # sparql_text = sparql_text.
                         sparql_text = sparql_text.replace('dbr_','http://dbpedia.org/resource/').\
                             replace('dbo_', 'http://dbpedia.org/ontology/').replace('dbp_', 'http://dbpedia.org/property/').\
