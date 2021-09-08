@@ -56,13 +56,14 @@ if __name__ == "__main__":
                         question_text = line1.strip()
                         sparql_text = line2.strip().replace('brack_open', '{').replace('brack_close', '}').replace('sep_dot', '.').\
                             replace('attr_open ', '(').replace(' attr_close', ')').replace('_ ', '_').replace('( ', '(').\
-                            replace(' )', ')').replace(' var_a ', ' ?var_a ').replace(' var_b ', ' ?var_b '). \
+                            replace(' )', ')').replace(' var_a ', ' ?var_a ').replace(' var_b ', ' ?var_b ').replace(' var_c ', ' ?var_c ').\
                             replace(' var_l ', ' ?var_l ').\
                             replace(' var_uri ', ' ?var_uri ').replace(' var_ad ', ' ?var_ad ').replace(' var_an ', ' ?var_an ').\
                             replace(' var_bd ', ' ?var_bd ').replace(' var_bn ', ' ?var_bn '). \
                             replace('var_admath_gtvar_bd', '?var_ad > ?var_bd').\
                             replace('var_anmath_gtvar_bn', '?var_an > ?var_bn'). \
-                            replace('var_amath_gtvar_b', '?var_a > ?var_b')
+                            replace('var_amath_gtvar_b', '?var_a > ?var_b').\
+                            replace(' _oba_var_c ', ' order by asc(?var_c) ')
                         # sparql_text = sparql_text.
                         sparql_text = sparql_text.replace('dbr_','http://dbpedia.org/resource/').\
                             replace('dbo_', 'http://dbpedia.org/ontology/').replace('dbp_', 'http://dbpedia.org/property/').\
@@ -114,7 +115,7 @@ if __name__ == "__main__":
     ds.parse()
 
     linked_answer_list = []
-    start_element = 285
+    start_element = 0
 
     linked_answer_json_file = os.path.join(data_dir, 'linked_answer.json')
 
@@ -124,7 +125,7 @@ if __name__ == "__main__":
         la_json_file.close()
 
         if len(linked_answer_list) > 0 and linked_answer_list[-1].get('id') is not None:
-            start_element = int(linked_answer_list[-1].get('id')) + 1
+            start_element = int(linked_answer_list[-1].get('id'))
 
     # print(f'start_element: {start_element.__str__() }')
 
