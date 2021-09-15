@@ -188,7 +188,7 @@ if __name__ == "__main__":
 
     # //////////////////////////////////////
     output_dir = args.output
-    start_dbnqa_gold_element = 0
+    start_dbnqa_gold_element = 600
     dbnqa_gold_list = []
     dbnqa_gold_json_file = os.path.join(output_dir, 'dbnqa_gold.json')
     start_no_dbnqa_gold_element = 0
