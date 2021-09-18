@@ -5,6 +5,7 @@ import sys
 from parsers.dbnqa import DBNQA
 import csv
 from config_dbnqa import parse_args
+import shutil
 
 def prepare_dataset(ds):
     ds.load()
@@ -148,8 +149,11 @@ if __name__ == "__main__":
                 json.dump(linked_answer_list, jsonFile)
             jsonFile.close()
 
+            shutil.copy(os.path.join(data_dir, 'linked_answer.json'), os.path.join(data_dir, 'linked_answer.bckp'))
+
     with open(os.path.join(data_dir, 'linked_answer.json'), 'w') as jsonFile:
         json.dump(linked_answer_list, jsonFile)
     jsonFile.close()
+    shutil.copy(os.path.join(data_dir, 'linked_answer.json'), os.path.join(data_dir, 'linked_answer.bckp'))
 
     print('data len: ', len(linked_answer_list))
