@@ -143,7 +143,7 @@ if __name__ == "__main__":
 
         linked_answer_list.append(raw_row)
 
-        if qapair.id % 10 == 0:
+        if qapair.id % 100 == 0:
             print(f'Id: {qapair.id.__str__()}')
             with open(os.path.join(data_dir, 'linked_answer.json'), 'w') as jsonFile:
                 json.dump(linked_answer_list, jsonFile)

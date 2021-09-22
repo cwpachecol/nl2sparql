@@ -15,6 +15,7 @@ import logging
 import sys
 import os
 import numpy as np
+import shutil
 from config_dbnqa import parse_args
 
 
@@ -246,14 +247,16 @@ if __name__ == "__main__":
             with open(dbnqa_gold_json_file, "w") as data_file:
                 json.dump(dbnqa_gold_list, data_file, sort_keys=True, indent=4, separators=(',', ': '))
             data_file.close()
+            shutil.copy(os.path.join(output_dir, 'dbnqa_gold.json'), os.path.join(output_dir, 'dbnqa_gold.bckp'))
             with open(na_dbnqa_gold_txt_file, 'w') as na_data_file:
                 for i in na_dbnqa_gold_list:
                     na_data_file.write("{}\n".format(i))
             na_data_file.close()
-
+            shutil.copy(os.path.join(output_dir, 'na_dbnqa_gold.json'), os.path.join(output_dir, 'na_dbnqa_gold.bckp'))
     with open(dbnqa_gold_json_file, "w") as data_file:
         json.dump(dbnqa_gold_list, data_file, sort_keys=True, indent=4, separators=(',', ': '))
     data_file.close()
+    shutil.copy(os.path.join(output_dir, 'dbnqa_gold.json'), os.path.join(output_dir, 'dbnqa_gold.bckp'))
 
     print('stats: ', stats)
 
@@ -262,3 +265,4 @@ if __name__ == "__main__":
         for i in na_dbnqa_gold_list:
             na_data_file.write("{}\n".format(i))
     na_data_file.close()
+    shutil.copy(os.path.join(output_dir, 'na_dbnqa_gold.json'), os.path.join(output_dir, 'na_dbnqa_gold.bckp'))
